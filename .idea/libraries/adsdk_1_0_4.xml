@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="adsdk-1.0.4">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.android/build-cache/22f9bbdda5ec7636db25ccd8d7bb0e4c4eb73bba/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/22f9bbdda5ec7636db25ccd8d7bb0e4c4eb73bba/output/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.pandadata/adsdk/1.0.4/5f5b7c89f87e7d692027bb9c051f88835905abad/adsdk-1.0.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

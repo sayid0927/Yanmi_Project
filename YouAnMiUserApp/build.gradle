@@ -1,0 +1,155 @@
+//buildscript {
+//    repositories {
+//        //mavenCentral()
+//        jcenter()
+//    }
+//
+//    dependencies {
+//        classpath 'me.tatarka:gradle-retrolambda:2.3.1'
+//    }
+//}
+//
+//allprojects {
+//    repositories {
+//        jcenter()
+//    }
+//}
+
+apply plugin: 'com.android.application'
+apply plugin: 'com.bugtags.library.plugin'
+apply from: 'tinkerpatch.gradle'
+apply plugin: 'org.greenrobot.greendao'
+
+bugtags {
+
+    appKey "a23cb6aeefc8930ac5bd148da6349408"
+    appSecret "154b7f3302bac3a1780bcdbed44b9aac"
+    mappingUploadEnabled true
+    trackingNetworkEnabled true
+
+}
+
+dependencies {
+    compile fileTree(include: '*.jar', dir: 'libs')
+    compile project(':ChatProject')
+    compile 'com.android.support:multidex:1.0.0'
+    compile files('libs/libagent2_Yam.jar')
+    compile files('libs/SecurePay-2.6.5.jar')
+    compile 'com.bugtags.library:bugtags-lib:latest.integration'
+    provided("com.tencent.tinker:tinker-android-anno:1.7.7")
+    compile("com.tinkerpatch.sdk:tinkerpatch-android-sdk:1.1.4")
+    compile 'org.greenrobot:greendao:3.1.1'
+
+}
+
+repositories {
+    flatDir {
+        dirs 'libs' //声明aar的所在的目录
+    }
+}
+
+
+afterEvaluate {
+    tasks.matching {
+        it.name.startsWith('dex')
+    }.each { dx ->
+        if (dx.additionalParameters == null) {
+            dx.additionalParameters = []
+        }
+        dx.additionalParameters += '--multi-dex' // enable multidex
+
+        // optional
+        // dx.additionalParameters += "--main-dex-list=$projectDir/<filename>".toString() // enable the main-dex-list
+    }
+}
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion '25.0.0'
+
+    defaultConfig {
+        applicationId "com.zxly.o2o.o2o_user"
+	    minSdkVersion 14
+        targetSdkVersion 21
+        multiDexEnabled true
+//        ndk {
+//            abiFilters 'armeabi'
+//        }
+    }
+
+    dexOptions {
+        preDexLibraries = false
+        javaMaxHeapSize "2g"
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LGPL2.1'
+    }
+
+
+     lintOptions {
+        checkReleaseBuilds false
+       // Or, if you prefer, you can continue to check for errors in release builds,
+       // but continue the build even when errors are found:
+       abortOnError false
+      }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src','src/com/java-gen']
+            resources.srcDirs = ['src']
+            aidl.srcDirs = ['src']
+            renderscript.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+            jniLibs.srcDirs = ['libs']
+        }
+
+        instrumentTest.setRoot('tests')
+        debug.setRoot('build-types/debug')
+        release.setRoot('build-types/release')
+    }
+
+    signingConfigs {
+		release{
+			storeFile file("youanmi.keystore")
+			storePassword "uhbtgb"
+			keyAlias "youanmi"
+			keyPassword "uhbtgb"
+		}
+
+
+        debug{
+            storeFile file("youanmi.keystore")
+            storePassword "uhbtgb"
+            keyAlias "youanmi"
+            keyPassword "uhbtgb"
+        }
+	}
+
+    buildTypes {
+		release {
+		    debuggable false
+		    zipAlignEnabled true
+			minifyEnabled true
+			shrinkResources true
+			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+			signingConfig  signingConfigs.release
+		}
+
+		debug {
+            debuggable true
+            signingConfig  signingConfigs.debug
+        }
+    }
+
+    configurations {
+        all*.exclude group: 'com.android.support', module: 'support-v4'
+        all*.exclude group: 'com.android.support', module: 'support-annotations'
+    }
+
+}

@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="tinkerpatch-android-sdk-1.1.4">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.android/build-cache/3cc1f235ce8d7497b210bc76bf1fc515e5060836/output/jars/libs/bsdiff-util-1.7.7.jar!/" />
+      <root url="jar://$USER_HOME$/.android/build-cache/3cc1f235ce8d7497b210bc76bf1fc515e5060836/output/jars/libs/tinker-commons-1.7.7.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/3cc1f235ce8d7497b210bc76bf1fc515e5060836/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/3cc1f235ce8d7497b210bc76bf1fc515e5060836/output/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.android/build-cache/3cc1f235ce8d7497b210bc76bf1fc515e5060836/output/jars/libs/aosp-dexutils-1.7.7.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.tinkerpatch.sdk/tinkerpatch-android-sdk/1.1.4/dd5aeeb94069ddafb668e43eb59e28e80a2c65f5/tinkerpatch-android-sdk-1.1.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
