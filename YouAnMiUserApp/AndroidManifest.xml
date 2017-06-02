@@ -6,7 +6,7 @@
 
     <!--<uses-sdk-->
         <!--android:minSdkVersion="14"-->
-        <!--android:targetSdkVersion="21"/>-->
+        <!--android:targetSdkVersion="19"/>-->
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -623,7 +623,7 @@
 
         <meta-data
             android:name="VERSION_CODE"
-            android:value="1"/>
+            android:value="-1"/>
 
         <meta-data
             android:name="promotionCode"

@@ -188,7 +188,7 @@ public class PromotionDetailAct extends BasicAct implements
                     AppController.imageLoader);
 
             ViewUtils.setText(viewHolder.txtMemberPhone, myPromotionMember.getUserName());
-            view.setOnClickListener(new OnClickListener() {
+            view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     EaseConstant.startIMUserDetailInfo(myPromotionMember.getUserId(), false,

@@ -135,7 +135,7 @@ public class RefundmentDetailActivity extends BasicAct
 
     private void loadData() {
         detailRequest = new RefundmentDetailRequest(refundId);
-        detailRequest.setOnResponseStateListener(new ResponseStateListener() {
+        detailRequest.setOnResponseStateListener(new BaseRequest.ResponseStateListener() {
             @Override
             public void onOK() {
                 if (detailRequest.refundmentDetail == null) {

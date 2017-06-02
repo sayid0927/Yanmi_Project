@@ -5,27 +5,78 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <include
-        android:id="@+id/layout_toolbar"
-        layout="@layout/connection_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="50dp" />
-
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tab_gank"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabBackground="@drawable/ripple_tab_bg"
-        app:tabIndicatorColor="@color/blue"
-        app:tabSelectedTextColor="@color/red"
-        app:tabTextColor="@color/black" />
+    <!--<include-->
+        <!--android:id="@+id/layout_toolbar"-->
+        <!--layout="@layout/connection_toolbar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp" />-->
 
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/vp_home"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#fff2f4f5" />
+        android:layout_weight="1">
 
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:descendantFocusability="blocksDescendants" />
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white">
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/gray_b3b3b3" />
+
+
+            <RadioGroup
+                android:id="@+id/rg_home_viewpager_contorl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_shop_promotion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:button="@null"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:text="@string/Shop_promotion" />
+
+                <RadioButton
+                    android:id="@+id/rb_my_store"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:text="@string/My_store" />
+
+                <RadioButton
+                    android:id="@+id/rb_self"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:text="@string/Self" />
+
+            </RadioGroup>
+
+    </FrameLayout>
 
 </LinearLayout>

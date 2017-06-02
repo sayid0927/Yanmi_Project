@@ -1,8 +1,13 @@
 package com.zxly.o2o.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -13,6 +18,8 @@ import android.widget.TextView;
 
 import com.easemob.chatuidemo.HXConstant;
 import com.igexin.sdk.PushManager;
+import com.umeng.analytics.AnalyticsConfig;
+import com.umeng.analytics.MobclickAgent;
 import com.zxly.o2o.account.Account;
 import com.zxly.o2o.config.Config;
 import com.zxly.o2o.controller.AppController;
@@ -25,6 +32,7 @@ import com.zxly.o2o.request.GetSubjectRequest;
 import com.zxly.o2o.request.LoginToHXRequest;
 import com.zxly.o2o.request.VersionCheckRequest;
 import com.zxly.o2o.service.RunHeatbeatService;
+import com.zxly.o2o.util.AppLog;
 import com.zxly.o2o.util.Constants;
 import com.zxly.o2o.util.NetworkUtil;
 import com.zxly.o2o.util.ParameCallBack;
@@ -39,6 +47,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 
 /**
@@ -82,7 +91,7 @@ public class LaunchAct extends BasicAct {
 
                 @Override
                 public void onFail(int code) {
-                   // initHXAccount();
+                    initHXAccount();
                     checkNewVersion();
                 }
             });
@@ -121,7 +130,8 @@ public class LaunchAct extends BasicAct {
                     txtUpdatePercent.setText("正在为您下载最新版本请稍候(" + object + "%)");
                 }
             });
-            versionCheckRequest.setOnResponseStateListener(new ResponseStateListener() {
+            versionCheckRequest
+                    .setOnResponseStateListener(new ResponseStateListener() {
 
                         @Override
                         public void onOK() {

@@ -13,16 +13,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.MotionEvent;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-import com.bugtags.library.Bugtags;
 import com.dx.libagent2.Agent2Yam;
+import com.easemob.easeui.controller.EaseUI;
 import com.umeng.analytics.MobclickAgent;
+import com.zxly.o2o.config.Config;
 import com.zxly.o2o.controller.AppController;
 import com.zxly.o2o.o2o_user.R;
 import com.zxly.o2o.service.NetBroadcastReceiver;
+import com.zxly.o2o.util.ViewUtils;
 
 import java.util.List;
 import java.util.Timer;
@@ -122,7 +124,7 @@ public abstract class BasicAct extends FragmentActivity {
     protected void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
-        Bugtags.onResume(this);
+
         /** 判断Agent2Yam服务是否运行*/
        if (!isServiceRunning(this, "com.dx.libagent2.Agent2Yam")) {
             this.startService(new Intent(this, Agent2Yam.class));
@@ -132,7 +134,6 @@ public abstract class BasicAct extends FragmentActivity {
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
-        Bugtags.onPause(this);
     }
 
     protected void handleMessage(Message msg) {
@@ -173,7 +174,7 @@ public abstract class BasicAct extends FragmentActivity {
     /**
      * 用来判断服务是否运行.
      *
-     * @param
+     * @param context
      * @param className 判断的服务名字
      * @return true 在运行 false 不在运行
      */
@@ -193,11 +194,5 @@ public abstract class BasicAct extends FragmentActivity {
             }
         }
         return isRunning;
-    }
-
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-        Bugtags.onDispatchTouchEvent(this, event);
-        return super.dispatchTouchEvent(event);
     }
 }

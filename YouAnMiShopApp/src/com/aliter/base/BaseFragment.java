@@ -12,6 +12,8 @@ import com.aliter.view.LoadingPage;
 
 import javax.inject.Inject;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
@@ -36,7 +38,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 
 
     protected View contentView;
-//    private Unbinder bind;
+    private Unbinder bind;
 
 
     @Override
@@ -47,7 +49,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
                 protected void initView() {
                     if (isFirst) {
                         BaseFragment.this.contentView = this.contentView;
-//                        bind = ButterKnife.bind(BaseFragment.this, contentView);
+                        bind = ButterKnife.bind(BaseFragment.this, contentView);
                         BaseFragment.this.initView();
                         isFirst = false;
                     }
@@ -159,9 +161,9 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     @Override
     public void onDetach() {
         super.onDetach();
-//        if (bind != null) {
-//            bind.unbind();
-//        }
+        if (bind != null) {
+            bind.unbind();
+        }
         if (this.mCompositeSubscription != null && mCompositeSubscription.hasSubscriptions()) {
             this.mCompositeSubscription.unsubscribe();
         }

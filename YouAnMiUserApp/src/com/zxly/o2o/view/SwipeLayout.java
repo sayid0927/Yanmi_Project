@@ -646,7 +646,7 @@ import java.util.Map;
     }
 
     /**
-     * {@link OnLayoutChangeListener} added in API 11. I need
+     * {@link android.view.View.OnLayoutChangeListener} added in API 11. I need
      * to support it from API 8.
      */
     public interface OnLayout {
@@ -937,8 +937,8 @@ import java.util.Map;
     }
 
     /**
-     * if working in {@link AdapterView}, we should response
-     * {@link Adapter} isEnable(int position).
+     * if working in {@link android.widget.AdapterView}, we should response
+     * {@link android.widget.Adapter} isEnable(int position).
      *
      * @return true when item is enabled, else disabled.
      */
@@ -1040,9 +1040,9 @@ import java.util.Map;
 
         /**
          * Simulate the touch event lifecycle. If you use SwipeLayout in
-         * {@link AdapterView} ({@link android.widget.ListView},
+         * {@link android.widget.AdapterView} ({@link android.widget.ListView},
          * {@link android.widget.GridView} etc.) It will manually call
-         * {@link AdapterView}.performItemClick,
+         * {@link android.widget.AdapterView}.performItemClick,
          * performItemLongClick.
          *
          * @param e

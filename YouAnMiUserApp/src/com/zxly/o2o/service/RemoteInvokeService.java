@@ -573,7 +573,7 @@ public class RemoteInvokeService {
 
                     String browserUrl=result.optString("bannerUrl");
                     String name=result.optString("name");
-                   WebViewAct.start(name,browserUrl);
+                    WebViewAct.start(name,browserUrl);
 
                     break;
 

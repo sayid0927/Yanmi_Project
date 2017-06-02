@@ -1,2 +1,5 @@
 <resources>
+    <string name="Shop_promotion">店店推</string>
+    <string name="My_store">我的门店</string>
+    <string name="Self">我</string>
 </resources>

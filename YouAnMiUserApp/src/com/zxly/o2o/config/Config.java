@@ -91,7 +91,7 @@ public class Config {
 
     public static void init(Context ctx) {
         LoadProperty();
-        dataBaseUrl = getConfig("data_base_url");
+        dataBaseUrl = getConfig("data_base_url").trim();
         displayMetrics = EaseUI.displayMetrics;
         densityDpi = displayMetrics.densityDpi;
         scaleRate = (float) densityDpi / (float) DisplayMetrics.DENSITY_MEDIUM;
@@ -136,8 +136,8 @@ public class Config {
     public static void LoadProperty() {
         prop = new Properties();
         try {
-//             prop.load(AppController.getInstance().getResources()
-//                     .openRawResource(R.raw.config));
+            prop.load(AppController.getInstance().getResources()
+                    .openRawResource(R.raw.config));
         } catch (Exception e) {
             e.printStackTrace();
         }
