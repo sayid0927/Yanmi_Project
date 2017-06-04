@@ -23,6 +23,6 @@ public class Test extends BaseQuickAdapter<StoreArticleBean, BaseViewHolder> {
 
         helper.setText(R.id.txt_title,item.getTitle());
         helper.setText(R.id.txt_recomend,item.getDescription());
-        helper.setText(R.id.txt_label1,item.getHasNewLabel());
+//        helper.setText(R.id.txt_label1,item.getHasNewLabel());
     }
 }

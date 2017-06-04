@@ -96,6 +96,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     protected void onInvisible() {
     }
 
+
+
     /**
      * 显示时加载数据,需要这样的使用
      * 注意声明 isPrepared，先初始化

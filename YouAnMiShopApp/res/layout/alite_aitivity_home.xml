@@ -46,7 +46,7 @@
 
                 <RadioButton
                     android:id="@+id/rb_shop_promotion"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:button="@null"
                     android:layout_weight="1"
@@ -57,7 +57,7 @@
 
                 <RadioButton
                     android:id="@+id/rb_my_store"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:button="@null"
                     android:gravity="center"
@@ -67,7 +67,7 @@
 
                 <RadioButton
                     android:id="@+id/rb_self"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:button="@null"
                     android:gravity="center"

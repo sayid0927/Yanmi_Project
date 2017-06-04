@@ -22,10 +22,6 @@ public class AliterHomeActivity extends BaseActivity {
 
     @BindView(R.id.vp_content)
     ViewPager vpContent;
-//    @BindView(R.id.tv_toolbar)
-//    TextView tvToolbar;
-//    @BindView(R.id.toolbar)
-//    Toolbar toolbar;
     @BindView(R.id.rb_shop_promotion)
     RadioButton rbShopPromotion;
     @BindView(R.id.rb_my_store)
@@ -35,8 +31,6 @@ public class AliterHomeActivity extends BaseActivity {
     @BindView(R.id.rg_home_viewpager_contorl)
     RadioGroup rgHomeViewpagerContorl;
 
-
-    private String TAG = AliterHomeActivity.class.getName();
     private BaseFragmentPageAdapter myAdapter;
 
     @Override
@@ -51,9 +45,6 @@ public class AliterHomeActivity extends BaseActivity {
 
     @Override
     public void setToolBar() {
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayShowTitleEnabled(false);
-//        tvToolbar.setText("");
 
     }
 
@@ -128,5 +119,4 @@ public class AliterHomeActivity extends BaseActivity {
             }
         });
     }
-
 }
