@@ -33,29 +33,23 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:22.+'
 //    compile 'com.android.support:support-annotations:22.+'
 
-
     compile 'io.reactivex:rxjava:1.1.0'
     compile 'io.reactivex:rxandroid:1.1.0'
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
-
-
     compile 'com.google.dagger:dagger:2.0.2'
     compile 'com.google.dagger:dagger-compiler:2.0.2'
-//  apt 'com.google.dagger:dagger-compiler:2.0.2'
-
-
+    //  apt 'com.google.dagger:dagger-compiler:2.0.2'
     provided 'org.glassfish:javax.annotation:10.0-b28'
     compile 'com.jakewharton:butterknife:8.4.0'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
-
     compile 'com.blankj:utilcode:1.3.6'
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.0'
     compile 'com.orhanobut:logger:1.15'
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
     compile 'com.google.code.gson:gson:2.6.1'
-    compile 'org.androidannotations:androidannotations:4.3.0'
+    //    compile 'org.androidannotations:androidannotations:4.3.0'
 }
 
 repositories {
@@ -104,11 +98,17 @@ android {
     }
 
     packagingOptions {
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/DEPENDENCIES.txt'
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
     }
 
     lintOptions {
@@ -170,5 +170,8 @@ android {
         }
     }
 
+    configurations {
+        all*.exclude group: 'com.android.support', module: 'support-v4'
 
+    }
 }
