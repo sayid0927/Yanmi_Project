@@ -10,5 +10,4 @@ import dagger.Component;
 @Singleton
 @Component(modules = { LoginHttpModule.class})
 public interface LoginComponent {
-//    void injectLogin(AliterHomeActivity mainActivity);
 }

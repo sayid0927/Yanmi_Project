@@ -57,10 +57,35 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
+        <!--<activity-->
+            <!--android:name="com.zxly.o2o.activity.LaunchAct"-->
+            <!--android:label="@string/app_name"-->
+            <!--android:exported="true"-->
+            <!--android:screenOrientation="portrait">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN"/>-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
+
+
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.VIEW" />-->
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
+                <!--<category android:name="android.intent.category.BROWSABLE" />-->
+                <!--<data-->
+                    <!--android:host="shopapp.com"-->
+                    <!--android:scheme="yam" />-->
+            <!--</intent-filter>-->
+
+        <!--</activity>-->
+
+
         <activity
-            android:name="com.zxly.o2o.activity.LaunchAct"
+            android:name="com.aliter.ui.activity.AliteLaunchActivity"
             android:label="@string/app_name"
             android:exported="true"
+            android:theme="@style/AliterAppTheme"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -79,6 +104,10 @@
             </intent-filter>
 
         </activity>
+
+
+
+
         <activity
             android:name="com.zxly.o2o.activity.MainActivity"
             android:label="@string/app_name"
@@ -91,6 +120,10 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+
+
+
+
         <activity
             android:name="com.zxly.o2o.activity.YamCollegeListAct"
             android:label="@string/app_name"
@@ -597,8 +630,13 @@
         </activity>
 
 
-        <activity android:name="com.aliter.ui.activity.AliterHomeActivity"
-            android:theme="@style/AliterAppTheme"/>
+        <!--<activity android:name="com.aliter.ui.activity.AliterHomeActivity"-->
+            <!--android:theme="@style/AliterAppTheme"/>-->
+
+
+        <activity android:name="com.aliter.ui.activity.AliteLoginActivity"
+        android:theme="@style/AliterAppTheme"/>
+
 
         <!-- 个推SDK配置开始 -->
         <!-- 配置的第三方参数属性 -->

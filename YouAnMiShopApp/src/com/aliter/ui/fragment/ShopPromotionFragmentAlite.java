@@ -1,14 +1,14 @@
 package com.aliter.ui.fragment;
 
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.aliter.base.BaseFragment;
@@ -23,26 +23,27 @@ import butterknife.BindView;
 
 public class ShopPromotionFragmentAlite extends BaseFragment implements AppBarLayout.OnOffsetChangedListener {
 
+    @BindView(R.id.toolbar_title)
+    TextView toolbarTitle;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.collapsingtool)
+    CollapsingToolbarLayout collapsingtool;
+    @BindView(R.id.tab_layout)
+    TabLayout tabLayout;
+    @BindView(R.id.appbar_layout)
+    AppBarLayout appbarLayout;
+    @BindView(R.id.vp)
+    ViewPager vp;
+    @BindView(R.id.coordinator)
+    CoordinatorLayout coordinator;
+
     private enum CollapsingToolbarLayoutState {
         EXPANDED,
         COLLAPSED,
         INTERNEDIATE
     }
 
-    @BindView(R.id.tab_gank)
-    TabLayout tabGank;
-    @BindView(R.id.shop_appbar)
-    AppBarLayout shopAppbar;
-    @BindView(R.id.vp_gank)
-    ViewPager vpGank;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.collapsing_content)
-    LinearLayout collapsingContent;
-    @BindView(R.id.imageView3)
-    ImageView imageView3;
-    @BindView(R.id.toolbar_title)
-    TextView toolbarTitle;
 
     private CollapsingToolbarLayoutState state;
     private ArrayList<String> mTitleList = new ArrayList<>();
@@ -64,10 +65,9 @@ public class ShopPromotionFragmentAlite extends BaseFragment implements AppBarLa
 
         initFragmentList();
         myAdapter = new BaseFragmentPageAdapter(getChildFragmentManager(), mFragments, mTitleList);
-        vpGank.setAdapter(myAdapter);
+        vp.setAdapter(myAdapter);
         myAdapter.notifyDataSetChanged();
-        tabGank.setTabMode(TabLayout.MODE_FIXED);
-        tabGank.setupWithViewPager(vpGank);
+        tabLayout.setupWithViewPager(vp);
 
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
@@ -88,6 +88,8 @@ public class ShopPromotionFragmentAlite extends BaseFragment implements AppBarLa
         mTitleList.add("本地热文");
         mTitleList.add("网络热文");
         mTitleList.add("自定义文章");
+        mTitleList.add("活动");
+        mFragments.add(new StoreArticlesFragmentAlite());
         mFragments.add(new StoreArticlesFragmentAlite());
         mFragments.add(new StoreArticlesFragmentAlite());
         mFragments.add(new StoreArticlesFragmentAlite());
@@ -97,12 +99,13 @@ public class ShopPromotionFragmentAlite extends BaseFragment implements AppBarLa
     @Override
     public void onPause() {
         super.onPause();
-        shopAppbar.removeOnOffsetChangedListener(this);
+        appbarLayout.removeOnOffsetChangedListener(this);
     }
+
     @Override
     public void onResume() {
         super.onResume();
-        shopAppbar.addOnOffsetChangedListener(this);
+        appbarLayout.addOnOffsetChangedListener(this);
     }
 
     @Override
@@ -120,7 +123,7 @@ public class ShopPromotionFragmentAlite extends BaseFragment implements AppBarLa
         } else {
             if (state != CollapsingToolbarLayoutState.INTERNEDIATE) {
                 if (state == CollapsingToolbarLayoutState.COLLAPSED) {
-                    if(toolbarTitle.getVisibility()==View.VISIBLE)
+                    if (toolbarTitle.getVisibility() == View.VISIBLE)
                         toolbarTitle.setVisibility(View.GONE);
                     else
                         toolbarTitle.setVisibility(View.VISIBLE);
