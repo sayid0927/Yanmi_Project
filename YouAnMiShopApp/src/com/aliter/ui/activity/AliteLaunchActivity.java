@@ -79,5 +79,4 @@ public class AliteLaunchActivity extends BaseActivity {
     }
 
 
-
 }

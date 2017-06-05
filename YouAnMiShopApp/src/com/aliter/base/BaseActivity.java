@@ -3,8 +3,11 @@ package com.aliter.base;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
+import android.view.View;
 
 import com.aliter.http.LifeSubscription;
 import com.aliter.http.Stateful;
@@ -70,6 +73,22 @@ public abstract class BaseActivity<P extends BasePresenter> extends SwipeBackAct
         setToolBar();
         loadData();
     }
+
+
+    protected void setToolBar(Toolbar toolbar, String title) {
+        toolbar.setTitle(title);
+        setSupportActionBar(toolbar);
+        toolbar.setTitleTextColor(Color.WHITE);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//显示toolbar的返回按钮
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+    }
+
 
     @Override
     protected void onResume() {

@@ -635,7 +635,7 @@
 
 
         <activity android:name="com.aliter.ui.activity.AliteLoginActivity"
-        android:theme="@style/AliterAppTheme"/>
+        android:theme="@style/AliterAppWhiteBarTheme"/>
 
 
         <!-- 个推SDK配置开始 -->
