@@ -21,6 +21,7 @@ public class AliteChangePwdActivity extends BaseActivity {
     @Override
     public void setState(int state) {
 
+
     }
 
     @Override
