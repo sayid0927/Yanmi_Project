@@ -548,8 +548,9 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize"></activity>
 
-        <!-- <activity android:name="com.aliter.ui.activity.AliterHomeActivity" -->
-        <!-- android:theme="@style/AliterAppTheme"/> -->
+        <activity
+            android:name="com.aliter.ui.activity.AliterHomeActivity"
+            android:theme="@style/AliterAppTheme" />
 
         <activity
             android:name="com.aliter.ui.activity.login.AliteLoginActivity"
@@ -559,16 +560,20 @@
             android:theme="@style/AliterAppWhiteBarTheme" />
 
 
-        <activity android:name="com.aliter.ui.activity.login.AliteChangePwdActivity"
+        <activity
+            android:name="com.aliter.ui.activity.login.AliteChangePwdActivity"
             android:theme="@style/AliterAppWhiteBarTheme" />
 
-        <activity android:name="com.aliter.ui.activity.login.AliteShopRegisterActivity"
+        <activity
+            android:name="com.aliter.ui.activity.login.AliteShopRegisterActivity"
             android:theme="@style/AliterAppWhiteBarTheme" />
 
-        <activity android:name="com.aliter.ui.activity.login.AlitePhoneRegisterActivity"
+        <activity
+            android:name="com.aliter.ui.activity.login.AlitePhoneRegisterActivity"
             android:theme="@style/AliterAppWhiteBarTheme" />
 
-        <activity android:name="com.aliter.ui.activity.login.AliteSMSVerificationActivity"
+        <activity
+            android:name="com.aliter.ui.activity.login.AliteSMSVerificationActivity"
             android:theme="@style/AliterAppWhiteBarTheme" />
 
         <!-- 个推SDK配置开始 -->

@@ -19,9 +19,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        app:tabTextAppearance="@android:style/TextAppearance.Holo.Large"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:tabIndicatorColor="#FF7B1A"
-        app:tabSelectedTextColor="#FF7B1A" />
+        app:tabSelectedTextColor="#FF7B1A"
+        app:tabTextAppearance="@android:style/TextAppearance.Holo.Large" />
 
 
     <LinearLayout
@@ -44,17 +47,19 @@
                 android:id="@+id/name_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignTop="@+id/edit_name"
+                android:layout_marginBottom="5dp"
                 android:src="@drawable/al_login_number" />
 
             <ImageView
                 android:id="@+id/btn_clean_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
+                android:layout_marginBottom="5dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:src="@drawable/btn_edit_del_selector" />
@@ -63,8 +68,9 @@
                 android:id="@+id/ll_verification_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
+                android:layout_marginBottom="5dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:orientation="horizontal"
@@ -87,15 +93,18 @@
             <EditText
                 android:id="@+id/edit_name"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_toLeftOf="@id/btn_clean_name"
-                android:layout_toRightOf="@id/name_icon"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toEndOf="@+id/name_icon"
+                android:layout_toRightOf="@+id/name_icon"
                 android:background="#00000000"
                 android:hint="输入手机号"
                 android:inputType="number"
                 android:singleLine="true"
                 android:textColorHint="@color/gray_999999"
-                android:textSize="15sp" />
+                android:textSize="15dp" />
         </RelativeLayout>
 
         <View
@@ -118,8 +127,8 @@
                 android:id="@+id/password_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="5dp"
                 android:layout_marginRight="10dp"
                 android:src="@drawable/al_login_password" />
 
@@ -127,8 +136,9 @@
                 android:id="@+id/btn_clean_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
+                android:layout_marginBottom="5dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:src="@drawable/btn_edit_del_selector" />
@@ -136,7 +146,9 @@
             <EditText
                 android:id="@+id/edit_password"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="5dp"
                 android:layout_toLeftOf="@id/btn_clean_password"
                 android:layout_toRightOf="@id/password_icon"
                 android:background="#00000000"
@@ -156,11 +168,12 @@
 
 
         <Button
+            android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="50dp"
             android:background="@drawable/alite_btn_login_phone"
             android:text="登录"
             android:textColor="@color/white" />
@@ -171,31 +184,34 @@
             android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
-            <TextView
+            <Button
                 android:id="@+id/tv_forget_pwd"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
                 android:layout_gravity="center"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:gravity="right"
+                android:background="@null"
+                android:gravity="right|center"
                 android:text="忘记密码"
                 android:textColor="@color/black" />
 
             <View
                 android:layout_width="0.5dp"
                 android:layout_height="match_parent"
+                android:layout_margin="5dp"
                 android:background="@color/gray_dcdcdc" />
 
 
-            <TextView
+            <Button
                 android:id="@+id/tv_register_shop"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
-                android:gravity="left"
+                android:background="@null"
+                android:gravity="left|center"
                 android:text="注册商户"
                 android:textColor="@color/black" />
 

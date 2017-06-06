@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import com.aliter.entity.LoginBean;
 import com.aliter.http.BaseResponse;
 import com.aliter.presenter.LoginPresenter;
 import com.aliter.presenter.impl.LoginPresenterImpl;
+import com.aliter.ui.activity.AliterHomeActivity;
 import com.zxly.o2o.shop.R;
 import com.zxly.o2o.util.ViewUtils;
 
@@ -39,6 +41,8 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
     ImageView btnCleanPassword;
     @BindView(R.id.tv_register_shop)
     TextView tvRegisterShop;
+    @BindView(R.id.btn_login)
+    Button btnLogin;
 
 
     @Override
@@ -68,9 +72,10 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
 
     @Override
     public void initView() {
-        tabLayout.addTab(tabLayout.newTab().setText("密码登陆"));
-        tabLayout.addTab(tabLayout.newTab().setText("验证码登陆"));
-
+        tabLayout.addTab(tabLayout.newTab());
+        tabLayout.addTab(tabLayout.newTab());
+        tabLayout.getTabAt(0).setText("密码登陆");
+        tabLayout.getTabAt(1).setText("验证码登陆");
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -113,7 +118,7 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
     }
 
 
-    @OnClick({R.id.btn_clean_name, R.id.btn_clean_password, R.id.tv_forget_pwd,R.id.tv_register_shop})
+    @OnClick({R.id.btn_clean_name, R.id.btn_clean_password, R.id.tv_forget_pwd, R.id.tv_register_shop,R.id.btn_login})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_clean_name:
@@ -128,7 +133,13 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
                 ViewUtils.startActivity(new Intent(AliteLoginActivity.this, AlitePhoneRegisterActivity.class), this);
 
                 break;
+            case R.id.btn_login:
+                ViewUtils.startActivity(new Intent(AliteLoginActivity.this, AliterHomeActivity.class), this);
+
+                break;
         }
     }
+
+
 
 }
