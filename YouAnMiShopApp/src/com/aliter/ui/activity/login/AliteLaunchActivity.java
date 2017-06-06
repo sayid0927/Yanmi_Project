@@ -1,4 +1,4 @@
-package com.aliter.ui.activity;
+package com.aliter.ui.activity.login;
 
 import android.content.Intent;
 import android.os.Build;
@@ -74,6 +74,7 @@ public class AliteLaunchActivity extends BaseActivity {
             case R.id.layout_wchat_login:
                 break;
             case R.id.registered_shop_account:
+                ViewUtils.startActivity(new Intent(AliteLaunchActivity.this,AlitePhoneRegisterActivity.class), this);
                 break;
         }
     }

@@ -80,6 +80,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends SwipeBackAct
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//显示toolbar的返回按钮
+
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

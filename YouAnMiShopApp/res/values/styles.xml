@@ -405,5 +405,9 @@
         <item name="windowActionBar">false</item>
     </style>
 
+    <style name="TextTitle">
+        <item name="textSize">18sp</item>
+    </style>
+
 
 </resources>

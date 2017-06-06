@@ -51,6 +51,8 @@
     </RelativeLayout>
 
     <View
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@color/gray_dcdcdc" />
@@ -97,6 +99,13 @@
             android:textSize="15sp" />
     </RelativeLayout>
 
+    <View
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/gray_dcdcdc" />
+
 
     <Button
         android:layout_width="match_parent"
@@ -127,7 +136,7 @@
         <View
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
-            android:background="@color/gold_yellow"/>
+            android:background="@color/gray_dcdcdc"/>
 
 
         <TextView
@@ -137,7 +146,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="left"
-            android:text="忘记密码"
+            android:text="注册商户"
             android:textColor="@color/black" />
 
 
