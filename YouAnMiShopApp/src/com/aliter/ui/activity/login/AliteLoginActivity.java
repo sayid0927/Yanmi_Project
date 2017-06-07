@@ -20,12 +20,13 @@ import com.aliter.injector.component.activity.DaggerLoginComponent;
 import com.aliter.presenter.LoginPresenter;
 import com.aliter.presenter.impl.LoginPresenterImpl;
 import com.aliter.ui.activity.AliterHomeActivity;
-import com.easemob.chatuidemo.HXConstant;
+import com.blankj.utilcode.utils.StringUtils;
+import com.easemob.easeui.model.IMUserInfoVO;
 import com.orhanobut.logger.Logger;
-import com.zxly.o2o.application.AppController;
 import com.zxly.o2o.application.Config;
 import com.zxly.o2o.shop.R;
 import com.zxly.o2o.util.Constants;
+import com.zxly.o2o.util.DESUtils;
 import com.zxly.o2o.util.EncryptionUtils;
 import com.zxly.o2o.util.PreferUtil;
 import com.zxly.o2o.util.StringUtil;
@@ -36,8 +37,6 @@ import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static com.zxly.o2o.account.Account.user;
 
 /**
  * Created by sayid on 2017/6/5.
@@ -70,10 +69,9 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
     @BindView(R.id.edit_password)
     EditText editPassword;
 
-private  String TAG=AliteLoginActivity.class.getName();
+    private  String TAG=AliteLoginActivity.class.getName();
     private String password,phoneNumber;
-
-
+    public IMUserInfoVO user;
 
     @Override
     public void setState(int state) {
@@ -82,26 +80,25 @@ private  String TAG=AliteLoginActivity.class.getName();
 
     @Override
     public void onSuccessView(BaseResponse<LoginBean> mData) {
-        ViewUtils.startActivity(new Intent(AliteLoginActivity.this, AliterHomeActivity.class), this);
         Logger.t(TAG).d("登录成功返回信息  ==  " + mData);
-        String  token= mData.getData().getToken();
-        HXConstant.isLoginSuccess = true; //标识登录hx成功
-        PreferUtil.getInstance().setLoginToken(token);
-        AppController.getInstance().initHXAccount(user,true);   //登录环信
+        LoginBean loginBean =mData.getData();
+        if(!StringUtils.isEmpty(loginBean.getSignKey())) {
+            try {
+                Config.accessKey = DESUtils.decrypt(loginBean.getSignKey(), Config.USER_SIGN_KEY);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if(!StringUtils.isEmpty(loginBean.getToken()))
+          PreferUtil.getInstance().setLoginToken(loginBean.getToken());
+//        HXConstant.isLoginSuccess = true; //标识登录hx成功
+//        ToUserInfoVO(loginBean);
+//        AppController.getInstance().initHXAccount(user,true);   //登录环信
 
-
-
-//        request.user.setPassword(EncryptionUtils
-//                .md5TransferPwd(password));
-//        request.user.setUserName(phoneNumber);
-//        //					PreferUtil.getInstance().setLoginUser(
-//        //							GsonParser.getInstance().toJson(dataInitrequest.user));
-//        Account.saveLoginUser(getActivity(), request.user);
-//        PreferUtil.getInstance().setLoginToken(request.user.getToken());
-//        Account.user = request.user;
-
+        ViewUtils.startActivity(new Intent(AliteLoginActivity.this, AliterHomeActivity.class), this);
 
     }
+
 
     @Override
     public void onFailView(String errorMsg) {
@@ -123,8 +120,6 @@ private  String TAG=AliteLoginActivity.class.getName();
     public void initView() {
         initListener();
     }
-
-
 
     @Override
     protected void loadData() {
@@ -197,6 +192,21 @@ private  String TAG=AliteLoginActivity.class.getName();
 
         }
     }
+
+
+    private void ToUserInfoVO(LoginBean loginBean) {
+
+
+
+
+
+
+    }
+
+
+
+
+
     private void initListener() {
 
         editPhone.addTextChangedListener(new TextWatcher() {
