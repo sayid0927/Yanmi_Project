@@ -10,7 +10,7 @@ import com.aliter.base.BaseActivity;
 import com.aliter.base.BaseFragmentPageAdapter;
 import com.aliter.ui.fragment.MyStoreFragmentAlite;
 import com.aliter.ui.fragment.SelfFragmentAlite;
-import com.aliter.ui.fragment.ShopPromotionFragmentAlite;
+import com.aliter.ui.fragment.homefragment.AliteShopPromotionFragment;
 import com.zxly.o2o.shop.R;
 
 import java.util.ArrayList;
@@ -66,7 +66,7 @@ public class AliterHomeActivity extends BaseActivity {
     private void initFragmentList() {
 
         List<Fragment> mFragmentList = new ArrayList<>();
-        mFragmentList.add(new ShopPromotionFragmentAlite());
+        mFragmentList.add(new AliteShopPromotionFragment());
         mFragmentList.add(new MyStoreFragmentAlite());
         mFragmentList.add(new SelfFragmentAlite());
         vpContent.setAdapter(new BaseFragmentPageAdapter(getSupportFragmentManager(), mFragmentList));

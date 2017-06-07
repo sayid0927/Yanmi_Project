@@ -17,6 +17,17 @@ public class StoreArticle {
     private int type;
     private int shopId;
     private int pageIndex;
+    private String codeId;
+
+
+
+    public String getCodeId() {
+        return codeId;
+    }
+
+    public void setCodeId(String codeId) {
+        this.codeId = codeId;
+    }
 
     public int getUserId() {
         return userId;
