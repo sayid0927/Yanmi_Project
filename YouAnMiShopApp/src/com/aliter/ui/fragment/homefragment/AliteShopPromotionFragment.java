@@ -64,6 +64,7 @@ public class AliteShopPromotionFragment extends BaseFragment implements AppBarLa
     @Override
     protected void initView() {
 
+
         initFragmentList();
         myAdapter = new BaseFragmentPageAdapter(getChildFragmentManager(), mFragments, mTitleList);
         vp.setAdapter(myAdapter);
