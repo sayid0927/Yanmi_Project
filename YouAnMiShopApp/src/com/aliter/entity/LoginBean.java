@@ -1,10 +1,12 @@
 package com.aliter.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by Sayid on 2017/5/19.
  */
 
-public class LoginBean {
+public class LoginBean  implements Serializable {
 
         /**
          * id : 1

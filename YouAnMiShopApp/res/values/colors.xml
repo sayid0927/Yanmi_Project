@@ -50,6 +50,7 @@
     <color name="transparent">#00000000</color>
     <color name="Cambridge_blue">#7BCAFC</color>
     <color name="white">#fff</color>
+    <color name="barcolors">#D5D5D5</color>
     <color name="darkgray">#333333</color>
     <color name="red">#C1272D</color>
     <color name="red_f83030">#f83030</color>
@@ -61,6 +62,10 @@
     <color name="red_lable">#ff3300</color>
     <color name="blue">#3794FE</color>
     <color name="orange_ff5f19">#ff5f19</color>
+    <color name="alite_bar_colors">#F5721E</color>
+
+
+
     <color name="orange_da6f5e">#da6f5e</color>
     <color name="orange_fc911f">#fc911f</color>
     <color name="grey">#d9d9d9</color>
@@ -81,6 +86,8 @@
     <color name="yellow_fc9c3e">#fc9c3e</color>
     <color name="yellow_ffa200">#ffa200</color>
     <color name="yellow_ffea59">#ffea59</color>
+
+
 
     <color name="tint_grey">#F8F8F8</color>
     <color name="black">#2E2E2E</color>

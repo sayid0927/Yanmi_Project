@@ -387,8 +387,8 @@
 
     <style name="AliterAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/red_lable</item>
-        <item name="colorPrimaryDark">@color/red_lable</item>
+        <item name="colorPrimary">@color/alite_bar_colors</item>
+        <item name="colorPrimaryDark">@color/alite_bar_colors</item>
         <item name="colorAccent">@color/white</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
@@ -397,10 +397,9 @@
 
 
     <style name="AliterAppWhiteBarTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryDark">@color/white</item>
-        <item name="colorAccent">@color/white</item>
+        <item name="colorPrimaryDark">@color/barcolors</item>
+        <item name="colorAccent">@color/barcolors</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
     </style>
