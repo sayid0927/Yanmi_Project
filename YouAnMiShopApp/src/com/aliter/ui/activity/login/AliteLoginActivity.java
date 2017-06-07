@@ -18,6 +18,7 @@ import com.aliter.presenter.LoginPresenter;
 import com.aliter.presenter.impl.LoginPresenterImpl;
 import com.aliter.ui.activity.AliterHomeActivity;
 import com.zxly.o2o.shop.R;
+import com.zxly.o2o.util.Constants;
 import com.zxly.o2o.util.StringUtil;
 import com.zxly.o2o.util.ViewUtils;
 
@@ -81,7 +82,6 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
 
     @Override
     public void initView() {
-        ///btnCleanPhone.setVisibility(View.VISIBLE);
         initListener();
     }
 
@@ -183,5 +183,41 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
 
 
 
+        editPassword.addTextChangedListener(new TextWatcher() {
+            private CharSequence temp;
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                temp = s;
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() == 0) {
+                    btnCleanPassword.setVisibility(View.GONE);
+                    btnLogin.setBackgroundResource(R.drawable.alite_btn_login_default);
+                    btnLogin.setEnabled(false);
+                } else {
+                    btnCleanPassword.setVisibility(View.VISIBLE);
+                    if (!StringUtil.isNull(editPhone.getText().toString())) {
+                        btnLogin.setBackgroundResource(R.drawable.alite_btn_login_phone);
+                        btnLogin.setEnabled(true);
+                    } else {
+                        btnLogin.setBackgroundResource(R.drawable.alite_btn_login_default);
+                        btnLogin.setEnabled(false);
+                    }
+                }
+                if (temp.length() > Constants.PASSWORD_MAX_LENGTH) {
+                    s.delete(Constants.PASSWORD_MAX_LENGTH, s.length());
+                    editPassword.setText(s);
+                    editPassword.setSelection(s.length());
+                    ViewUtils.showToast("密码只能为6-16位的数字或字母组成");
+                }
+            }
+        });
     }
 }
