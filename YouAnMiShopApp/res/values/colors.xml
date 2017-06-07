@@ -50,6 +50,7 @@
     <color name="transparent">#00000000</color>
     <color name="Cambridge_blue">#7BCAFC</color>
     <color name="white">#fff</color>
+    <color name="barcolors">#D5D5D5</color>
     <color name="darkgray">#333333</color>
     <color name="red">#C1272D</color>
     <color name="red_f83030">#f83030</color>
