@@ -111,6 +111,7 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
             case R.id.tv_forget_pwd:
                 ViewUtils.startActivity(new Intent(AliteLoginActivity.this, AliteForgetPwdActivity.class), this);
 
+
                 break;
             case R.id.tv_register_shop:
                 ViewUtils.startActivity(new Intent(AliteLoginActivity.this, AlitePhoneRegisterActivity.class), this);
