@@ -70,6 +70,7 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
 
     }
 
+
     @Override
     public int getLayoutId() {
         return R.layout.alite_aitivity_login;
