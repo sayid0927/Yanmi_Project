@@ -221,4 +221,5 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
             }
         });
     }
+
 }
