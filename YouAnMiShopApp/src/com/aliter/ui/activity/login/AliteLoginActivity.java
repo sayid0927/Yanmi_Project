@@ -1,10 +1,12 @@
 package com.aliter.ui.activity.login;
 
 import android.content.Intent;
-import android.support.design.widget.TabLayout;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,6 +18,7 @@ import com.aliter.presenter.LoginPresenter;
 import com.aliter.presenter.impl.LoginPresenterImpl;
 import com.aliter.ui.activity.AliterHomeActivity;
 import com.zxly.o2o.shop.R;
+import com.zxly.o2o.util.StringUtil;
 import com.zxly.o2o.util.ViewUtils;
 
 import butterknife.BindView;
@@ -29,12 +32,10 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.tabLayout)
-    TabLayout tabLayout;
     @BindView(R.id.ll_verification_login)
     LinearLayout llVerificationLogin;
-    @BindView(R.id.btn_clean_name)
-    ImageView btnCleanName;
+    @BindView(R.id.btn_clean_phone)
+    ImageView btnCleanPhone;
     @BindView(R.id.tv_forget_pwd)
     TextView tvForgetPwd;
     @BindView(R.id.btn_clean_password)
@@ -43,6 +44,14 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
     TextView tvRegisterShop;
     @BindView(R.id.btn_login)
     Button btnLogin;
+    @BindView(R.id.btn_pwd_login)
+    Button btnPwdLogin;
+    @BindView(R.id.btn_register_login)
+    Button btnRegisterLogin;
+    @BindView(R.id.edit_phone)
+    EditText editPhone;
+    @BindView(R.id.edit_password)
+    EditText editPassword;
 
 
     @Override
@@ -72,40 +81,11 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
 
     @Override
     public void initView() {
-        tabLayout.addTab(tabLayout.newTab());
-        tabLayout.addTab(tabLayout.newTab());
-        tabLayout.getTabAt(0).setText("密码登陆");
-        tabLayout.getTabAt(1).setText("验证码登陆");
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                switch (tab.getPosition()) {
-                    case 0:
-                        if (llVerificationLogin.getVisibility() == View.VISIBLE)
-                            llVerificationLogin.setVisibility(View.GONE);
-                        if (btnCleanName.getVisibility() == View.GONE)
-                            btnCleanName.setVisibility(View.VISIBLE);
-                        break;
-                    case 1:
-                        if (llVerificationLogin.getVisibility() == View.GONE)
-                            llVerificationLogin.setVisibility(View.VISIBLE);
-                        if (btnCleanName.getVisibility() == View.VISIBLE)
-                            btnCleanName.setVisibility(View.GONE);
-                        break;
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
+        ///btnCleanPhone.setVisibility(View.VISIBLE);
+        initListener();
     }
+
+
 
     @Override
     protected void loadData() {
@@ -118,12 +98,15 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
     }
 
 
-    @OnClick({R.id.btn_clean_name, R.id.btn_clean_password, R.id.tv_forget_pwd, R.id.tv_register_shop,R.id.btn_login})
+    @OnClick({R.id.btn_clean_phone, R.id.btn_clean_password, R.id.tv_forget_pwd, R.id.tv_register_shop, R.id.btn_login,
+            R.id.btn_pwd_login, R.id.btn_register_login})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.btn_clean_name:
+            case R.id.btn_clean_phone:
+                editPhone.setText("");
                 break;
             case R.id.btn_clean_password:
+                editPassword.setText("");
                 break;
             case R.id.tv_forget_pwd:
                 ViewUtils.startActivity(new Intent(AliteLoginActivity.this, AliteForgetPwdActivity.class), this);
@@ -137,9 +120,68 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
                 ViewUtils.startActivity(new Intent(AliteLoginActivity.this, AliterHomeActivity.class), this);
 
                 break;
+            case R.id.btn_pwd_login:
+                if (llVerificationLogin.getVisibility() == View.VISIBLE)
+                    llVerificationLogin.setVisibility(View.GONE);
+                if (btnCleanPhone.getVisibility() == View.GONE)
+                    btnCleanPhone.setVisibility(View.VISIBLE);
+
+                break;
+            case R.id.btn_register_login:
+                if (llVerificationLogin.getVisibility() == View.GONE)
+                    llVerificationLogin.setVisibility(View.VISIBLE);
+                if (btnCleanPhone.getVisibility() == View.VISIBLE)
+                    btnCleanPhone.setVisibility(View.GONE);
+                break;
+
         }
     }
+    private void initListener() {
+
+        editPhone.addTextChangedListener(new TextWatcher() {
+            private CharSequence temp;
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                temp = s;
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() == 0) {
+                    btnCleanPhone.setVisibility(View.GONE);
+                    btnLogin.setBackgroundResource(R.drawable.alite_btn_login_default);
+                    btnLogin.setEnabled(false);
+                } else {
+                    if (!s.toString().startsWith("1")) {
+                        editPhone.setText("");
+                        ViewUtils.showToast("请输入正确的电话号码！");
+                        btnCleanPhone.setVisibility(View.GONE);
+                        btnLogin.setBackgroundResource(R.drawable.alite_btn_login_default);
+                        btnLogin.setEnabled(false);
+                    } else {
+                        btnCleanPhone.setVisibility(View.VISIBLE);
+                        if (!StringUtil.isNull(editPassword.getText().toString())) {
+                            btnLogin.setBackgroundResource(R.drawable.alite_btn_login_phone);
+                            btnLogin.setEnabled(true);
+                        } else {
+                            btnLogin.setBackgroundResource(R.drawable.alite_btn_login_default);
+                            btnLogin.setEnabled(false);
+                        }
+                    }
+                }if (temp.length() > 11) {
+                    s.delete(11, s.length());
+                    editPhone.setText(s);
+                    editPhone.setSelection(s.length());
+                }
+            }
+        });
 
 
 
+
+    }
 }
