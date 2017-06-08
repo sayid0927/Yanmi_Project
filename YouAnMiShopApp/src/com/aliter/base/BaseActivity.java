@@ -16,10 +16,8 @@ import com.aliter.injector.component.DaggerActivityComponent;
 import com.aliter.injector.component.module.ActivityModule;
 import com.aliter.ui.SwipeBackActivity.SwipeBackActivity;
 import com.aliter.ui.SwipeBackActivity.SwipeBackLayout;
+import com.zxly.o2o.application.AppController;
 import com.zxly.o2o.shop.R;
-
-import java.util.LinkedList;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -35,7 +33,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends SwipeBackAct
     protected P mPresenter;
     public static BaseActivity activity;
     private SwipeBackLayout mSwipeBackLayout;
-    public final static List<Activity> mActivities = new LinkedList<Activity>();
 
     public abstract int getLayoutId();
 
@@ -63,15 +60,13 @@ public abstract class BaseActivity<P extends BasePresenter> extends SwipeBackAct
         initSwipeBackLayout();
         setContentView(getLayoutId());
         bind = ButterKnife.bind(this);
-        synchronized (mActivities) {
-            mActivities.add(this);
-        }
         initInject();
         if (mPresenter!=null)
         mPresenter.attachView(this);
         initView();
         setToolBar();
         loadData();
+        AppController.addAct(this);
     }
 
 
@@ -106,9 +101,8 @@ public abstract class BaseActivity<P extends BasePresenter> extends SwipeBackAct
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        synchronized (mActivities) {
-            mActivities.remove(this);
-        }
+        AppController.cancelAll(this);
+        AppController.remove(this);
         if (this.mCompositeSubscription != null && mCompositeSubscription.hasSubscriptions()) {
             this.mCompositeSubscription.unsubscribe();
         }
@@ -141,17 +135,17 @@ public abstract class BaseActivity<P extends BasePresenter> extends SwipeBackAct
         }
     }
 
-    public void killAllActivity() {
-        List<Activity> copy;
-        synchronized (mActivities) {
-            copy = new LinkedList<>(mActivities);
-        }
-        for (Activity activity : copy) {
-            activity.finish();
-        }
-        // 杀死当前的进程
-        // android.os.Process.killProcess(android.os.Process.myPid());
-    }
+//    public void killAllActivity() {
+//        List<Activity> copy;
+//        synchronized (mActivities) {
+//            copy = new LinkedList<>(mActivities);
+//        }
+//        for (Activity activity : copy) {
+//            activity.finish();
+//        }
+//        // 杀死当前的进程
+//        // android.os.Process.killProcess(android.os.Process.myPid());
+//    }
 
     private CompositeSubscription mCompositeSubscription;
 

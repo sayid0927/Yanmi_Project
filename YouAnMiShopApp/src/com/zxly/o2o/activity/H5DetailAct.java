@@ -132,6 +132,7 @@ public class H5DetailAct extends BasicAct implements View.OnClickListener {
 		UmengUtil.onEvent(curAct,new UmengUtil().FIND_ARTICLE_ENTER, null);
 	}
 
+
 	private void initViews() {
 		View btnShare=findViewById(R.id.btn_share);
 		btnShare.setOnClickListener(this);

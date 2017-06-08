@@ -324,4 +324,28 @@ public class StringUtil {
         return stringBuilder.toString();
     }
 
+
+
+    public static int isChinese(String str) {
+        if (str == null)
+            return 000;
+        int i=0;
+        for (char c : str.toCharArray()) {
+            if (isChinese(c)) {
+                return i;
+            }else {
+                i++;
+                continue;
+            }
+        }
+        return 000;
+    }
+    public  static  boolean isChinese(char c) {
+        return c >= 0x4E00 && c <= 0x9FA5;
+    }
+
+
+
+
+
 }

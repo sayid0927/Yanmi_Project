@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.aliter.base.BaseFragment;
 import com.aliter.base.BaseFragmentPageAdapter;
-import com.aliter.ui.fragment.StoreArticlesFragmentAlite;
+
 import com.zxly.o2o.application.AppController;
 import com.zxly.o2o.shop.R;
 
@@ -92,10 +92,10 @@ public class AliteShopPromotionFragment extends BaseFragment implements AppBarLa
         mTitleList.add("自定义文章");
         mTitleList.add("活动");
         mFragments.add(new AliteStoreArticlesFragment());
-        mFragments.add(new StoreArticlesFragmentAlite());
-        mFragments.add(new StoreArticlesFragmentAlite());
-        mFragments.add(new StoreArticlesFragmentAlite());
-        mFragments.add(new StoreArticlesFragmentAlite());
+        mFragments.add(new AliteStoreArticlesFragment());
+        mFragments.add(new AliteStoreArticlesFragment());
+        mFragments.add(new AliteStoreArticlesFragment());
+        mFragments.add(new AliteStoreArticlesFragment());
     }
 
     @Override

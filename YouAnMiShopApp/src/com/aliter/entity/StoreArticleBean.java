@@ -1,5 +1,7 @@
 package com.aliter.entity;
 
+import com.chad.library.adapter.base.entity.MultiItemEntity;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -7,12 +9,25 @@ import java.util.List;
  * Created by sayid on 2017/5/29.
  */
 
-public class StoreArticleBean  implements Serializable {
+public class StoreArticleBean  implements Serializable, MultiItemEntity {
 
+    private int type;
 
-        /**
+    public static final int ICON = 0;
+    public static final int NO_ICON = 1;
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    /**
          * articleId : 258002
          * createTime : 1491898686359
+
          * headUrl :
          * labels : [{"id":1219,"articleId":258002,"name":"a"},{"id":1220,"articleId":258002,"name":"b"}]
          * scanCount : 47
@@ -134,7 +149,12 @@ public class StoreArticleBean  implements Serializable {
             this.labels = labels;
         }
 
-        public static class LabelsBean {
+    @Override
+    public int getItemType() {
+        return getType();
+    }
+
+    public static class LabelsBean {
             /**
              * id : 1219
              * articleId : 258002
