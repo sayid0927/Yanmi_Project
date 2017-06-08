@@ -35,7 +35,8 @@ import butterknife.BindView;
 
 import static android.R.attr.type;
 
-public class AliteStoreArticlesFragment extends BaseFragment<StorArticlesPresenterImpl> implements StorArticlesPresenter.View {
+public class AliteStoreArticlesFragment extends BaseFragment<StorArticlesPresenterImpl> implements StorArticlesPresenter.View,
+        BaseQuickAdapter.RequestLoadMoreListener {
 
 
     @BindView(R.id.recyclerView)
@@ -48,6 +49,7 @@ public class AliteStoreArticlesFragment extends BaseFragment<StorArticlesPresent
     private List<StoreArticleBean> data;
 
     private ShareDialog dialog;
+    private int PageIndex=1;
 
 
     @Override
@@ -72,7 +74,7 @@ public class AliteStoreArticlesFragment extends BaseFragment<StorArticlesPresent
     protected void loadData() {
 
         StoreArticle storeArticle = new StoreArticle();
-        storeArticle.setPageIndex(1);
+        storeArticle.setPageIndex(PageIndex);
         storeArticle.setType(1);
         storeArticle.setShopId(Account.user.getShopId());
         storeArticle.setUserId(Account.user.getId());
@@ -150,5 +152,17 @@ public class AliteStoreArticlesFragment extends BaseFragment<StorArticlesPresent
     protected void initInject() {
         DaggerStoreArticlesComponent.builder().storeAriclesHttpModule(new StoreAriclesHttpModule()).storeArticlesModule(new StoreArticlesModule())
                 .build().injectData(this);
+    }
+
+    @Override
+    public void onLoadMoreRequested() {
+        if (PageIndex >= 1) {
+            mAdapter.loadMoreEnd();
+           // srlAndroid.setEnabled(true);
+        } else {
+            PageIndex++;
+            loadData();
+          //  srlAndroid.setEnabled(false);
+        }
     }
 }
