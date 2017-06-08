@@ -4,37 +4,46 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.aliter.adapter.Test;
 import com.aliter.base.BaseFragment;
+import com.aliter.entity.StoreArticle;
 import com.aliter.entity.StoreArticleBean;
 import com.aliter.http.BaseResponse;
 import com.aliter.injector.component.StoreAriclesHttpModule;
 import com.aliter.injector.component.fragment.DaggerStoreArticlesComponent;
+import com.aliter.injector.component.module.fragment.StoreArticlesModule;
 import com.aliter.presenter.StorArticlesPresenter;
 import com.aliter.presenter.impl.StorArticlesPresenterImpl;
 import com.aliter.ui.fragment.StoreArticlesFragmentAlite;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.orhanobut.logger.Logger;
-import com.zxly.o2o.application.AppController;
+import com.zxly.o2o.account.Account;
 import com.zxly.o2o.shop.R;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 
 public class AliteStoreArticlesFragment extends BaseFragment<StorArticlesPresenterImpl> implements StorArticlesPresenter.View {
 
 
-    private Test mAdapter;
+
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout mSwipeRefreshLayout;
     private String TAG = StoreArticlesFragmentAlite.class.getName();
-    private List<StoreArticleBean> data;
+
+    @Inject
+    protected BaseQuickAdapter mAdapter;
+
+
 
     @Override
-    public void onSuccessView(BaseResponse<StoreArticleBean> mData) {
+    public void onSuccessView(BaseResponse<List<StoreArticleBean>> mData) {
+        List<StoreArticleBean>  data= mData.getData();
+        mAdapter.setNewData(data);
         Logger.t(TAG).d(mData);
     }
 
@@ -55,21 +64,26 @@ public class AliteStoreArticlesFragment extends BaseFragment<StorArticlesPresent
 //        addParams("shopId", Account.user.getShopId());
 //        addParams("userId",Account.user.getId());
 
+        StoreArticle storeArticle= new StoreArticle();
+//        storeArticle.setCodeId("");
+        storeArticle.setPageIndex(1);
+        storeArticle.setType(1);
+        storeArticle.setShopId(Account.user.getShopId());
+        storeArticle.setUserId(Account.user.getId());
+
+        mPresenter.fetchData(storeArticle);
 
 
 
 
-
-
-
-        data = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
-            StoreArticleBean storeArticleBean = new StoreArticleBean();
-            storeArticleBean.setDescription("fdsfsfsa");
-            storeArticleBean.setTitle("dfsfsdfsf");
-            data.add(storeArticleBean);
-        }
-        setState(AppController.STATE_SUCCESS);
+//        data = new ArrayList<>();
+//        for (int i = 0; i < 50; i++) {
+//            StoreArticleBean storeArticleBean = new StoreArticleBean();
+//            storeArticleBean.setDescription("fdsfsfsa");
+//            storeArticleBean.setTitle("dfsfsdfsf");
+//            data.add(storeArticleBean);
+//        }
+//        setState(AppController.STATE_SUCCESS);
 
 //        StoreArticle storeArticle = new StoreArticle();
 //        storeArticle.setShopId(1);
@@ -87,10 +101,8 @@ public class AliteStoreArticlesFragment extends BaseFragment<StorArticlesPresent
     @Override
     protected void initView() {
         mSwipeRefreshLayout.setEnabled(false);
-        mAdapter = new Test(data);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mAdapter);
-
         mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -99,11 +111,9 @@ public class AliteStoreArticlesFragment extends BaseFragment<StorArticlesPresent
             }
         });
     }
-
-
     @Override
     protected void initInject() {
-        DaggerStoreArticlesComponent.builder().storeAriclesHttpModule(new StoreAriclesHttpModule())
+        DaggerStoreArticlesComponent.builder().storeAriclesHttpModule(new StoreAriclesHttpModule()).storeArticlesModule(new StoreArticlesModule())
                 .build().injectData(this);
     }
 }

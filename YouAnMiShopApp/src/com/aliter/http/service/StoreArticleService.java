@@ -6,6 +6,8 @@ import com.aliter.entity.StoreArticleBean;
 import com.aliter.http.BaseResponse;
 import com.zxly.o2o.application.AppController;
 
+import java.util.List;
+
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 import rx.Observable;
@@ -14,5 +16,5 @@ import rx.Observable;
 public interface StoreArticleService {
 
     @POST(AppController.keduoduo_promote_articles)
-    Observable <BaseResponse<StoreArticleBean>> getData(@Body StoreArticle storeArticle);
+    Observable <BaseResponse<List<StoreArticleBean>>> getData(@Body StoreArticle storeArticle);
 }

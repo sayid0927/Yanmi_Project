@@ -91,7 +91,7 @@ public class AliteShopPromotionFragment extends BaseFragment implements AppBarLa
         mTitleList.add("网络热文");
         mTitleList.add("自定义文章");
         mTitleList.add("活动");
-        mFragments.add(new StoreArticlesFragmentAlite());
+        mFragments.add(new AliteStoreArticlesFragment());
         mFragments.add(new StoreArticlesFragmentAlite());
         mFragments.add(new StoreArticlesFragmentAlite());
         mFragments.add(new StoreArticlesFragmentAlite());

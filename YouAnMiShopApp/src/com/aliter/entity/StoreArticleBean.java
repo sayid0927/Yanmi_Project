@@ -1,19 +1,21 @@
 package com.aliter.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by sayid on 2017/5/29.
  */
 
-public class StoreArticleBean {
+public class StoreArticleBean  implements Serializable {
+
 
         /**
          * articleId : 258002
          * createTime : 1491898686359
          * headUrl :
          * labels : [{"id":1219,"articleId":258002,"name":"a"},{"id":1220,"articleId":258002,"name":"b"}]
-         * scanCount : 46
+         * scanCount : 47
          * title : test3
          * url : https://share.youanmi.com/style/articleDetail/articledetail.html?shopId=1&userId=1&isShare=0&id=258002&articleFrom=2&h5Host=aHR0cHM6Ly9zaGFyZS55b3Vhbm1pLmNvbS8=
          * userAppName : 明阳测试店
@@ -167,4 +169,22 @@ public class StoreArticleBean {
                 this.name = name;
             }
         }
+
+    @Override
+    public String toString() {
+        return "StoreArticleBean{" +
+                "articleId=" + articleId +
+                ", createTime=" + createTime +
+                ", headUrl='" + headUrl + '\'' +
+                ", scanCount=" + scanCount +
+                ", title='" + title + '\'' +
+                ", url='" + url + '\'' +
+                ", userAppName='" + userAppName + '\'' +
+                ", description='" + description + '\'' +
+                ", shareUrl='" + shareUrl + '\'' +
+                ", isProductArticle=" + isProductArticle +
+                ", hasNewLabel=" + hasNewLabel +
+                ", labels=" + labels +
+                '}';
+    }
 }

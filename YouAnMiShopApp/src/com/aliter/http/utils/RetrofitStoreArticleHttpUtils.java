@@ -7,6 +7,8 @@ import com.aliter.http.BaseResponse;
 import com.aliter.http.HttpUtils;
 import com.aliter.http.service.StoreArticleService;
 
+import java.util.List;
+
 import rx.Observable;
 
 /**
@@ -21,7 +23,7 @@ public class RetrofitStoreArticleHttpUtils extends HttpUtils {
         this.storeArticleService = storeArticleService;
     }
 
-    public Observable<BaseResponse<StoreArticleBean>> fetchData(StoreArticle storeArticle) {
+    public Observable<BaseResponse<List<StoreArticleBean>>> fetchData(StoreArticle storeArticle) {
        return storeArticleService.getData(storeArticle);
     }
 }

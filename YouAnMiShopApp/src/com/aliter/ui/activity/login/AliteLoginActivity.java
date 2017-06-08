@@ -21,8 +21,11 @@ import com.aliter.presenter.LoginPresenter;
 import com.aliter.presenter.impl.LoginPresenterImpl;
 import com.aliter.ui.activity.AliterHomeActivity;
 import com.blankj.utilcode.utils.StringUtils;
+import com.easemob.chatuidemo.HXConstant;
 import com.easemob.easeui.model.IMUserInfoVO;
 import com.orhanobut.logger.Logger;
+import com.zxly.o2o.account.Account;
+import com.zxly.o2o.application.AppController;
 import com.zxly.o2o.application.Config;
 import com.zxly.o2o.shop.R;
 import com.zxly.o2o.util.Constants;
@@ -79,21 +82,25 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
     }
 
     @Override
-    public void onSuccessView(BaseResponse<LoginBean> mData) {
+    public void onSuccessView(BaseResponse<IMUserInfoVO> mData) {
         Logger.t(TAG).d("登录成功返回信息  ==  " + mData);
-        LoginBean loginBean =mData.getData();
-        if(!StringUtils.isEmpty(loginBean.getSignKey())) {
+        IMUserInfoVO usserInfo =mData.getData();
+        if(!StringUtils.isEmpty(usserInfo.getSignKey())) {
             try {
-                Config.accessKey = DESUtils.decrypt(loginBean.getSignKey(), Config.USER_SIGN_KEY);
+                Config.accessKey = DESUtils.decrypt(usserInfo.getSignKey(), Config.USER_SIGN_KEY);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        if(!StringUtils.isEmpty(loginBean.getToken()))
-          PreferUtil.getInstance().setLoginToken(loginBean.getToken());
-//        HXConstant.isLoginSuccess = true; //标识登录hx成功
-//        ToUserInfoVO(loginBean);
-//        AppController.getInstance().initHXAccount(user,true);   //登录环信
+        if(!StringUtils.isEmpty(usserInfo.getToken()))
+          PreferUtil.getInstance().setLoginToken(usserInfo.getToken());
+        HXConstant.isLoginSuccess = true; //标识登录hx成功
+
+        AppController.getInstance().initHXAccount(usserInfo,true);   //登录环信
+        usserInfo.setPassword(EncryptionUtils.md5TransferPwd(password));
+        usserInfo.setUserName(phoneNumber);
+        Account.saveLoginUser(this, usserInfo);
+        Account.user = usserInfo;
 
         ViewUtils.startActivity(new Intent(AliteLoginActivity.this, AliterHomeActivity.class), this);
 
@@ -119,6 +126,8 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
     @Override
     public void initView() {
         initListener();
+        editPhone.setText("13728890837");
+        editPassword.setText("123456");
     }
 
     @Override

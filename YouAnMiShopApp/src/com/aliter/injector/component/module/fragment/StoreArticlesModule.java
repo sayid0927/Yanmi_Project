@@ -1,6 +1,6 @@
 package com.aliter.injector.component.module.fragment;
 
-import com.aliter.adapter.Test;
+import com.aliter.adapter.AliteStoreArticleAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
@@ -15,6 +15,6 @@ public class StoreArticlesModule {
     @Provides
     @Singleton
     public BaseQuickAdapter provideAdapter() {
-        return new Test(new ArrayList());
+        return new AliteStoreArticleAdapter(new ArrayList());
     }
 }

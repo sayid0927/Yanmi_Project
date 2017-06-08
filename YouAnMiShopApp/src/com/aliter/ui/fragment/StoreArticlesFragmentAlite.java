@@ -10,7 +10,6 @@ import com.aliter.entity.StoreArticleBean;
 import com.aliter.http.BaseResponse;
 import com.aliter.presenter.StorArticlesPresenter;
 import com.aliter.presenter.impl.StorArticlesPresenterImpl;
-import com.orhanobut.logger.Logger;
 import com.zxly.o2o.application.AppController;
 import com.zxly.o2o.shop.R;
 
@@ -32,9 +31,10 @@ public class StoreArticlesFragmentAlite extends BaseFragment<StorArticlesPresent
 
     private List<StoreArticleBean> data;
 
+
     @Override
-    public void onSuccessView(BaseResponse<StoreArticleBean> mData) {
-        Logger.t(TAG).d(mData);
+    public void onSuccessView(BaseResponse<List<StoreArticleBean>> mData) {
+
     }
 
     @Override

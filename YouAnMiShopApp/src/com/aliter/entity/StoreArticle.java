@@ -13,9 +13,9 @@ public class StoreArticle {
      * pageIndex : 1
      */
 
-    private int userId;
+    private long userId;
     private int type;
-    private int shopId;
+    private long shopId;
     private int pageIndex;
     private String codeId;
 
@@ -29,11 +29,11 @@ public class StoreArticle {
         this.codeId = codeId;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
@@ -45,11 +45,11 @@ public class StoreArticle {
         this.type = type;
     }
 
-    public int getShopId() {
+    public long getShopId() {
         return shopId;
     }
 
-    public void setShopId(int shopId) {
+    public void setShopId(long shopId) {
         this.shopId = shopId;
     }
 

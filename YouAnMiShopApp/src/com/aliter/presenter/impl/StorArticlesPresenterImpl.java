@@ -9,6 +9,8 @@ import com.aliter.http.Callback;
 import com.aliter.http.utils.RetrofitStoreArticleHttpUtils;
 import com.aliter.presenter.StorArticlesPresenter;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 public class StorArticlesPresenterImpl extends BasePresenter<StorArticlesPresenter.View> implements StorArticlesPresenter.Presenter {
@@ -21,9 +23,9 @@ public class StorArticlesPresenterImpl extends BasePresenter<StorArticlesPresent
 
     @Override
     public void fetchData(StoreArticle storeArticle) {
-        invoke(retrofitStoreArticleHttpUtils.fetchData(storeArticle), new Callback<BaseResponse<StoreArticleBean>>() {
+        invoke(retrofitStoreArticleHttpUtils.fetchData(storeArticle), new Callback<BaseResponse<List<StoreArticleBean>>>() {
             @Override
-            public void onSuccess(BaseResponse<StoreArticleBean> data) {
+            public void onSuccess(BaseResponse<List<StoreArticleBean>> data) {
                 mView.onSuccessView(data);
             }
 
@@ -33,4 +35,5 @@ public class StorArticlesPresenterImpl extends BasePresenter<StorArticlesPresent
             }
         });
     }
+
 }
