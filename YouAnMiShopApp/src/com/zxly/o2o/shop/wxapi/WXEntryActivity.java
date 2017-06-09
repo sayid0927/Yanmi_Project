@@ -1,6 +1,5 @@
 package com.zxly.o2o.shop.wxapi;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -9,13 +8,14 @@ import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.umeng.weixin.callback.WXCallbackActivity;
 import com.zxly.o2o.util.Constants;
 import com.zxly.o2o.util.ShareListener;
 
 /**
  * Created by kenwu on 2015/9/19.
  */
-public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
+public class WXEntryActivity extends WXCallbackActivity implements IWXAPIEventHandler {
 
     // IWXAPI 是第三方app和微信通信的openapi接口
     private IWXAPI api;
@@ -39,6 +39,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     @Override
     public void onReq(BaseReq req) {
         // 微信发送请求到第三方应用时，会回调到该方法 (暂时不做处理)
+
         this.finish();
     }
 
@@ -49,6 +50,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
      */
     @Override
     public void onResp(BaseResp resp) {
+
         switch (resp.errCode) {
             case BaseResp.ErrCode.ERR_OK:
                 if(shareListener!=null)
@@ -71,7 +73,9 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 break;
         }
 
+
         this.finish();
+
     }
 
 

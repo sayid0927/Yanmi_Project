@@ -14,6 +14,8 @@ import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.zxly.o2o.util.Constants;
 
+
+
 public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 
 	private static final String TAG = "MicroMsg.SDKSample.WXPayEntryActivity";
@@ -29,7 +31,6 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		api = WXAPIFactory.createWXAPI(this, Constants.WX_APP_ID);
-
 		api.handleIntent(getIntent(), this);
 	}
 

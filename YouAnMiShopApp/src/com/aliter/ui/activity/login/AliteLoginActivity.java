@@ -126,7 +126,7 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
     @Override
     public void initView() {
         initListener();
-        editPhone.setText("13728890837");
+        editPhone.setText("13592495216");
         editPassword.setText("123456");
     }
 

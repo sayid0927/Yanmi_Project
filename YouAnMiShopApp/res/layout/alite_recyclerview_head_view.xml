@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/store_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFE6D0"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="为你推荐了10个内容"
+        android:gravity="center"
+        android:textColor="#666666"/>
+
+</LinearLayout>

@@ -5,7 +5,7 @@ import android.widget.ImageView;
 import com.aliter.entity.StoreArticleBean;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.utils.GlideUtils;
+import com.aliter.utils.GlideUtils;
 import com.zxly.o2o.shop.R;
 
 import java.util.List;

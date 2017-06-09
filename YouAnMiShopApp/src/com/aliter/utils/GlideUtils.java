@@ -1,4 +1,4 @@
-package com.utils;
+package com.aliter.utils;
 
 import android.content.Context;
 import android.widget.ImageView;

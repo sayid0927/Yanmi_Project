@@ -30,6 +30,8 @@ import com.easemob.easeui.adapter.EaseContactAdapter;
 import com.easemob.easeui.controller.EaseUI;
 import com.easemob.easeui.model.IMUserInfoVO;
 import com.tencent.tinker.loader.app.ApplicationLike;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
 import com.zxly.o2o.account.Account;
 import com.zxly.o2o.cache.BitmapLruCache;
 import com.zxly.o2o.request.IMGetContactListRequest;
@@ -41,7 +43,7 @@ import com.zxly.o2o.util.ImeiUtil;
 import com.zxly.o2o.util.MD5Util;
 import com.zxly.o2o.util.PreferUtil;
 import com.zxly.o2o.util.ViewUtils;
-
+import com.umeng.socialize.Config;
 import java.util.Stack;
 
 import static com.bugtags.library.Bugtags.BTGInvocationEventNone;
@@ -95,7 +97,8 @@ public class AppController extends Application {
     public void onCreate() {
         super.onCreate();
         Utils.init(this);
-        Bugtags.start("beb9b4f14e72470fe0ad088b715ec421", this, BTGInvocationEventNone);
+
+
         instance = this;
 
         imei = ImeiUtil.getImei(instance);
@@ -110,7 +113,12 @@ public class AppController extends Application {
         mRequestQueue = EaseUI.requestQueue;
         imageLoader = new ImageLoader(mRequestQueue, lruImageCache);
         EaseUI.imageLoader = imageLoader;
-        Config.init(this);
+        Config.DEBUG = true;
+        Bugtags.start("beb9b4f14e72470fe0ad088b715ec421", this, BTGInvocationEventNone);
+        PlatformConfig.setWeixin("wx3ef3bfdf7a1b11e1", "918adff6da306b22ec9d2312e5d26de8");
+
+        UMShareAPI.get(this);
+//        Config.init(this);
 
         //HXInit
         //判断当前的包是release还是debug包，release包供外部测试，崩溃信息打印到内存卡

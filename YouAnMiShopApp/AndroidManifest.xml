@@ -453,6 +453,7 @@
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:label="@string/app_name"
+
             android:screenOrientation="portrait"></activity>
 
         <!-- IM用户详情 -->
@@ -588,6 +589,9 @@
             android:name="PUSH_APPSECRET"
             android:value="ZKQyzxEXMx5ip8WUJzmidA" /> <!-- 替换为第三方应用的APPSECRET -->
         <!-- 配置SDK核心服务 -->
+
+
+
         <service
             android:name="com.igexin.sdk.PushService"
             android:exported="true"

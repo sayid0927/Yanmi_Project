@@ -1,5 +1,6 @@
 package com.aliter.ui.fragment.homefragment;
 
+import android.graphics.Color;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +15,7 @@ import com.aliter.injector.component.fragment.DaggerStoreArticlesComponent;
 import com.aliter.injector.component.module.fragment.StoreArticlesModule;
 import com.aliter.presenter.StorArticlesPresenter;
 import com.aliter.presenter.impl.StorArticlesPresenterImpl;
-
+import com.aliter.view.EasyLoadMoreView;
 import com.blankj.utilcode.utils.StringUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
@@ -36,7 +37,7 @@ import butterknife.BindView;
 import static android.R.attr.type;
 
 public class AliteStoreArticlesFragment extends BaseFragment<StorArticlesPresenterImpl> implements StorArticlesPresenter.View,
-        BaseQuickAdapter.RequestLoadMoreListener {
+        BaseQuickAdapter.RequestLoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
 
 
     @BindView(R.id.recyclerView)
@@ -50,11 +51,26 @@ public class AliteStoreArticlesFragment extends BaseFragment<StorArticlesPresent
 
     private ShareDialog dialog;
     private int PageIndex=1;
+    private boolean isRefresh = false;
 
 
     @Override
     public void onSuccessView(BaseResponse<List<StoreArticleBean>> mData) {
         data = mData.getData();
+
+        if (isRefresh){
+            mSwipeRefreshLayout.setRefreshing(false);
+            mAdapter.setEnableLoadMore(true);
+            isRefresh = false;
+            mAdapter.setNewData(data);
+
+        }else{
+            mSwipeRefreshLayout.setEnabled(true);
+            PageIndex++;
+            mAdapter.addData(data);
+            mAdapter.loadMoreComplete();
+        }
+
         for (int i=0;i<data.size();i++){
             if(StringUtils.isEmpty(data.get(i).getHeadUrl())){
                data.get(i).setType(StoreArticleBean.NO_ICON);
@@ -89,9 +105,21 @@ public class AliteStoreArticlesFragment extends BaseFragment<StorArticlesPresent
 
     @Override
     protected void initView() {
-        mSwipeRefreshLayout.setEnabled(false);
+//        mSwipeRefreshLayout.setEnabled(false);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mAdapter);
+
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setColorSchemeColors(Color.rgb(245, 113, 29));
+
+        mAdapter.setOnLoadMoreListener(this,mRecyclerView);
+        mAdapter.setLoadMoreView(new EasyLoadMoreView());
+
+//        View headView = getLayoutInflater().inflate(R.layout.alite_recyclerview_head_view, (ViewGroup) mRecyclerView.getParent(), false);
+//        headView.findViewById(R.id.iv).setVisibility(View.GONE);
+
+
+
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -164,5 +192,15 @@ public class AliteStoreArticlesFragment extends BaseFragment<StorArticlesPresent
             loadData();
           //  srlAndroid.setEnabled(false);
         }
+    }
+
+
+    @Override
+    public void onRefresh() {
+
+        PageIndex = 1;
+        isRefresh =true;
+        mAdapter.setEnableLoadMore(false);
+        loadData();
     }
 }
