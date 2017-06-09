@@ -27,6 +27,7 @@ public class WXEntryActivity extends WXCallbackActivity implements IWXAPIEventHa
         super.onCreate(savedInstanceState);
         api = WXAPIFactory.createWXAPI(this, Constants.WX_APP_ID, false);
         api.handleIntent(getIntent(), this);
+
     }
 
 
@@ -34,6 +35,7 @@ public class WXEntryActivity extends WXCallbackActivity implements IWXAPIEventHa
         super.onNewIntent(paramIntent);
         setIntent(paramIntent);
         api.handleIntent(paramIntent, this);
+
     }
 
     @Override
@@ -52,7 +54,9 @@ public class WXEntryActivity extends WXCallbackActivity implements IWXAPIEventHa
     public void onResp(BaseResp resp) {
 
         switch (resp.errCode) {
+
             case BaseResp.ErrCode.ERR_OK:
+
                 if(shareListener!=null)
                     shareListener.onComplete("");
                 break;

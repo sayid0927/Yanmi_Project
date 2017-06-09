@@ -13,14 +13,13 @@ import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.zxly.o2o.shop.R;
+import com.zxly.o2o.util.PreferUtil;
 import com.zxly.o2o.util.ViewUtils;
 
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static com.umeng.socialize.bean.SHARE_MEDIA.WEIXIN;
 
 /**
  * Created by sayid on 2017/6/5.
@@ -77,8 +76,8 @@ public class AliteLaunchActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.layout_phone_login:
-                UMShareAPI.get(AliteLaunchActivity.this).deleteOauth(AliteLaunchActivity.this, WEIXIN, authListener);
-//                ViewUtils.startActivity(new Intent(AliteLaunchActivity.this,AliteLoginActivity.class), this);
+//                UMShareAPI.get(AliteLaunchActivity.this).deleteOauth(AliteLaunchActivity.this, WEIXIN, authListener);
+                ViewUtils.startActivity(new Intent(AliteLaunchActivity.this,AliteLoginActivity.class), this);
                 break;
             case R.id.layout_wchat_login:
 //                UMShareAPI.get(AliteLaunchActivity.this).doOauthVerify(AliteLaunchActivity.this, SHARE_MEDIA.WEIXIN , authListener);
@@ -105,12 +104,8 @@ public class AliteLaunchActivity extends BaseActivity {
 
         @Override
         public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
-            String temp = "";
-            for (String key : data.keySet()) {
-                temp = temp + key + " : " + data.get(key) + "\n";
-            }
-            Toast.makeText(AliteLaunchActivity.this,temp, Toast.LENGTH_LONG).show();
-
+            PreferUtil.getInstance().setWeixinUserInfo(data);
+            ViewUtils.startActivity(new Intent(AliteLaunchActivity.this,AlitePhoneRegisterActivity.class),AliteLaunchActivity.this);
         }
 
         @Override

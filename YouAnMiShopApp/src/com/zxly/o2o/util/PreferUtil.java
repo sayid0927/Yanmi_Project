@@ -11,7 +11,9 @@ package com.zxly.o2o.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.easemob.easeui.EaseConstant;
+import com.aliter.entity.WeixinUserInfoBean;
+
+import java.util.Map;
 
 
 public final class PreferUtil {
@@ -133,6 +135,42 @@ public final class PreferUtil {
     public void setHomeMaintain(String homeMaintain) {
         putString(HOME_MAINTAIN, homeMaintain);
     }
+
+
+
+
+    //保存微信个人信息
+    public  void setWeixinUserInfo(Map<String, String> data) {
+        String temp = "";
+        for (String key : data.keySet()) {
+            temp = temp + key + " : " + data.get(key) + "\n";
+            putString(key, data.get(key));
+        }
+    }
+
+    //获取微信个人信息
+    public  WeixinUserInfoBean getWeixinUserInfo() {
+        WeixinUserInfoBean user = new WeixinUserInfoBean();
+        user.setUnionid(getString("unionid", ""));
+        user.setScreen_name(getString("screen_name", ""));
+        user.setCity(getString("city", ""));
+        user.setAccessToken(getString("accessToken", ""));
+        user.setRefreshToken(getString("refreshToken", ""));
+        user.setGender(getString("gender", ""));
+        user.setProvince(getString("province", ""));
+        user.setOpenid(getString("openid", ""));
+        user.setProfile_image_url(getString("profile_image_url", ""));
+        user.setCountry(getString("country", ""));
+        user.setAccess_token(getString("access_token", ""));
+        user.setIconurl(getString("iconurl", ""));
+        user.setName(getString("name", ""));
+        user.setUid(getString("uid", ""));
+        user.setExpiration(getString("expiration", ""));
+        user.setLanguage(getString("language", ""));
+        user.setExpires_in(getString("expires_in", ""));
+        return user;
+    }
+
 
 
     /**

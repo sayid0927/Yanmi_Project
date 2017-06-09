@@ -37,8 +37,8 @@ public class LoginBean  implements Serializable {
          * packageName : 20170104
          */
 
-        private int id;
-        private int shopId;
+        private long id;
+        private long shopId;
         private int shopUserId;
         private String userName;
         private int userShopId;
@@ -64,19 +64,19 @@ public class LoginBean  implements Serializable {
         private String serialNum;
         private String packageName;
 
-        public int getId() {
+        public long getId() {
             return id;
         }
 
-        public void setId(int id) {
+        public void setId(long id) {
             this.id = id;
         }
 
-        public int getShopId() {
+        public long getShopId() {
             return shopId;
         }
 
-        public void setShopId(int shopId) {
+        public void setShopId(long shopId) {
             this.shopId = shopId;
         }
 

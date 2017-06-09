@@ -1,6 +1,5 @@
 package com.zxly.o2o.fragment;
 
-import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.aliter.ui.activity.AliterHomeActivity;
 import com.zxly.o2o.account.Account;
 import com.zxly.o2o.activity.BasicAct;
 import com.zxly.o2o.activity.LoginAct;
@@ -46,9 +44,9 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
                 // 事件埋点
                 UmengUtil.onEvent( getActivity(), "login_login_press",null);
 
-//               doLogin();
-                Intent intent = new Intent(getActivity(), AliterHomeActivity.class);
-                ViewUtils.startActivity(intent, getActivity());
+               doLogin();
+//                Intent intent = new Intent(getActivity(), AliterHomeActivity.class);
+//                ViewUtils.startActivity(intent, getActivity());
                 break;
             case R.id.btn_clean_name:
                 editName.setText("");

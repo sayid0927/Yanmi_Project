@@ -62,7 +62,7 @@ public class AliteSMSVerificationActivity extends BaseActivity {
                 break;
             case R.id.btn_ok:
 
-                ViewUtils.startActivity(new Intent(AliteSMSVerificationActivity.this,AliteShopRegisterActivity.class), this);
+                ViewUtils.startActivity(new Intent(AliteSMSVerificationActivity.this,AliteSettingShopInfoActivity.class), this);
                 break;
         }
     }

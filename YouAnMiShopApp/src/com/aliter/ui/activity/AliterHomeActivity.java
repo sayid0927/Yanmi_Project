@@ -50,6 +50,7 @@ public class AliterHomeActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        getSwipeBackLayout().setEnableGesture(false);
         setVpContentChangeListener();
         initFragmentList();
     }

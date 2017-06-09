@@ -28,6 +28,7 @@ public class Constants {
 	public static final String WX_APP_ID="wx3ef3bfdf7a1b11e1";
 	public static final String WX_MCH_ID = "1291642701";
 	public static final  String WX_API_KEY ="qismd2om1oxfn382mxoacopj1mxp2xlm";
+
 	public static final String QQ_SHARE_APP_ID="1104793023";
 
 
