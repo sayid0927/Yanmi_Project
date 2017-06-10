@@ -50,10 +50,12 @@
                     android:checked="true"
                     android:drawableTop="@drawable/al_icon_name_click"
                     android:textColor="@color/black"
+                    android:textSize="11dp"
                     android:gravity="center"
                     android:text="@string/Shop_promotion" />
 
                 <RadioButton
+                    android:textSize="11dp"
                     android:id="@+id/rb_my_store"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -65,6 +67,7 @@
                     android:text="@string/My_store" />
 
                 <RadioButton
+                    android:textSize="11dp"
                     android:id="@+id/rb_self"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"

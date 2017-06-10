@@ -1,7 +1,6 @@
 package com.aliter.ui.activity.login;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -9,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.aliter.base.BaseActivity;
@@ -22,7 +23,6 @@ import com.zxly.o2o.util.ViewUtils;
 import com.zxly.o2o.view.CircleImageView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
@@ -47,6 +47,10 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity {
     ImageView btnCleanPassword;
     @BindView(R.id.btn_back_pwd)
     Button btnBackPwd;
+    @BindView(R.id.ll_main)
+    LinearLayout llMain;
+    @BindView(R.id.scroll_view)
+    ScrollView scrollView;
 
     private String iconurl;
 
@@ -91,9 +95,9 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity {
 
     }
 
-
     private void initListener() {
-
+        StringUtil.changeScrollView(editPhone,scrollView);
+        StringUtil.changeScrollView(editPassword,scrollView);
         editPhone.addTextChangedListener(new TextWatcher() {
             private CharSequence temp;
 
@@ -179,13 +183,6 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity {
         });
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
-
     @OnClick({R.id.btn_clean_password, R.id.btn_back_pwd})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -193,7 +190,7 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity {
                 editPassword.setText("");
                 break;
             case R.id.btn_back_pwd:
-                ViewUtils.startActivity(new Intent(AliteWeixinUserPhoneActivity.this,AliteSettingShopInfoActivity.class), this);
+                ViewUtils.startActivity(new Intent(AliteWeixinUserPhoneActivity.this, AliteSettingShopInfoActivity.class), this);
                 break;
         }
     }

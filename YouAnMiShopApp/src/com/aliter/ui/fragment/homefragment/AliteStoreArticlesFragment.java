@@ -58,18 +58,18 @@ public class AliteStoreArticlesFragment extends BaseFragment<StorArticlesPresent
     public void onSuccessView(BaseResponse<List<StoreArticleBean>> mData) {
         data = mData.getData();
 
-        if (isRefresh){
-            mSwipeRefreshLayout.setRefreshing(false);
-            mAdapter.setEnableLoadMore(true);
-            isRefresh = false;
-            mAdapter.setNewData(data);
-
-        }else{
-            mSwipeRefreshLayout.setEnabled(true);
-            PageIndex++;
-            mAdapter.addData(data);
-            mAdapter.loadMoreComplete();
-        }
+//        if (isRefresh){
+//            mSwipeRefreshLayout.setRefreshing(false);
+//            mAdapter.setEnableLoadMore(true);
+//            isRefresh = false;
+//            mAdapter.setNewData(data);
+//
+//        }else{
+//            mSwipeRefreshLayout.setEnabled(true);
+//            PageIndex++;
+//            mAdapter.addData(data);
+//            mAdapter.loadMoreComplete();
+//        }
 
         for (int i=0;i<data.size();i++){
             if(StringUtils.isEmpty(data.get(i).getHeadUrl())){

@@ -48,6 +48,9 @@
         android:name="getui.permission.GetuiService.com.zxly.o2o.shop"
         android:protectionLevel="normal"></permission>
 
+
+
+
     <!-- 替换为第三方应用的包名 -->
     <!-- 自定义权限 -->
     <application
@@ -57,30 +60,30 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
 
-        <!-- <activity -->
-        <!-- android:name="com.zxly.o2o.activity.LaunchAct" -->
-        <!-- android:label="@string/app_name" -->
-        <!-- android:exported="true" -->
-        <!-- android:screenOrientation="portrait"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="android.intent.action.MAIN"/> -->
+         <!--<activity-->
+         <!--android:name="com.zxly.o2o.activity.LaunchAct"-->
+         <!--android:label="@string/app_name"-->
+         <!--android:exported="true"-->
+         <!--android:screenOrientation="portrait">-->
+         <!--<intent-filter>-->
+         <!--<action android:name="android.intent.action.MAIN"/>-->
 
 
-        <!-- <category android:name="android.intent.category.LAUNCHER"/> -->
-        <!-- </intent-filter> -->
+         <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+         <!--</intent-filter>-->
 
 
-        <!-- <intent-filter> -->
-        <!-- <action android:name="android.intent.action.VIEW" /> -->
-        <!-- <category android:name="android.intent.category.DEFAULT" /> -->
-        <!-- <category android:name="android.intent.category.BROWSABLE" /> -->
-        <!-- <data -->
-        <!-- android:host="shopapp.com" -->
-        <!-- android:scheme="yam" /> -->
-        <!-- </intent-filter> -->
+         <!--<intent-filter>-->
+         <!--<action android:name="android.intent.action.VIEW" />-->
+         <!--<category android:name="android.intent.category.DEFAULT" />-->
+         <!--<category android:name="android.intent.category.BROWSABLE" />-->
+         <!--<data-->
+         <!--android:host="shopapp.com"-->
+         <!--android:scheme="yam" />-->
+         <!--</intent-filter>-->
 
 
-        <!-- </activity> -->
+         <!--</activity>-->
 
         <activity
             android:name="com.aliter.ui.activity.login.AliteLaunchActivity"
@@ -104,6 +107,9 @@
                     android:scheme="yam" />
             </intent-filter>
         </activity>
+
+
+
         <activity
             android:name="com.zxly.o2o.activity.MainActivity"
             android:label="@string/app_name"
@@ -578,7 +584,12 @@
             android:theme="@style/AliterAppWhiteBarTheme" />
         <activity
             android:name="com.aliter.ui.activity.login.AliteWeixinUserPhoneActivity"
-            android:theme="@style/AliterAppWhiteBarTheme" />
+            android:theme="@style/AliterAppWhiteBarTheme"
+            />
+
+        <!--<activity-->
+            <!--android:name= "com.aliter"-->
+            <!--android:exported= "true" />-->
 
         <!-- 个推SDK配置开始 -->
         <!-- 配置的第三方参数属性 -->

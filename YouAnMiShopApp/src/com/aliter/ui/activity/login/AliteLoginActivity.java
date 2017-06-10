@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.aliter.base.BaseActivity;
 import com.aliter.entity.Login;
-import com.aliter.entity.LoginBean;
 import com.aliter.http.BaseResponse;
 import com.aliter.injector.component.LoginHttpModule;
 import com.aliter.injector.component.activity.DaggerLoginComponent;
@@ -93,7 +92,7 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
             }
         }
         if(!StringUtils.isEmpty(usserInfo.getToken()))
-          PreferUtil.getInstance().setLoginToken(usserInfo.getToken());
+            PreferUtil.getInstance().setLoginToken(usserInfo.getToken());
         HXConstant.isLoginSuccess = true; //标识登录hx成功
 
         AppController.getInstance().initHXAccount(usserInfo,true);   //登录环信
@@ -110,6 +109,7 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
     @Override
     public void onFailView(String errorMsg) {
         Logger.t(TAG).e("登录失败返回信息  ==  " + errorMsg);
+        ViewUtils.showToast("登录失败返回信息  ==  " + errorMsg);
         ViewUtils.showToast(errorMsg);
     }
 
@@ -201,21 +201,6 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
 
         }
     }
-
-
-    private void ToUserInfoVO(LoginBean loginBean) {
-
-
-
-
-
-
-    }
-
-
-
-
-
     private void initListener() {
 
         editPhone.addTextChangedListener(new TextWatcher() {
@@ -261,8 +246,6 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
                 }
             }
         });
-
-
         editPassword.addTextChangedListener(new TextWatcher() {
             private CharSequence temp;
 

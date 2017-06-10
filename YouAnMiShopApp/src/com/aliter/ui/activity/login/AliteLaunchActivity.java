@@ -110,7 +110,7 @@ public class AliteLaunchActivity extends BaseActivity {
             PreferUtil.getInstance().setWeixinUserInfo(data);
             if (loadingDialog.isShow())
                 loadingDialog.dismiss();
-            UMShareAPI.get(AliteLaunchActivity.this).deleteOauth(AliteLaunchActivity.this, WEIXIN, null);
+//            UMShareAPI.get(AliteLaunchActivity.this).deleteOauth(AliteLaunchActivity.this, WEIXIN, null);
             ViewUtils.startActivity(new Intent(AliteLaunchActivity.this, AliteWeixinUserPhoneActivity.class), AliteLaunchActivity.this);
         }
 
@@ -128,29 +128,4 @@ public class AliteLaunchActivity extends BaseActivity {
         }
     };
 
-//    UMAuthListener deleteOauthListener = new UMAuthListener() {
-//        @Override
-//        public void onStart(SHARE_MEDIA platform) {
-//
-//        }
-//
-//        @Override
-//        public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
-//
-//            if (loadingDialog.isShow())
-//                loadingDialog.dismiss();
-//            ViewUtils.startActivity(new Intent(AliteLaunchActivity.this, AliteWeixinUserPhoneActivity.class), AliteLaunchActivity.this);
-//
-//        }
-//
-//        @Override
-//        public void onError(SHARE_MEDIA platform, int action, Throwable t) {
-//
-//        }
-//
-//        @Override
-//        public void onCancel(SHARE_MEDIA platform, int action) {
-//
-//        }
-//    };
 }

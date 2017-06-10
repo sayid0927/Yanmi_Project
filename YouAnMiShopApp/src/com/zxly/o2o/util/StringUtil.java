@@ -1,6 +1,7 @@
 package com.zxly.o2o.util;
 
 import android.app.Activity;
+import android.os.Handler;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -8,6 +9,8 @@ import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.TextView;
 
 import com.zxly.o2o.application.AppController;
@@ -346,6 +349,19 @@ public class StringUtil {
 
 
 
-
+    public static void  changeScrollView (View ed , final View scroll){
+        ed.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        scroll.scrollTo(0, scroll.getHeight());
+                    }
+                }, 300);
+                return false;
+            }
+        });
+    }
 
 }
