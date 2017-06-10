@@ -61,7 +61,6 @@
             app:tabIndicatorColor="#F0811C"
             app:tabIndicatorHeight="2dp"
             app:tabMode="scrollable"
-
             app:tabSelectedTextColor="#F0811C"
             app:tabTextColor="#999999" />
     </android.support.design.widget.AppBarLayout>

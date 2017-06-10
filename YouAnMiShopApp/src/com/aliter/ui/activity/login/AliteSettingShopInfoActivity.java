@@ -1,6 +1,8 @@
 package com.aliter.ui.activity.login;
 
+import android.content.Intent;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -9,9 +11,11 @@ import android.widget.TextView;
 
 import com.aliter.base.BaseActivity;
 import com.aliter.entity.WeixinUserInfoBean;
+import com.aliter.ui.activity.AliterHomeActivity;
 import com.aliter.utils.GlideUtils;
 import com.zxly.o2o.shop.R;
 import com.zxly.o2o.util.PreferUtil;
+import com.zxly.o2o.util.ViewUtils;
 import com.zxly.o2o.view.CircleImageView;
 
 import butterknife.BindView;
@@ -27,8 +31,6 @@ public class AliteSettingShopInfoActivity extends BaseActivity {
     TextView tvToolbar;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.img_user_head)
-    CircleImageView imgUserHead;
     @BindView(R.id.edit_shop_introduce)
     EditText editShopIntroduce;
     @BindView(R.id.layout_shop_introduce)
@@ -45,6 +47,8 @@ public class AliteSettingShopInfoActivity extends BaseActivity {
     EditText editPassword;
     @BindView(R.id.layout_shop_extension)
     RelativeLayout layoutShopExtension;
+    @BindView(R.id.img_user_head)
+    CircleImageView imgUserHead;
     @BindView(R.id.btn_back_pwd)
     Button btnBackPwd;
 
@@ -85,12 +89,15 @@ public class AliteSettingShopInfoActivity extends BaseActivity {
     }
 
 
-    @OnClick(R.id.img_user_head)
-    public void onViewClicked() {
-//        PhotoPicker.builder()
-//                .setShowCamera(true)
-//                .setPhotoCount(1)
-//                .start(this);
 
+    @OnClick({R.id.img_user_head, R.id.btn_back_pwd})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.img_user_head:
+                break;
+            case R.id.btn_back_pwd:
+                ViewUtils.startActivity(new Intent(AliteSettingShopInfoActivity.this, AliterHomeActivity.class), this);
+                break;
+        }
     }
 }

@@ -43,7 +43,6 @@ import com.zxly.o2o.service.IMMultiPushTask;
 import com.zxly.o2o.service.IMMultiSendTask;
 import com.zxly.o2o.service.IMMultiTxtSendTask;
 import com.zxly.o2o.shop.R;
-import com.zxly.o2o.util.AppLog;
 import com.zxly.o2o.util.KeyBoardUtils;
 import com.zxly.o2o.util.NoDoubleClickListener;
 import com.zxly.o2o.util.ViewUtils;
@@ -65,7 +64,6 @@ public class IMMultiPushActivity extends EaseBaseMyListPageActivity implements
     private int checkPosition = -1;  //item check position
     private ImageView checkView;   //checked view
     private boolean isResume;
-    //    private LoadingDialog loading;
     private int multiPushOrSend;
     private String commission;
     private boolean isRegistMembers;

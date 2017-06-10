@@ -1,9 +1,5 @@
 package com.zxly.o2o.dialog;
 
-import com.zxly.o2o.application.AppController;
-import com.zxly.o2o.shop.R;
-import com.zxly.o2o.util.CallBack;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -11,11 +7,12 @@ import android.graphics.drawable.AnimationDrawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
+
+import com.zxly.o2o.application.AppController;
+import com.zxly.o2o.shop.R;
+import com.zxly.o2o.util.CallBack;
 
 
 public class LoadingDialog {
@@ -62,6 +59,12 @@ public class LoadingDialog {
         animationDrawable = (AnimationDrawable) imgProgress.getDrawable();
     }
 
+    public  boolean isShow(){
+        if (dialog.isShowing())
+            return true;
+        else
+            return  false;
+    }
 
     public void show() {
         if (dialog.isShowing()) {

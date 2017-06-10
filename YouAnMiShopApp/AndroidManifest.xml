@@ -566,7 +566,7 @@
             android:theme="@style/AliterAppWhiteBarTheme" />
 
         <activity
-            android:name="com.aliter.ui.activity.login.AliteShopRegisterActivity"
+            android:name="com.aliter.ui.activity.login.AliteSettingShopInfoActivity"
             android:theme="@style/AliterAppWhiteBarTheme" />
 
         <activity
@@ -575,6 +575,9 @@
 
         <activity
             android:name="com.aliter.ui.activity.login.AliteSMSVerificationActivity"
+            android:theme="@style/AliterAppWhiteBarTheme" />
+        <activity
+            android:name="com.aliter.ui.activity.login.AliteWeixinUserPhoneActivity"
             android:theme="@style/AliterAppWhiteBarTheme" />
 
         <!-- 个推SDK配置开始 -->

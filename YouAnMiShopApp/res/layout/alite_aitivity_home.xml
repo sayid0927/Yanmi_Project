@@ -35,6 +35,7 @@
 
 
             <RadioGroup
+                android:layout_marginTop="5dp"
                 android:id="@+id/rg_home_viewpager_contorl"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -47,6 +48,7 @@
                     android:button="@null"
                     android:layout_weight="1"
                     android:checked="true"
+                    android:drawableTop="@drawable/al_icon_name_click"
                     android:textColor="@color/black"
                     android:gravity="center"
                     android:text="@string/Shop_promotion" />
@@ -58,6 +60,7 @@
                     android:button="@null"
                     android:gravity="center"
                     android:layout_weight="1"
+                    android:drawableTop="@drawable/al_icon_store"
                     android:textColor="@color/black"
                     android:text="@string/My_store" />
 
@@ -68,6 +71,7 @@
                     android:button="@null"
                     android:gravity="center"
                     android:layout_weight="1"
+                    android:drawableTop="@drawable/al_icon_me"
                     android:textColor="@color/black"
                     android:text="@string/Self" />
 

@@ -14,25 +14,24 @@
         android:layout_height="50dp" />
 
 
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="手机号快速注册"
         android:layout_gravity="center"
+        android:layout_marginTop="22dp"
         android:gravity="center"
-             android:layout_marginTop="22dp"
+        android:text="手机号快速注册"
         android:textColor="#333333"
-        android:textSize="20dp"/>
+        android:textSize="20dp" />
 
 
     <RelativeLayout
-        android:layout_marginTop="85dp"
         android:id="@+id/name_layout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
+        android:layout_marginTop="85dp"
         android:background="@color/white"
         android:orientation="horizontal">
 
@@ -40,8 +39,8 @@
             android:id="@+id/name_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="5dp"
             android:layout_marginRight="10dp"
             android:src="@drawable/al_login_number" />
 
@@ -50,20 +49,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="5dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
+            android:visibility="gone"
             android:src="@drawable/btn_edit_del_selector" />
 
 
         <EditText
-            android:id="@+id/edit_name"
+            android:id="@+id/edit_phone"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_toLeftOf="@id/btn_clean_name"
             android:layout_toRightOf="@id/name_icon"
             android:background="#00000000"
             android:hint="输入手机号"
+            android:layout_marginBottom="5dp"
+            android:layout_alignParentBottom="true"
             android:inputType="number"
             android:singleLine="true"
             android:textColorHint="@color/gray_999999"
@@ -85,7 +88,7 @@
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:layout_marginTop="30dp"
-        android:background="@drawable/alite_btn_login_phone"
+        android:background="@drawable/alite_btn_login_default"
         android:text="注册"
         android:textColor="@color/white" />
 

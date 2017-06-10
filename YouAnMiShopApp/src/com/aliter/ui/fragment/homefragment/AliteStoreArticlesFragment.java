@@ -105,7 +105,7 @@ public class AliteStoreArticlesFragment extends BaseFragment<StorArticlesPresent
 
     @Override
     protected void initView() {
-//        mSwipeRefreshLayout.setEnabled(false);
+        mSwipeRefreshLayout.setEnabled(false);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mAdapter);
 
