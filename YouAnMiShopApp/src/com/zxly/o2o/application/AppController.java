@@ -91,6 +91,8 @@ public class AppController extends Application {
 
     public  static  final  String auth_shop_login2="auth/shop/login2";
     public  static  final  String keduoduo_promote_articles="/keduoduo/promote/articles";
+    public  static  final  String get_auth_code="/get/auth/code";
+    public  static  final  String auth_shop_register="/auth/shop/register";
 
 
     @Override

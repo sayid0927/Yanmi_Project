@@ -72,6 +72,8 @@ public class AliteShopPromotionFragment extends BaseFragment implements AppBarLa
         myAdapter.notifyDataSetChanged();
         tabLayout.setupWithViewPager(vp);
 
+
+        collapsingtool.setTitleEnabled(false);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
@@ -117,11 +119,13 @@ public class AliteShopPromotionFragment extends BaseFragment implements AppBarLa
             if (state != CollapsingToolbarLayoutState.EXPANDED) {
                 state = CollapsingToolbarLayoutState.EXPANDED;//展开
                 toolbarTitle.setVisibility(View.GONE);
+                collapsingtool.setTitle("");
             }
         } else if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()) {
             if (state != CollapsingToolbarLayoutState.COLLAPSED) {
                 state = CollapsingToolbarLayoutState.COLLAPSED;//折叠
                 toolbarTitle.setVisibility(View.VISIBLE);
+                collapsingtool.setTitle("");
             }
         } else {
             if (state != CollapsingToolbarLayoutState.INTERNEDIATE) {
@@ -132,6 +136,7 @@ public class AliteShopPromotionFragment extends BaseFragment implements AppBarLa
                         toolbarTitle.setVisibility(View.VISIBLE);
                 }
                 state = CollapsingToolbarLayoutState.INTERNEDIATE;//中间
+                collapsingtool.setTitle("");
             }
         }
     }

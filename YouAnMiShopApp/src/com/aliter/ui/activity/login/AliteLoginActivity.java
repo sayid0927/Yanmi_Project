@@ -12,25 +12,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.aliter.base.BaseActivity;
+import com.aliter.entity.AuthCode;
 import com.aliter.entity.Login;
+import com.aliter.entity.LoginBean;
 import com.aliter.http.BaseResponse;
 import com.aliter.injector.component.LoginHttpModule;
 import com.aliter.injector.component.activity.DaggerLoginComponent;
 import com.aliter.presenter.LoginPresenter;
 import com.aliter.presenter.impl.LoginPresenterImpl;
-import com.aliter.ui.activity.AliterHomeActivity;
-import com.blankj.utilcode.utils.StringUtils;
-import com.easemob.chatuidemo.HXConstant;
 import com.easemob.easeui.model.IMUserInfoVO;
 import com.orhanobut.logger.Logger;
-import com.zxly.o2o.account.Account;
-import com.zxly.o2o.application.AppController;
 import com.zxly.o2o.application.Config;
 import com.zxly.o2o.shop.R;
 import com.zxly.o2o.util.Constants;
-import com.zxly.o2o.util.DESUtils;
 import com.zxly.o2o.util.EncryptionUtils;
-import com.zxly.o2o.util.PreferUtil;
 import com.zxly.o2o.util.StringUtil;
 import com.zxly.o2o.util.ViewUtils;
 
@@ -47,11 +42,8 @@ import butterknife.OnClick;
 public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> implements LoginPresenter.View {
 
 
-
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.ll_verification_login)
-    LinearLayout llVerificationLogin;
     @BindView(R.id.btn_clean_phone)
     ImageView btnCleanPhone;
     @BindView(R.id.tv_forget_pwd)
@@ -70,38 +62,49 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
     EditText editPhone;
     @BindView(R.id.edit_password)
     EditText editPassword;
+    @BindView(R.id.ll_verification_login)
+    LinearLayout llVerificationLogin;
 
-    private  String TAG=AliteLoginActivity.class.getName();
-    private String password,phoneNumber;
+    private String TAG = AliteLoginActivity.class.getName();
+    private String password, phoneNumber;
     public IMUserInfoVO user;
+    private int LoginType = 0; //  0 密码登录  1 验证码登录
 
     @Override
     public void setState(int state) {
 
     }
 
+//    @Override
+//    public void onSuccessView(BaseResponse<IMUserInfoVO> mData) {
+//        Logger.t(TAG).d("登录成功返回信息  ==  " + mData);
+//        IMUserInfoVO usserInfo = mData.getData();
+//        if (!StringUtils.isEmpty(usserInfo.getSignKey())) {
+//            try {
+//                Config.accessKey = DESUtils.decrypt(usserInfo.getSignKey(), Config.USER_SIGN_KEY);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        if (!StringUtils.isEmpty(usserInfo.getToken()))
+//            PreferUtil.getInstance().setLoginToken(usserInfo.getToken());
+//        HXConstant.isLoginSuccess = true; //标识登录hx成功
+//
+//        AppController.getInstance().initHXAccount(usserInfo, true);   //登录环信
+//        usserInfo.setPassword(EncryptionUtils.md5TransferPwd(password));
+//        usserInfo.setUserName(phoneNumber);
+//        Account.saveLoginUser(this, usserInfo);
+//        Account.user = usserInfo;
+//
+//        ViewUtils.startActivity(new Intent(AliteLoginActivity.this, AliterHomeActivity.class), this);
+//
+//    }
+
+
     @Override
-    public void onSuccessView(BaseResponse<IMUserInfoVO> mData) {
-        Logger.t(TAG).d("登录成功返回信息  ==  " + mData);
-        IMUserInfoVO usserInfo =mData.getData();
-        if(!StringUtils.isEmpty(usserInfo.getSignKey())) {
-            try {
-                Config.accessKey = DESUtils.decrypt(usserInfo.getSignKey(), Config.USER_SIGN_KEY);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        if(!StringUtils.isEmpty(usserInfo.getToken()))
-            PreferUtil.getInstance().setLoginToken(usserInfo.getToken());
-        HXConstant.isLoginSuccess = true; //标识登录hx成功
-
-        AppController.getInstance().initHXAccount(usserInfo,true);   //登录环信
-        usserInfo.setPassword(EncryptionUtils.md5TransferPwd(password));
-        usserInfo.setUserName(phoneNumber);
-        Account.saveLoginUser(this, usserInfo);
-        Account.user = usserInfo;
-
-        ViewUtils.startActivity(new Intent(AliteLoginActivity.this, AliterHomeActivity.class), this);
+    public void onSuccessView(BaseResponse<LoginBean> mData) {
+        mData.getData().getImUserInfoVO();
+        Logger.t("TAG").d(mData);
 
     }
 
@@ -142,7 +145,7 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
 
 
     @OnClick({R.id.btn_clean_phone, R.id.btn_clean_password, R.id.tv_forget_pwd, R.id.tv_register_shop, R.id.btn_login,
-            R.id.btn_pwd_login, R.id.btn_register_login})
+            R.id.btn_pwd_login, R.id.btn_register_login,R.id.ll_verification_login})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_clean_phone:
@@ -164,7 +167,7 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
                 phoneNumber = editPhone.getText().toString();
                 password = editPassword.getText().toString();
 
-                if ("13888888888".equals(phoneNumber) && "yam2017".equals(password)){
+                if ("13888888888".equals(phoneNumber) && "yam2017".equals(password)) {
                     ViewUtils.showLongToast(StringUtil.getCheckInfo());
                     return;
                 }
@@ -180,31 +183,58 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
                     ViewUtils.showToast("密码只能为6-16位的数字或字母组成");
                     return;
                 }
+                if (LoginType == 0) {
+                    Login login = new Login();
+                    login.setClientId(Config.getuiClientId);
+                    login.setUserName(phoneNumber);
+                    login.setPassword(EncryptionUtils.md5TransferPwd(password));
+                    mPresenter.fetchLogin(login);
+                } else {
+                    Login login = new Login();
+                    login.setClientId(Config.getuiClientId);
+                    login.setUserName(phoneNumber);
+                    login.setPassword(EncryptionUtils.md5TransferPwd(password));
+                    mPresenter.fetchLogin(login);
 
-                Login  login = new Login();
-                login.setClientId(Config.getuiClientId);
-                login.setUserName(phoneNumber);
-                login.setPassword(EncryptionUtils.md5TransferPwd(password));
-                mPresenter.fetchLogin(login);
-
+                }
                 break;
             case R.id.btn_pwd_login:
-                if (llVerificationLogin.getVisibility() == View.VISIBLE)
+                if (llVerificationLogin.getVisibility() == View.VISIBLE) {
                     llVerificationLogin.setVisibility(View.GONE);
+                    LoginType = 0;
+                }
                 break;
             case R.id.btn_register_login:
-                if (llVerificationLogin.getVisibility() == View.GONE)
+                if (llVerificationLogin.getVisibility() == View.GONE) {
                     llVerificationLogin.setVisibility(View.VISIBLE);
-                if (btnCleanPhone.getVisibility() == View.VISIBLE)
+
+                }
+                if (btnCleanPhone.getVisibility() == View.VISIBLE) {
                     btnCleanPhone.setVisibility(View.GONE);
+                }
+                LoginType = 1;
                 break;
 
+            case R.id.ll_verification_login:
+
+                AuthCode authCode = new AuthCode();
+                authCode.setCommand(18);
+                authCode.setMobilePhone(editPhone.getText().toString().trim());
+                mPresenter.fetchgetAuthCode(authCode);
+
+
+                break;
+
+
         }
+
     }
+
     private void initListener() {
 
         editPhone.addTextChangedListener(new TextWatcher() {
             private CharSequence temp;
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 temp = s;
@@ -239,7 +269,8 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
                             btnLogin.setTextColor(getResources().getColor(R.color.white));
                         }
                     }
-                }if (temp.length() > 11) {
+                }
+                if (temp.length() > 11) {
                     s.delete(11, s.length());
                     editPhone.setText(s);
                     editPhone.setSelection(s.length());
@@ -285,4 +316,6 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
             }
         });
     }
+
+
 }

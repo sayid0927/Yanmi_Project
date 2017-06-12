@@ -84,7 +84,7 @@ public abstract class LoadingPage extends FrameLayout {
     }
 
     private View createEmptyView() {
-        emptyView = LayoutInflater.from(mContext).inflate(R.layout.basefragment_state_loading, null);
+        emptyView = LayoutInflater.from(mContext).inflate(R.layout.ease_loading_fail_layout, null);
         return emptyView;
     }
 

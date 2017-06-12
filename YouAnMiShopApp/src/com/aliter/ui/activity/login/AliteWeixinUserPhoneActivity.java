@@ -13,7 +13,14 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.aliter.base.BaseActivity;
+import com.aliter.entity.AuthCode;
+import com.aliter.entity.AuthCodeBean;
 import com.aliter.entity.WeixinUserInfoBean;
+import com.aliter.http.BaseResponse;
+import com.aliter.injector.component.AliteWeixinUserPhoneHttpModule;
+import com.aliter.injector.component.activity.DaggerAliteWeixinUserPhoneComponent;
+import com.aliter.presenter.AliteWeixinUserPhonePresenter;
+import com.aliter.presenter.impl.AliteWeixinUserPhonePresenterImpl;
 import com.aliter.utils.GlideUtils;
 import com.blankj.utilcode.utils.StringUtils;
 import com.zxly.o2o.shop.R;
@@ -30,7 +37,7 @@ import butterknife.OnClick;
  * Created by sayid on 2017/6/6.
  */
 
-public class AliteWeixinUserPhoneActivity extends BaseActivity {
+public class AliteWeixinUserPhoneActivity extends BaseActivity<AliteWeixinUserPhonePresenterImpl> implements AliteWeixinUserPhonePresenter.View {
     @BindView(R.id.tv_toolbar)
     TextView tvToolbar;
     @BindView(R.id.toolbar)
@@ -51,6 +58,8 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity {
     LinearLayout llMain;
     @BindView(R.id.scroll_view)
     ScrollView scrollView;
+    @BindView(R.id.ll_verification_login)
+    LinearLayout llVerificationLogin;
 
     private String iconurl;
 
@@ -92,12 +101,12 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity {
 
     @Override
     protected void initInject() {
-
+        DaggerAliteWeixinUserPhoneComponent.builder().aliteWeixinUserPhoneHttpModule(new AliteWeixinUserPhoneHttpModule()).build().injectData(this);
     }
 
     private void initListener() {
-        StringUtil.changeScrollView(editPhone,scrollView);
-        StringUtil.changeScrollView(editPassword,scrollView);
+        StringUtil.changeScrollView(editPhone, scrollView);
+        StringUtil.changeScrollView(editPassword, scrollView);
         editPhone.addTextChangedListener(new TextWatcher() {
             private CharSequence temp;
 
@@ -183,7 +192,7 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.btn_clean_password, R.id.btn_back_pwd})
+    @OnClick({R.id.btn_clean_password, R.id.btn_back_pwd,R.id.ll_verification_login})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_clean_password:
@@ -192,6 +201,23 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity {
             case R.id.btn_back_pwd:
                 ViewUtils.startActivity(new Intent(AliteWeixinUserPhoneActivity.this, AliteSettingShopInfoActivity.class), this);
                 break;
+            case R.id.ll_verification_login:
+                AuthCode authCode = new AuthCode();
+                authCode.setCommand(19);
+                authCode.setMobilePhone(editPhone.getText().toString().trim());
+                mPresenter.fetchgetAuthCode(authCode);
+                break;
         }
     }
+
+    @Override
+    public void onSuccessView(BaseResponse<AuthCodeBean> mData) {
+
+    }
+
+    @Override
+    public void onFailView(String errorMsg) {
+
+    }
+
 }

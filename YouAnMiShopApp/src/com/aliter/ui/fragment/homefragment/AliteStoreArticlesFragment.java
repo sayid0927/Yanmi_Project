@@ -15,18 +15,19 @@ import com.aliter.injector.component.fragment.DaggerStoreArticlesComponent;
 import com.aliter.injector.component.module.fragment.StoreArticlesModule;
 import com.aliter.presenter.StorArticlesPresenter;
 import com.aliter.presenter.impl.StorArticlesPresenterImpl;
-import com.aliter.view.EasyLoadMoreView;
-import com.blankj.utilcode.utils.StringUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
+import com.orhanobut.logger.Logger;
 import com.zxly.o2o.account.Account;
 import com.zxly.o2o.activity.H5DetailAct;
+import com.zxly.o2o.application.AppController;
 import com.zxly.o2o.dialog.ShareDialog;
 import com.zxly.o2o.model.ShareInfo;
 import com.zxly.o2o.request.PromoteCallbackConfirmRequest;
 import com.zxly.o2o.shop.R;
 import com.zxly.o2o.util.ShareListener;
 import com.zxly.o2o.util.StringUtil;
+import com.zxly.o2o.util.ViewUtils;
 
 import java.util.List;
 
@@ -50,39 +51,46 @@ public class AliteStoreArticlesFragment extends BaseFragment<StorArticlesPresent
     private List<StoreArticleBean> data;
 
     private ShareDialog dialog;
-    private int PageIndex=1;
+    private int PageIndex = 1;
     private boolean isRefresh = false;
 
 
-    @Override
-    public void onSuccessView(BaseResponse<List<StoreArticleBean>> mData) {
-        data = mData.getData();
-
-//        if (isRefresh){
+//    @Override
+//    public void onSuccessView(BaseResponse<IMUserInfoVO> mData) {
+//        data = mData.getData();
+//
+//        if (isRefresh) {
 //            mSwipeRefreshLayout.setRefreshing(false);
 //            mAdapter.setEnableLoadMore(true);
 //            isRefresh = false;
-//            mAdapter.setNewData(data);
-//
-//        }else{
+////            mAdapter.setNewData(data);
+//        } else {
 //            mSwipeRefreshLayout.setEnabled(true);
 //            PageIndex++;
 //            mAdapter.addData(data);
 //            mAdapter.loadMoreComplete();
 //        }
+//
+//        for (int i = 0; i < data.size(); i++) {
+//            if (StringUtils.isEmpty(data.get(i).getHeadUrl())) {
+//                data.get(i).setType(StoreArticleBean.NO_ICON);
+//            } else
+//                data.get(i).setType(StoreArticleBean.ICON);
+//        }
+//        mAdapter.setNewData(data);
+//
+//    }
 
-        for (int i=0;i<data.size();i++){
-            if(StringUtils.isEmpty(data.get(i).getHeadUrl())){
-               data.get(i).setType(StoreArticleBean.NO_ICON);
-            }else
-                data.get(i).setType(StoreArticleBean.ICON);
-        }
-        mAdapter.setNewData(data);
+    @Override
+    public void onSuccessView(BaseResponse<List<StoreArticleBean>> mData) {
 
     }
 
     @Override
     public void onFailView(String errorMsg) {
+        setState(AppController.STATE_SUCCESS);
+        mAdapter.setEnableLoadMore(true);
+        ViewUtils.showToast(errorMsg);
 
     }
 
@@ -105,19 +113,18 @@ public class AliteStoreArticlesFragment extends BaseFragment<StorArticlesPresent
 
     @Override
     protected void initView() {
-        mSwipeRefreshLayout.setEnabled(false);
+//        mSwipeRefreshLayout.setEnabled(false);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mAdapter);
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeColors(Color.rgb(245, 113, 29));
 
-        mAdapter.setOnLoadMoreListener(this,mRecyclerView);
-        mAdapter.setLoadMoreView(new EasyLoadMoreView());
 
+//        mAdapter.setLoadMoreView(new EasyLoadMoreView());
+        mAdapter.setOnLoadMoreListener(this, mRecyclerView);
 //        View headView = getLayoutInflater().inflate(R.layout.alite_recyclerview_head_view, (ViewGroup) mRecyclerView.getParent(), false);
 //        headView.findViewById(R.id.iv).setVisibility(View.GONE);
-
 
 
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -135,22 +142,22 @@ public class AliteStoreArticlesFragment extends BaseFragment<StorArticlesPresent
             }
         });
 
-        mRecyclerView.addOnItemTouchListener(new OnItemChildClickListener( ) {
+        mRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
             @Override
             public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
 
                 if (dialog == null)
                     dialog = new ShareDialog();
 
-                final StoreArticleBean article= data.get(position);
+                final StoreArticleBean article = data.get(position);
                 String shareTitle = article.getTitle();
                 String shareImageUrl = article.getHeadUrl();
                 String shareDesc = article.getDescription();
                 String shareUrl = article.getShareUrl();
 
-                int index=StringUtil.isChinese(shareUrl);
-                if(StringUtil.isChinese(shareUrl)!=000)
-                  shareUrl= shareUrl.substring(0,index-1);
+                int index = StringUtil.isChinese(shareUrl);
+                if (StringUtil.isChinese(shareUrl) != 000)
+                    shareUrl = shareUrl.substring(0, index - 1);
                 dialog.show(shareTitle, shareDesc, shareUrl.replace("isShare=0", "isShare=1"), shareImageUrl, new ShareListener() {
                     @Override
                     public void onComplete(Object var1) {
@@ -184,14 +191,11 @@ public class AliteStoreArticlesFragment extends BaseFragment<StorArticlesPresent
 
     @Override
     public void onLoadMoreRequested() {
-        if (PageIndex >= 1) {
-            mAdapter.loadMoreEnd();
-           // srlAndroid.setEnabled(true);
-        } else {
-            PageIndex++;
-            loadData();
-          //  srlAndroid.setEnabled(false);
-        }
+
+
+        PageIndex++;
+        loadData();
+        Logger.t("TAG").e("PageIndex == " + String.valueOf(PageIndex));
     }
 
 
@@ -199,7 +203,7 @@ public class AliteStoreArticlesFragment extends BaseFragment<StorArticlesPresent
     public void onRefresh() {
 
         PageIndex = 1;
-        isRefresh =true;
+        isRefresh = true;
         mAdapter.setEnableLoadMore(false);
         loadData();
     }

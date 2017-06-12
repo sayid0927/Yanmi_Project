@@ -26,7 +26,15 @@ public class StorArticlesPresenterImpl extends BasePresenter<StorArticlesPresent
         invoke(retrofitStoreArticleHttpUtils.fetchData(storeArticle), new Callback<BaseResponse<List<StoreArticleBean>>>() {
             @Override
             public void onSuccess(BaseResponse<List<StoreArticleBean>> data) {
-                mView.onSuccessView(data);
+              List<StoreArticleBean> storeArticleBean =data.getData();
+//                checkState(storeArticleBean);
+                if (storeArticleBean.size()!= 0)
+                    mView.onSuccessView(data);
+                else {
+                    mView.onFailView("data 数据为空");
+                   // ((Stateful) mView).setState(AppController.STATE_EMPTY);
+
+                }
             }
 
             @Override

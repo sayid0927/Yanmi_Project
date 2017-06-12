@@ -5,6 +5,7 @@ import android.net.ParseException;
 import com.google.gson.JsonParseException;
 import com.orhanobut.logger.Logger;
 import com.zxly.o2o.application.AppController;
+import com.zxly.o2o.util.ViewUtils;
 
 import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONException;
@@ -50,10 +51,11 @@ public abstract class Callback<T> extends Subscriber<T> {
 //            errorMsg = "你连接的网络有问题，请检查网络";
         else
             errorMsg = StatusUtils.getErrorMsg();
-        if (target != null)
-            target.setState(AppController.STATE_ERROR);
+//        if (target != null)
+//            target.setState(AppController.STATE_ERROR);
         Logger.t(TAG).i("失败返回信息  ==  " + errorMsg);
         onFail(errorMsg);
+        ViewUtils.showToast(errorMsg);
     }
 
     @Override
@@ -62,10 +64,6 @@ public abstract class Callback<T> extends Subscriber<T> {
         target.setState(AppController.STATE_SUCCESS);
         onSuccess(data);
     }
-
-//    public  void onResponse(T data) {
-//        ((BaseView) target).onSuccessView(data);
-//    }
 
     public abstract void onSuccess(T data);
 
