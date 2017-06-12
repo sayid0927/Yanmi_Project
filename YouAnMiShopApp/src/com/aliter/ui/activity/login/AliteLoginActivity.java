@@ -13,19 +13,25 @@ import android.widget.TextView;
 
 import com.aliter.base.BaseActivity;
 import com.aliter.entity.AuthCode;
+import com.aliter.entity.AuthCodeBean;
 import com.aliter.entity.Login;
-import com.aliter.entity.LoginBean;
-import com.aliter.http.BaseResponse;
 import com.aliter.injector.component.LoginHttpModule;
 import com.aliter.injector.component.activity.DaggerLoginComponent;
 import com.aliter.presenter.LoginPresenter;
 import com.aliter.presenter.impl.LoginPresenterImpl;
+import com.aliter.ui.activity.AliterHomeActivity;
+import com.blankj.utilcode.utils.StringUtils;
+import com.easemob.chatuidemo.HXConstant;
 import com.easemob.easeui.model.IMUserInfoVO;
 import com.orhanobut.logger.Logger;
+import com.zxly.o2o.account.Account;
+import com.zxly.o2o.application.AppController;
 import com.zxly.o2o.application.Config;
 import com.zxly.o2o.shop.R;
 import com.zxly.o2o.util.Constants;
+import com.zxly.o2o.util.DESUtils;
 import com.zxly.o2o.util.EncryptionUtils;
+import com.zxly.o2o.util.PreferUtil;
 import com.zxly.o2o.util.StringUtil;
 import com.zxly.o2o.util.ViewUtils;
 
@@ -64,56 +70,49 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
     EditText editPassword;
     @BindView(R.id.ll_verification_login)
     LinearLayout llVerificationLogin;
-
+    @BindView(R.id.view_pwd_login)
+    View viewPwdLogin;
+    @BindView(R.id.view_register_login)
+    View viewRegisterLogin;
     private String TAG = AliteLoginActivity.class.getName();
     private String password, phoneNumber;
-    public IMUserInfoVO user;
-    private int LoginType = 0; //  0 密码登录  1 验证码登录
+    private int LoginType = 0;    //0 密码登录  1 验证码登录
 
     @Override
     public void setState(int state) {
 
     }
 
-//    @Override
-//    public void onSuccessView(BaseResponse<IMUserInfoVO> mData) {
-//        Logger.t(TAG).d("登录成功返回信息  ==  " + mData);
-//        IMUserInfoVO usserInfo = mData.getData();
-//        if (!StringUtils.isEmpty(usserInfo.getSignKey())) {
-//            try {
-//                Config.accessKey = DESUtils.decrypt(usserInfo.getSignKey(), Config.USER_SIGN_KEY);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        if (!StringUtils.isEmpty(usserInfo.getToken()))
-//            PreferUtil.getInstance().setLoginToken(usserInfo.getToken());
-//        HXConstant.isLoginSuccess = true; //标识登录hx成功
-//
-//        AppController.getInstance().initHXAccount(usserInfo, true);   //登录环信
-//        usserInfo.setPassword(EncryptionUtils.md5TransferPwd(password));
-//        usserInfo.setUserName(phoneNumber);
-//        Account.saveLoginUser(this, usserInfo);
-//        Account.user = usserInfo;
-//
-//        ViewUtils.startActivity(new Intent(AliteLoginActivity.this, AliterHomeActivity.class), this);
-//
-//    }
-
-
     @Override
-    public void onSuccessView(BaseResponse<LoginBean> mData) {
-        mData.getData().getImUserInfoVO();
-        Logger.t("TAG").d(mData);
+    public void onLoginSuccessView(IMUserInfoVO usserInfo) {
+        Logger.t(TAG).d("登录成功返回信息  ==  " + usserInfo);
+        if (!StringUtils.isEmpty(usserInfo.getSignKey())) {
+            try {
+                Config.accessKey = DESUtils.decrypt(usserInfo.getSignKey(), Config.USER_SIGN_KEY);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if (!StringUtils.isEmpty(usserInfo.getToken()))
+            PreferUtil.getInstance().setLoginToken(usserInfo.getToken());
+        HXConstant.isLoginSuccess = true; //标识登录hx成功
 
+        AppController.getInstance().initHXAccount(usserInfo, true);   //登录环信
+        usserInfo.setPassword(EncryptionUtils.md5TransferPwd(password));
+        usserInfo.setUserName(phoneNumber);
+        Account.saveLoginUser(this, usserInfo);
+        Account.user = usserInfo;
+
+        ViewUtils.startActivity(new Intent(AliteLoginActivity.this, AliterHomeActivity.class), this);
     }
 
+    @Override
+    public void onAuthCodeSuccessView(AuthCodeBean authCodeBean) {
+        Logger.t(TAG).d("成功获取验证码返回信息  ==  " + authCodeBean);
+    }
 
     @Override
     public void onFailView(String errorMsg) {
-        Logger.t(TAG).e("登录失败返回信息  ==  " + errorMsg);
-        ViewUtils.showToast("登录失败返回信息  ==  " + errorMsg);
-        ViewUtils.showToast(errorMsg);
     }
 
     @Override
@@ -145,7 +144,7 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
 
 
     @OnClick({R.id.btn_clean_phone, R.id.btn_clean_password, R.id.tv_forget_pwd, R.id.tv_register_shop, R.id.btn_login,
-            R.id.btn_pwd_login, R.id.btn_register_login,R.id.ll_verification_login})
+            R.id.btn_pwd_login, R.id.btn_register_login, R.id.ll_verification_login})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_clean_phone:
@@ -199,19 +198,41 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
                 }
                 break;
             case R.id.btn_pwd_login:
-                if (llVerificationLogin.getVisibility() == View.VISIBLE) {
+                if (llVerificationLogin.getVisibility() == View.VISIBLE)
                     llVerificationLogin.setVisibility(View.GONE);
-                    LoginType = 0;
-                }
+
+                if (!StringUtils.isEmpty(editPhone.getText().toString()))
+                    btnCleanPhone.setVisibility(View.VISIBLE);
+                else
+                    btnCleanPhone.setVisibility(View.GONE);
+                if (!StringUtils.isEmpty(editPassword.getText().toString()))
+                    btnCleanPassword.setVisibility(View.VISIBLE);
+
+                else
+                    btnCleanPassword.setVisibility(View.GONE);
+
+                viewRegisterLogin.setVisibility(View.GONE);
+                viewPwdLogin.setVisibility(View.VISIBLE);
+                btnRegisterLogin.setTextColor(this.getResources().getColor(R.color.gray_999999));
+                btnPwdLogin.setTextColor(this.getResources().getColor(R.color.orange_ff903e));
+                LoginType = 0;
                 break;
             case R.id.btn_register_login:
-                if (llVerificationLogin.getVisibility() == View.GONE) {
+                if (llVerificationLogin.getVisibility() == View.GONE)
                     llVerificationLogin.setVisibility(View.VISIBLE);
 
-                }
-                if (btnCleanPhone.getVisibility() == View.VISIBLE) {
+                if (btnCleanPhone.getVisibility() == View.VISIBLE)
                     btnCleanPhone.setVisibility(View.GONE);
-                }
+
+                if (!StringUtils.isEmpty(editPassword.getText().toString()))
+                    btnCleanPassword.setVisibility(View.VISIBLE);
+                else
+                    btnCleanPassword.setVisibility(View.GONE);
+
+                viewRegisterLogin.setVisibility(View.VISIBLE);
+                viewPwdLogin.setVisibility(View.GONE);
+                btnRegisterLogin.setTextColor(this.getResources().getColor(R.color.orange_ff903e));
+                btnPwdLogin.setTextColor(this.getResources().getColor(R.color.gray_999999));
                 LoginType = 1;
                 break;
 
@@ -222,10 +243,7 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
                 authCode.setMobilePhone(editPhone.getText().toString().trim());
                 mPresenter.fetchgetAuthCode(authCode);
 
-
                 break;
-
-
         }
 
     }
@@ -259,7 +277,10 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
                         btnLogin.setEnabled(false);
                         btnLogin.setTextColor(getResources().getColor(R.color.white));
                     } else {
-                        btnCleanPhone.setVisibility(View.VISIBLE);
+                        if (LoginType == 0)
+                            btnCleanPhone.setVisibility(View.VISIBLE);
+                        else
+                            btnCleanPhone.setVisibility(View.GONE);
                         if (!StringUtil.isNull(editPassword.getText().toString())) {
                             btnLogin.setBackgroundResource(R.drawable.alite_btn_login_phone);
                             btnLogin.setEnabled(true);
@@ -311,11 +332,13 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
                     s.delete(Constants.PASSWORD_MAX_LENGTH, s.length());
                     editPassword.setText(s);
                     editPassword.setSelection(s.length());
-                    ViewUtils.showToast("密码只能为6-16位的数字或字母组成");
+                    if (LoginType == 0)
+                        ViewUtils.showToast("密码只能为6-16位的数字或字母组成");
+                    else
+                        ViewUtils.showToast("验证码只能为6-16位的数字或字母组成");
                 }
             }
         });
     }
-
 
 }

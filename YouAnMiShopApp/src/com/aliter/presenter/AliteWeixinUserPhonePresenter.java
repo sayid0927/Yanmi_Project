@@ -12,6 +12,9 @@ import com.aliter.entity.AuthCodeBean;
 
 public interface AliteWeixinUserPhonePresenter {
     interface View extends BaseView<AuthCodeBean> {
+        void  onAuthCodeSuccessView(AuthCodeBean authCodeBean);
+        void  onFailView(String errorMsg);//获取数据失败调用该方法。
+
     }
     interface Presenter {
         void fetchgetAuthCode(AuthCode authCode);

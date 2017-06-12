@@ -27,13 +27,10 @@ public class StorArticlesPresenterImpl extends BasePresenter<StorArticlesPresent
             @Override
             public void onSuccess(BaseResponse<List<StoreArticleBean>> data) {
               List<StoreArticleBean> storeArticleBean =data.getData();
-//                checkState(storeArticleBean);
                 if (storeArticleBean.size()!= 0)
-                    mView.onSuccessView(data);
+                    mView.onGetDataSuccessView(storeArticleBean);
                 else {
                     mView.onFailView("data 数据为空");
-                   // ((Stateful) mView).setState(AppController.STATE_EMPTY);
-
                 }
             }
 
@@ -43,5 +40,4 @@ public class StorArticlesPresenterImpl extends BasePresenter<StorArticlesPresent
             }
         });
     }
-
 }

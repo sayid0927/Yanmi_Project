@@ -25,7 +25,11 @@ public class AliteWeixinUserPhonePresenterImpl extends BasePresenter<AliteWeixin
         invoke(retrofitAuthCodeHttpUtils.fetchgetAuthCode(authCode),new Callback<BaseResponse<AuthCodeBean>>(){
             @Override
             public void onSuccess(BaseResponse<AuthCodeBean> data) {
-                mView.onSuccessView(data);
+                AuthCodeBean authCodeBean = data.getData();
+                if(authCodeBean!=null)
+                    mView.onAuthCodeSuccessView(authCodeBean);
+                else
+                    mView.onFailView("数据为空");
             }
 
             @Override

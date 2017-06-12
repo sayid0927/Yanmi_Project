@@ -14,6 +14,8 @@ import java.util.List;
 
 public interface StorArticlesPresenter {
     interface View extends BaseView<List<StoreArticleBean>> {
+        void  onGetDataSuccessView(List<StoreArticleBean> list);
+        void  onFailView(String errorMsg);//获取数据失败调用该方法。
     }
     interface Presenter {
         void fetchData(StoreArticle storeArticle);

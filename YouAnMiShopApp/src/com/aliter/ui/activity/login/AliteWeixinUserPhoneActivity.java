@@ -16,7 +16,6 @@ import com.aliter.base.BaseActivity;
 import com.aliter.entity.AuthCode;
 import com.aliter.entity.AuthCodeBean;
 import com.aliter.entity.WeixinUserInfoBean;
-import com.aliter.http.BaseResponse;
 import com.aliter.injector.component.AliteWeixinUserPhoneHttpModule;
 import com.aliter.injector.component.activity.DaggerAliteWeixinUserPhoneComponent;
 import com.aliter.presenter.AliteWeixinUserPhonePresenter;
@@ -211,7 +210,7 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity<AliteWeixinUserPh
     }
 
     @Override
-    public void onSuccessView(BaseResponse<AuthCodeBean> mData) {
+    public void onAuthCodeSuccessView(AuthCodeBean authCodeBean) {
 
     }
 
@@ -219,5 +218,4 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity<AliteWeixinUserPh
     public void onFailView(String errorMsg) {
 
     }
-
 }

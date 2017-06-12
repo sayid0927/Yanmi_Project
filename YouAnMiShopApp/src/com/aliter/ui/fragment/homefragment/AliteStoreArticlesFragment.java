@@ -9,12 +9,12 @@ import android.view.View;
 import com.aliter.base.BaseFragment;
 import com.aliter.entity.StoreArticle;
 import com.aliter.entity.StoreArticleBean;
-import com.aliter.http.BaseResponse;
 import com.aliter.injector.component.StoreAriclesHttpModule;
 import com.aliter.injector.component.fragment.DaggerStoreArticlesComponent;
 import com.aliter.injector.component.module.fragment.StoreArticlesModule;
 import com.aliter.presenter.StorArticlesPresenter;
 import com.aliter.presenter.impl.StorArticlesPresenterImpl;
+import com.blankj.utilcode.utils.StringUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.orhanobut.logger.Logger;
@@ -55,35 +55,16 @@ public class AliteStoreArticlesFragment extends BaseFragment<StorArticlesPresent
     private boolean isRefresh = false;
 
 
-//    @Override
-//    public void onSuccessView(BaseResponse<IMUserInfoVO> mData) {
-//        data = mData.getData();
-//
-//        if (isRefresh) {
-//            mSwipeRefreshLayout.setRefreshing(false);
-//            mAdapter.setEnableLoadMore(true);
-//            isRefresh = false;
-////            mAdapter.setNewData(data);
-//        } else {
-//            mSwipeRefreshLayout.setEnabled(true);
-//            PageIndex++;
-//            mAdapter.addData(data);
-//            mAdapter.loadMoreComplete();
-//        }
-//
-//        for (int i = 0; i < data.size(); i++) {
-//            if (StringUtils.isEmpty(data.get(i).getHeadUrl())) {
-//                data.get(i).setType(StoreArticleBean.NO_ICON);
-//            } else
-//                data.get(i).setType(StoreArticleBean.ICON);
-//        }
-//        mAdapter.setNewData(data);
-//
-//    }
-
     @Override
-    public void onSuccessView(BaseResponse<List<StoreArticleBean>> mData) {
-
+    public void onGetDataSuccessView(List<StoreArticleBean> data) {
+        this.data=data;
+        for (int i=0;i<data.size();i++){
+            if(StringUtils.isEmpty(data.get(i).getHeadUrl())){
+                data.get(i).setType(StoreArticleBean.NO_ICON);
+            }else
+                data.get(i).setType(StoreArticleBean.ICON);
+        }
+        mAdapter.setNewData(data);
     }
 
     @Override
