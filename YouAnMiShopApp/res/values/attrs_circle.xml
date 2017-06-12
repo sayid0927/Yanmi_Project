@@ -4,7 +4,7 @@
     <declare-styleable name="Circle">
         <attr name="radius" format="dimension"/>
         <attr name="color" format="color"/>
-        <attr name="alpha" format="integer"/>
+        <attr name="alphal" format="integer"/>
     </declare-styleable>
 
 	

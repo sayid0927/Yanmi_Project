@@ -27,10 +27,10 @@ dependencies {
     compile 'org.greenrobot:greendao:3.1.1'
 
 
-    compile 'com.android.support:cardview-v7:22.+'
-    compile 'com.android.support:appcompat-v7:22.+'
-    compile 'com.android.support:design:22.+'
-    compile 'com.android.support:recyclerview-v7:22.+'
+    compile 'com.android.support:cardview-v7:25.0.1'
+    compile 'com.android.support:appcompat-v7:25.0.1'
+    compile 'com.android.support:design:25.0.1'
+    compile 'com.android.support:recyclerview-v7:25.0.1'
 //    compile 'com.android.support:support-annotations:22.+'
 
     compile 'io.reactivex:rxjava:1.1.0'
@@ -52,8 +52,11 @@ dependencies {
 
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'jp.wasabeef:glide-transformations:2.0.1'
+
+//    compile 'me.iwf.photopicker:PhotoPicker:0.9.5@aar'
 //    compile 'com.google.code.gson:gson:2.6.1'
     //    compile 'org.androidannotations:androidannotations:4.3.0'
+
 }
 
 repositories {
@@ -79,14 +82,14 @@ afterEvaluate {
 
 android {
 
-    compileSdkVersion 21
+    compileSdkVersion 25
     buildToolsVersion "25.0.3"
 
 
     defaultConfig {
         applicationId "com.zxly.o2o.shop"
         minSdkVersion 16
-        targetSdkVersion 21
+        targetSdkVersion 25
         multiDexEnabled true
 
 //        ndk {
@@ -150,10 +153,10 @@ android {
         }
 
         debug {
-//            storeFile file("youanmi.keystore")
-//            storePassword "uhbtgb"
-//            keyAlias "youanmi"
-//            keyPassword "uhbtgb"
+            storeFile file("youanmi.keystore")
+            storePassword "uhbtgb"
+            keyAlias "youanmi"
+            keyPassword "uhbtgb"
         }
     }
 

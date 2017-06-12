@@ -22,7 +22,7 @@
             android:fitsSystemWindows="true"
             android:minHeight="20dp"
             app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
             <include
                 layout="@layout/alite_collapsing_content"

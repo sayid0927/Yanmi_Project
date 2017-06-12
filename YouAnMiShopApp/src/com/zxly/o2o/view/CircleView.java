@@ -37,7 +37,7 @@ public class CircleView extends View {
         TypedArray mTypedArray = getContext().obtainStyledAttributes(set, R.styleable.Circle);
         mColor = mTypedArray.getColor(R.styleable.Circle_color, Color.BLACK);
         mRadius = mTypedArray.getDimension(R.styleable.Circle_radius, 50);
-        mAlpha = mTypedArray.getInteger(R.styleable.Circle_alpha, 0);
+        mAlpha = mTypedArray.getInteger(R.styleable.Circle_alphal, 0);
         mTypedArray.recycle();
         mPaint.setDither(true);
         mPaint.setAntiAlias(true);
