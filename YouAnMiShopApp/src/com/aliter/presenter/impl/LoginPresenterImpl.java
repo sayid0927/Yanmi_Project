@@ -4,6 +4,8 @@ package com.aliter.presenter.impl;
 import com.aliter.base.BasePresenter;
 import com.aliter.entity.AuthCode;
 import com.aliter.entity.AuthCodeBean;
+import com.aliter.entity.CheckAuthCode;
+import com.aliter.entity.CheckAuthCodeBean;
 import com.aliter.entity.Login;
 import com.aliter.http.BaseResponse;
 import com.aliter.http.Callback;
@@ -27,8 +29,9 @@ public class LoginPresenterImpl extends BasePresenter<LoginPresenter.View> imple
             @Override
             public void onSuccess(BaseResponse<IMUserInfoVO> data) {
                 IMUserInfoVO imUserInfoVO = data.getData();
-                if (imUserInfoVO != null)
+                if (imUserInfoVO != null) {
                     mView.onLoginSuccessView(imUserInfoVO);
+                }
                 else
                     mView.onFailView("数据为空");
             }
@@ -39,7 +42,6 @@ public class LoginPresenterImpl extends BasePresenter<LoginPresenter.View> imple
             }
         });
     }
-
     @Override
     public void fetchgetAuthCode(AuthCode authCode) {
         invoke(retrofitLoginHttpUtils.getAuthCode(authCode), new Callback<BaseResponse<AuthCodeBean>>() {
@@ -48,6 +50,24 @@ public class LoginPresenterImpl extends BasePresenter<LoginPresenter.View> imple
                 AuthCodeBean authCodeBean = data.getData();
                 if (authCodeBean != null) {
                     mView.onAuthCodeSuccessView(authCodeBean);
+                } else
+                    mView.onFailView("数据为空");
+            }
+            @Override
+            public void onFail(String msg) {
+                mView.onFailView(msg);
+            }
+        });
+    }
+
+    @Override
+    public void fetchCheckAuthCode(CheckAuthCode checkAuthCode) {
+        invoke(retrofitLoginHttpUtils.getCheckAuthCode(checkAuthCode), new Callback<BaseResponse<CheckAuthCodeBean>>() {
+            @Override
+            public void onSuccess(BaseResponse<CheckAuthCodeBean> data) {
+                CheckAuthCodeBean checkAuthCodeBean = data.getData();
+                if (checkAuthCodeBean != null) {
+                    mView.onCheckAuthCodeSuccessView(checkAuthCodeBean);
                 } else
                     mView.onFailView("数据为空");
             }

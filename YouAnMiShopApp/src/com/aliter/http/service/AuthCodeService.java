@@ -16,7 +16,7 @@ import rx.Observable;
 
 public interface AuthCodeService {
 
-    @POST(AppController.get_auth_code)
+    @POST(AppController.shop_get_security_code)
     Observable <BaseResponse<AuthCodeBean>> getAuthCode(@Body AuthCode authCode);
 
 

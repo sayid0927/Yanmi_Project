@@ -22,6 +22,7 @@ import com.aliter.presenter.AliteWeixinUserPhonePresenter;
 import com.aliter.presenter.impl.AliteWeixinUserPhonePresenterImpl;
 import com.aliter.utils.GlideUtils;
 import com.blankj.utilcode.utils.StringUtils;
+import com.zxly.o2o.application.AppController;
 import com.zxly.o2o.shop.R;
 import com.zxly.o2o.util.PreferUtil;
 import com.zxly.o2o.util.StringUtil;
@@ -61,6 +62,8 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity<AliteWeixinUserPh
     LinearLayout llVerificationLogin;
 
     private String iconurl;
+
+
 
     @Override
     public void setState(int state) {
@@ -202,8 +205,8 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity<AliteWeixinUserPh
                 break;
             case R.id.ll_verification_login:
                 AuthCode authCode = new AuthCode();
-                authCode.setCommand(19);
-                authCode.setMobilePhone(editPhone.getText().toString().trim());
+                authCode.setMobile(editPhone.getText().toString());
+                authCode.setType(AppController.WeiXinLoginType);
                 mPresenter.fetchgetAuthCode(authCode);
                 break;
         }
@@ -211,7 +214,7 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity<AliteWeixinUserPh
 
     @Override
     public void onAuthCodeSuccessView(AuthCodeBean authCodeBean) {
-
+     ViewUtils.showToast("获取验证码成功");
     }
 
     @Override

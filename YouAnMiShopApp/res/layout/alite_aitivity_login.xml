@@ -133,7 +133,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:orientation="horizontal"
-                android:visibility="gone">
+               android:visibility="gone">
 
                 <View
                     android:layout_width="0.5dp"
@@ -143,7 +143,7 @@
                     android:background="@color/gray_dcdcdc" />
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/tv_verification"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"

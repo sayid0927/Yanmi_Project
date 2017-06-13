@@ -7,33 +7,46 @@ package com.aliter.entity;
 public class AuthCode {
 
      /*
-    command	短信模板类型(1-18)	number
-    mobilePhone	11位手机号码	string*/
+   mobile	11位手机号码	string
+   type	短信模板类型	number	7:找回密码,18:手机验证码登录,19:绑定第三方平台,20:商户app注册
+   userName	账号	string	type=7时,需要此参数
 
-    private int command;
-    private  String mobilePhone;
+    */
 
-    public int getCommand() {
-        return command;
+    private String userName;
+    private  String mobile;
+    private int type;
+
+    public String getUserName() {
+        return userName;
     }
 
-    public void setCommand(int command) {
-        this.command = command;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getMobilePhone() {
-        return mobilePhone;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setMobilePhone(String mobilePhone) {
-        this.mobilePhone = mobilePhone;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     @Override
     public String toString() {
         return "AuthCode{" +
-                "command=" + command +
-                ", mobilePhone='" + mobilePhone + '\'' +
+                "userName=" + userName +
+                ", mobile='" + mobile + '\'' +
+                ", type=" + type +
                 '}';
     }
 }

@@ -126,14 +126,14 @@ public class AliteShopPromotionFragment extends BaseFragment implements AppBarLa
         } else {
             if (state != CollapsingToolbarLayoutState.INTERNEDIATE) {
                 if (state == CollapsingToolbarLayoutState.COLLAPSED) {
-                    if (toolbarTitle.getVisibility() == View.VISIBLE)
-                        toolbarTitle.setVisibility(View.GONE);
-                    else
+//                    if (toolbarTitle.getVisibility() == View.VISIBLE)
+//                        toolbarTitle.setVisibility(View.GONE);
+//                    else
                         toolbarTitle.setVisibility(View.VISIBLE);
                 }
                 state = CollapsingToolbarLayoutState.INTERNEDIATE;//中间
-                ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
-                toolbarTitle.setVisibility(View.GONE);
+                ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+                toolbarTitle.setVisibility(View.VISIBLE);
                 collapsingtool.setTitle("");
             }
         }

@@ -34,17 +34,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:text="设置门店信息"
-                    android:textColor="#333333"
-                    android:textSize="18dp" />
-
-
                 <com.zxly.o2o.view.CircleImageView
                     android:id="@+id/img_user_head"
                     android:layout_width="75dp"

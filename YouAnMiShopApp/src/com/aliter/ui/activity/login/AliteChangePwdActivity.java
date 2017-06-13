@@ -1,6 +1,5 @@
 package com.aliter.ui.activity.login;
 
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
@@ -8,7 +7,6 @@ import com.aliter.base.BaseActivity;
 import com.zxly.o2o.shop.R;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class AliteChangePwdActivity extends BaseActivity {
 
@@ -49,12 +47,5 @@ public class AliteChangePwdActivity extends BaseActivity {
     @Override
     protected void initInject() {
 
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 }

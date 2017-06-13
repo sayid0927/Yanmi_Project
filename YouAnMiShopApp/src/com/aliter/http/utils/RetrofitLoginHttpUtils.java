@@ -3,6 +3,8 @@ package com.aliter.http.utils;
 
 import com.aliter.entity.AuthCode;
 import com.aliter.entity.AuthCodeBean;
+import com.aliter.entity.CheckAuthCode;
+import com.aliter.entity.CheckAuthCodeBean;
 import com.aliter.entity.Login;
 import com.aliter.http.BaseResponse;
 import com.aliter.http.HttpUtils;
@@ -29,5 +31,9 @@ public class RetrofitLoginHttpUtils extends HttpUtils {
 
     public Observable<BaseResponse<AuthCodeBean>> getAuthCode(AuthCode authCode) {
         return loginService.getAuthCode(authCode);
+    }
+
+    public Observable<BaseResponse<CheckAuthCodeBean>> getCheckAuthCode(CheckAuthCode checkAuthCode) {
+        return loginService.getCheckAuthCode(checkAuthCode);
     }
 }

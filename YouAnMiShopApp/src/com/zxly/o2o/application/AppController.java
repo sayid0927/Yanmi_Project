@@ -86,13 +86,19 @@ public class AppController extends Application {
     public static final int STATE_SUCCESS = 4;
     public static  final int WECHA_SEARCH = 1000;
 
+    //增加type类型=18，使用手机验证码登录类型；增加type类型=19，绑定第三方平台验证码类型；增加type类型=20，商户app注册类型；
+    public  static  final  int PhoneRigisterLoginType=18;
+    public  static  final  int WeiXinLoginType=19;
+    public  static  final  int ShopRigisterLoginType=20;
+    public  static  final  int ForgetPwdType=7;
+
 
     public  static  final   String data_base_url="http://sasp.youanmi.com/";
-
     public  static  final  String auth_shop_login2="auth/shop/login2";
     public  static  final  String keduoduo_promote_articles="/keduoduo/promote/articles";
-    public  static  final  String get_auth_code="/get/auth/code";
-    public  static  final  String auth_shop_register="/auth/shop/register";
+    public  static  final  String shop_get_security_code="/shopApp/get_security_code";       //获取验证码
+    public  static  final  String check_auth_code="/check/auth/code";  // 验证验证码
+    public  static  final  String auth_shop_register="/auth/shop/register";  //注册接口1.0
 
 
     @Override

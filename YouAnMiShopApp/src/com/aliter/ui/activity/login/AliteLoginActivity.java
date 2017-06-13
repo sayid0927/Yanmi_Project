@@ -1,6 +1,8 @@
 package com.aliter.ui.activity.login;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import com.aliter.base.BaseActivity;
 import com.aliter.entity.AuthCode;
 import com.aliter.entity.AuthCodeBean;
+import com.aliter.entity.CheckAuthCodeBean;
 import com.aliter.entity.Login;
 import com.aliter.injector.component.LoginHttpModule;
 import com.aliter.injector.component.activity.DaggerLoginComponent;
@@ -74,9 +77,31 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
     View viewPwdLogin;
     @BindView(R.id.view_register_login)
     View viewRegisterLogin;
+    @BindView(R.id.tv_verification)
+    TextView tvVerification;
     private String TAG = AliteLoginActivity.class.getName();
     private String password, phoneNumber;
     private int LoginType = 0;    //0 密码登录  1 验证码登录
+    private int resendTime = 0;
+    private final int TIME_CHANGE = 100;
+
+    private Handler handler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case TIME_CHANGE:
+                    resendTime--;
+                    if (resendTime > 0) {
+                        tvVerification.setText(String.format("%d秒后重发", resendTime));
+                        handler.sendEmptyMessageDelayed(TIME_CHANGE, 1000);
+                    } else {
+                        ViewUtils.setText(tvVerification, "重新发送");
+                    }
+                    break;
+            }
+        }
+    };
 
     @Override
     public void setState(int state) {
@@ -109,6 +134,12 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
     @Override
     public void onAuthCodeSuccessView(AuthCodeBean authCodeBean) {
         Logger.t(TAG).d("成功获取验证码返回信息  ==  " + authCodeBean);
+        ViewUtils.showToast("验证码已发送");
+    }
+
+    @Override
+    public void onCheckAuthCodeSuccessView(CheckAuthCodeBean checkAuthCodeBean) {
+        Logger.t(TAG).d("成功验证验证码返回信息  ==  " + checkAuthCodeBean);
     }
 
     @Override
@@ -183,16 +214,19 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
                     return;
                 }
                 if (LoginType == 0) {
+                    //密码登录
                     Login login = new Login();
                     login.setClientId(Config.getuiClientId);
                     login.setUserName(phoneNumber);
                     login.setPassword(EncryptionUtils.md5TransferPwd(password));
                     mPresenter.fetchLogin(login);
                 } else {
+                    //  手机验证码登录
                     Login login = new Login();
                     login.setClientId(Config.getuiClientId);
                     login.setUserName(phoneNumber);
-                    login.setPassword(EncryptionUtils.md5TransferPwd(password));
+                    login.setType(AppController.PhoneRigisterLoginType);
+                    login.setCode(editPassword.getText().toString());
                     mPresenter.fetchLogin(login);
 
                 }
@@ -238,11 +272,19 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
 
             case R.id.ll_verification_login:
 
-                AuthCode authCode = new AuthCode();
-                authCode.setCommand(18);
-                authCode.setMobilePhone(editPhone.getText().toString().trim());
-                mPresenter.fetchgetAuthCode(authCode);
+                if (resendTime > 0) {
+                    ViewUtils.showToast(resendTime + "秒后才可再次发送");
+                } else {
+                    resendTime = 54;
+                    handler.sendEmptyMessageDelayed(TIME_CHANGE, 1000);
+                    //获取验证码
+                    AuthCode authCode = new AuthCode();
+                    authCode.setMobile(editPhone.getText().toString());
+                    authCode.setType(AppController.PhoneRigisterLoginType);
+                    authCode.setUserName(editPhone.getText().toString());
+                    mPresenter.fetchgetAuthCode(authCode);
 
+                }
                 break;
         }
 
@@ -341,4 +383,9 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
         });
     }
 
+    @Override
+    public void finish() {
+        super.finish();
+        handler.removeMessages(TIME_CHANGE);
+    }
 }
