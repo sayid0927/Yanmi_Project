@@ -120,17 +120,24 @@ public class AliteCheckCityActivity extends BaseActivity implements AdapterView.
 
     @Override
     public void finish() {
-
-        Bundle mBundle = new Bundle();
-        mBundle.putString("districtName", districtName);
-        mBundle.putString("districtId", districtId);
-        Intent intent = new Intent();
-        intent.putExtras(mBundle);
-        if (type == 0)
+        if (type == 0) {
+            Bundle mBundle = new Bundle();
+            mBundle.putString("districtName", districtName);
+            mBundle.putString("districtId", districtId);
+            Intent intent = new Intent();
+            intent.putExtras(mBundle);
             setResult(RESULT_OK, intent);
-        else
+        }
+        else {
+            Bundle mBundle = new Bundle();
+            mBundle.putString("districtName", districtName);
+            mBundle.putString("districtId", districtId);
+            mBundle.putString("cityName", cityName);
+            mBundle.putString("cityId", cityId);
+            Intent intent = new Intent();
+            intent.putExtras(mBundle);
             setResult(1000, intent);
-        finishActivity();
+        }
         super.finish();
     }
 
