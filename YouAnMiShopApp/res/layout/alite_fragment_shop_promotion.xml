@@ -36,13 +36,12 @@
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
-                app:layout_collapseParallaxMultiplier="0.3"
+                app:layout_collapseParallaxMultiplier="0.1"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_gravity="center_horizontal"
-
+                android:background="@color/alite_bar_colors"
                 app:contentInsetLeft="0dp"
-
                 app:contentInsetStart="0dp"
                 android:layout_marginTop="5dp"
                 app:layout_collapseMode="pin">
@@ -54,6 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
+                    android:textColor="#1Affffff"
                     android:text="推广文章" />
 
 

@@ -121,6 +121,8 @@ public class AliteShopPromotionFragment extends BaseFragment implements AppBarLa
                 state = CollapsingToolbarLayoutState.COLLAPSED;//折叠
                 ((AppCompatActivity) getActivity()).getSupportActionBar().show();
                 toolbarTitle.setVisibility(View.VISIBLE);
+                toolbarTitle.setTextColor(getActivity().getResources().getColor(R.color.white));
+                toolbar.getBackground().setAlpha(255);
                 collapsingtool.setTitle("");
             }
         } else {
@@ -129,12 +131,14 @@ public class AliteShopPromotionFragment extends BaseFragment implements AppBarLa
 //                    if (toolbarTitle.getVisibility() == View.VISIBLE)
 //                        toolbarTitle.setVisibility(View.GONE);
 //                    else
-                        toolbarTitle.setVisibility(View.VISIBLE);
+                    toolbarTitle.setVisibility(View.VISIBLE);
                 }
                 state = CollapsingToolbarLayoutState.INTERNEDIATE;//中间
                 ((AppCompatActivity) getActivity()).getSupportActionBar().show();
                 toolbarTitle.setVisibility(View.VISIBLE);
-                collapsingtool.setTitle("");
+                toolbarTitle.setTextColor(getActivity().getResources().getColor(R.color.orange_1aff));
+                toolbar.getBackground().setAlpha(100);
+
             }
         }
     }

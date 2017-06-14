@@ -5,6 +5,8 @@ import java.util.List;
 
 public class AddressProvince implements Serializable{
 	/**  */
+
+
 	private static final long serialVersionUID = 1L;
 	private String provinceName;
 	private String provinceId;

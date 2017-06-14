@@ -16,6 +16,7 @@ import com.zxly.o2o.adapter.AddressAdapter;
 import com.zxly.o2o.application.Config;
 import com.zxly.o2o.model.AddressCity;
 import com.zxly.o2o.model.AddressCountry;
+import com.zxly.o2o.model.AddressDistrict;
 import com.zxly.o2o.model.AddressProvince;
 import com.zxly.o2o.shop.R;
 import com.zxly.o2o.util.AreaUtil;
@@ -38,11 +39,15 @@ public class AreaAct extends BasicAct implements
     private List<AddressCountry> areaList = null;
     private ArrayList<AddressProvince> provinceList = new ArrayList<AddressProvince>();
     private ArrayList<AddressCity> cityList = new ArrayList<AddressCity>();
+    private ArrayList<AddressDistrict> districtList = new ArrayList<AddressDistrict>();
     private ArrayList<String> dataList = new ArrayList<String>();
     private String provinceId = null;
     private String provinceName = null;
     private String cityId = null;
+
     private String cityName = null;
+    private String districtId = null;
+    private String districtName = null;
     private ListView listView;
     private TextView txtProvinceName = null;
     private AddressAdapter adapter = null;
@@ -127,6 +132,17 @@ public class AreaAct extends BasicAct implements
         return dataList;
     }
 
+
+    private ArrayList<String> getDistrictData() {
+        if (areaList != null) {
+            dataList.clear();
+            for (AddressDistrict ac : districtList) {
+                dataList.add(ac.getDistrictName());
+            }
+        }
+        return dataList;
+    }
+
     private void showProvinces() {
         txtProvinceName.setVisibility(View.GONE);
         txtProvinceName.setText("");
@@ -151,7 +167,15 @@ public class AreaAct extends BasicAct implements
                     adapter.addItem(getCityData(), true);
                     adapter.setCurrentState(2);
                 } else {
-                    if (parameCallBack != null) {
+                    districtList  = (ArrayList<AddressDistrict>) cityList.get(0).getDistricts();
+                    if (districtList.size()!=0) {
+                        txtProvinceName.setVisibility(View.VISIBLE);
+                        txtProvinceName.setText(provinceName);
+                        currentState = 3;
+                        adapter.clear();
+                        adapter.addItem(getDistrictData(), true);
+                        adapter.setCurrentState(3);
+                    }else if (parameCallBack != null) {
                         Map<String, String> result = new HashMap<String, String>();
                         result.put("provinceId", provinceId);
                         result.put("cityId", null);
@@ -165,15 +189,42 @@ public class AreaAct extends BasicAct implements
             case 2:
                 cityName = cityList.get(position).getCityName();
                 cityId = cityList.get(position).getCityId();
-                if (parameCallBack != null) {
-                    Map<String, String> result = new HashMap<String, String>();
-                    result.put("provinceId", provinceId);
-                    result.put("cityId", cityId);
-                    result.put("provinceName", provinceName);
-                    result.put("cityName", cityName);
-                    parameCallBack.onCall(result);
-                    finish();
+                districtList  = (ArrayList<AddressDistrict>) cityList.get(position).getDistricts();
+                if (districtList.size()!=0) {
+                    txtProvinceName.setVisibility(View.VISIBLE);
+                    txtProvinceName.setText(cityName);
+                    currentState = 3;
+                    adapter.clear();
+                    adapter.addItem(getDistrictData(), true);
+                    adapter.setCurrentState(3);
+                }else {
+                    if (parameCallBack != null) {
+                        Map<String, String> result = new HashMap<String, String>();
+                        result.put("provinceId", provinceId);
+                        result.put("cityId", cityId);
+                        result.put("provinceName", provinceName);
+                        result.put("cityName", cityName);
+                        parameCallBack.onCall(result);
+                        finish();
+                    }
                 }
+                break;
+            case 3:
+                districtName = districtList.get(position).getDistrictName();
+                districtId = districtList.get(position).getDistrictId();
+                districtList  = (ArrayList<AddressDistrict>) cityList.get(0).getDistricts();
+                    if (parameCallBack != null) {
+                        Map<String, String> result = new HashMap<String, String>();
+                        result.put("provinceId", provinceId);
+                        result.put("cityId", cityId);
+                        result.put("provinceName", provinceName);
+                        result.put("cityName", cityName);
+                        result.put("districtName",districtName);
+                        result.put("districtId",districtId);
+                        parameCallBack.onCall(result);
+                        finish();
+                    }
+
                 break;
         }
     }
