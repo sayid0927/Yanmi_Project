@@ -41,8 +41,9 @@ public class AliteCheckDistrictActivity extends BaseActivity implements AdapterV
     private static ArrayList<AddressDistrict> districtList = new ArrayList<AddressDistrict>();
     private ArrayList<String> dataList = new ArrayList<String>();
     private LoadingDialog loadingDialog;
-    private String districtName,districtId;
+    private String districtName, districtId;
     private static int type;
+    private boolean isCheck = false;
 
 
     @Override
@@ -97,36 +98,51 @@ public class AliteCheckDistrictActivity extends BaseActivity implements AdapterV
     }
 
 
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        districtName = districtList.get(position-1).getDistrictName();
-        districtId = districtList.get(position-1).getDistrictId();
+        isCheck = true;
+        districtName = districtList.get(position - 1).getDistrictName();
+        districtId = districtList.get(position - 1).getDistrictId();
         finish();
-
+        finishActivity();
     }
 
+    @Override
+    public void onBackPressed() {
+        type = 99;
+        super.onBackPressed();
+    }
 
 
     @Override
     public void finish() {
-
         Bundle mBundle = new Bundle();
-        mBundle.putString("districtName",districtName);
+        mBundle.putString("districtName", districtName);
         mBundle.putString("districtId", districtId);
         Intent intent = new Intent();
         intent.putExtras(mBundle);
-        if(type==0)
-            setResult(RESULT_OK, intent);
-        else
-            setResult(1000, intent);
-        finishActivity();
+        if (isCheck) {
+            switch (type) {
+                case 0:
+                    setResult(0, intent);
+                    break;
+                case 1:
+                    setResult(1000, intent);
+                    break;
+            }
+        }
         super.finish();
+    }
+
+    @Override
+    protected void onResume() {
+        isCheck=false;
+        super.onResume();
     }
 
     public static void start(Activity curAct, ArrayList<AddressDistrict> districtLists, int Checktype) {
         // Checktype ==0 没有城市  类似上海没有城市有区县
-        type=Checktype;
+        type = Checktype;
         districtList = districtLists;
         Intent intent = new Intent(curAct, AliteCheckDistrictActivity.class);
         curAct.startActivityForResult(intent, 1);

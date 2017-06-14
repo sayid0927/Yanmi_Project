@@ -1,6 +1,7 @@
 package com.aliter.ui.activity.login;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.Toolbar;
@@ -12,7 +13,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.aliter.base.BaseActivity;
-import com.orhanobut.logger.Logger;
 import com.zxly.o2o.adapter.AddressAdapter;
 import com.zxly.o2o.application.AppController;
 import com.zxly.o2o.application.Config;
@@ -48,6 +48,10 @@ public class AliteCheckProvinceActivity extends BaseActivity implements AdapterV
     private ArrayList<AddressCity> cityList = new ArrayList<AddressCity>();
     private ArrayList<AddressDistrict> districtList = new ArrayList<AddressDistrict>();
     private LoadingDialog loadingDialog;
+
+    private String cityName, cityId, districtName, districtId;
+    private int type;
+    private boolean isCheck=false;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -106,6 +110,12 @@ public class AliteCheckProvinceActivity extends BaseActivity implements AdapterV
     protected void initInject() {
     }
 
+    @Override
+    protected void onResume() {
+        isCheck=false;
+        super.onResume();
+    }
+
     private void initViews() {
         adapter = new AddressAdapter(AliteCheckProvinceActivity.this);
         adapter.clear();
@@ -133,43 +143,90 @@ public class AliteCheckProvinceActivity extends BaseActivity implements AdapterV
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        isCheck=true;
         provinceName = provinceList.get(position-1).getProvinceName();
         provinceId = provinceList.get(position-1).getProvinceId();
         cityList = (ArrayList<AddressCity>) provinceList.get(position-1).getCitys();
         if(cityList.get(0).getCityId() != null){
-
             AliteCheckCityActivity.start(AliteCheckProvinceActivity.this,cityList);
-
         } else {
             districtList = (ArrayList<AddressDistrict>) cityList.get(0).getDistricts();
             if (districtList.size() != 0) {
-
                 AliteCheckDistrictActivity.start(AliteCheckProvinceActivity.this,districtList,0);
-
             }
         }
     }
 
     @Override
-    public void finish() {
-        super.finish();
-        Intent intent = new Intent();
-        setResult(RESULT_OK, intent);
+    public void onBackPressed() {
+        type=99;
+        super.onBackPressed();
+    }
 
+    @Override
+    public void finish() {
+        Bundle mBundle = new Bundle();
+        Intent intent = new Intent();
+        if(isCheck) {
+            switch (type) {
+                case 0:
+                    mBundle.putString("districtName", districtName);
+                    mBundle.putString("districtId", districtId);
+                    mBundle.putString("provinceName", provinceName);
+                    mBundle.putString("provinceId", provinceId);
+                    intent.putExtras(mBundle);
+                    setResult(0, intent);
+                    break;
+                case 1000:
+                    mBundle.putString("districtName", districtName);
+                    mBundle.putString("districtId", districtId);
+                    mBundle.putString("cityName", cityName);
+                    mBundle.putString("cityId", cityId);
+                    mBundle.putString("provinceName", provinceName);
+                    mBundle.putString("provinceId", provinceId);
+                    intent.putExtras(mBundle);
+                    setResult(1000, intent);
+                    break;
+                case 1001:
+                    mBundle.putString("cityName", cityName);
+                    mBundle.putString("cityId", cityId);
+                    mBundle.putString("provinceName", provinceName);
+                    mBundle.putString("provinceId", provinceId);
+                    intent.putExtras(mBundle);
+                    setResult(1001, intent);
+                    break;
+            }
+        }
+        super.finish();
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Logger.t("TAG").e("requestCode  ==  "+String.valueOf(requestCode));
-        Logger.t("TAG").e("data  ==  "+String.valueOf(data));
-        Logger.t("TAG").e("resultCode  ==  "+String.valueOf(resultCode));
-        if(requestCode==1){
-            if(resultCode==0){
+        if (requestCode == 1) {
+            if (data != null) {
+                Bundle mBundle = data.getExtras();
+                switch (resultCode){
+                    case 0:
+                        districtName = mBundle.getString("districtName");
+                        districtId = mBundle.getString("districtId");
+                        type = 0;
+                        break;
+                    case 1000:
+                        type = 1000;
+                        districtName = mBundle.getString("districtName");
+                        districtId = mBundle.getString("districtId");
+                        cityName = mBundle.getString("cityName");
+                        cityId = mBundle.getString("cityId");
 
-
-            }else {
-
-
+                        break;
+                    case 1001:
+                        type = 1001;
+                        cityName = mBundle.getString("cityName");
+                        cityId = mBundle.getString("cityId");
+                        break;
+                }
+                finish();
+                finishActivity();
             }
         }
     }

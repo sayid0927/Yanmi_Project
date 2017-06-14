@@ -12,7 +12,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.aliter.base.BaseActivity;
-import com.orhanobut.logger.Logger;
 import com.zxly.o2o.adapter.AddressAdapter;
 import com.zxly.o2o.application.AppController;
 import com.zxly.o2o.dialog.LoadingDialog;
@@ -47,6 +46,7 @@ public class AliteCheckCityActivity extends BaseActivity implements AdapterView.
     private LoadingDialog loadingDialog;
     private String cityName, cityId, districtName, districtId;
     private int type;
+    private boolean isCheck = false;
 
 
     @Override
@@ -82,7 +82,6 @@ public class AliteCheckCityActivity extends BaseActivity implements AdapterView.
     @Override
     protected void loadData() {
 
-
     }
 
     @Override
@@ -99,46 +98,63 @@ public class AliteCheckCityActivity extends BaseActivity implements AdapterView.
         return dataList;
     }
 
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        isCheck = true;
         cityName = cityList.get(position - 1).getCityName();
         cityId = cityList.get(position - 1).getCityId();
         districtList = (ArrayList<AddressDistrict>) cityList.get(position - 1).getDistricts();
         if (districtList.size() != 0) {
-            districtList = (ArrayList<AddressDistrict>) cityList.get(0).getDistricts();
             if (districtList.get(0).getDistrictId() != null)
                 AliteCheckDistrictActivity.start(AliteCheckCityActivity.this, districtList, 1);
         } else {
-            Intent data = new Intent();
-            data.putExtra("receiptList", 1000);
-            setResult(Activity.RESULT_OK, data);
+            type = 1001;
             finish();
+            finishActivity();
         }
     }
 
     @Override
+    public void onBackPressed() {
+        type = 99;
+        super.onBackPressed();
+    }
+
+    @Override
     public void finish() {
-        if (type == 0) {
-            Bundle mBundle = new Bundle();
-            mBundle.putString("districtName", districtName);
-            mBundle.putString("districtId", districtId);
-            Intent intent = new Intent();
-            intent.putExtras(mBundle);
-            setResult(RESULT_OK, intent);
-        }
-        else {
-            Bundle mBundle = new Bundle();
-            mBundle.putString("districtName", districtName);
-            mBundle.putString("districtId", districtId);
-            mBundle.putString("cityName", cityName);
-            mBundle.putString("cityId", cityId);
-            Intent intent = new Intent();
-            intent.putExtras(mBundle);
-            setResult(1000, intent);
+        Bundle mBundle = new Bundle();
+        Intent intent = new Intent();
+        if (isCheck) {
+            switch (type) {
+                case 0:
+                    mBundle.putString("districtName", districtName);
+                    mBundle.putString("districtId", districtId);
+                    intent.putExtras(mBundle);
+                    setResult(0, intent);
+                    break;
+                case 1000:
+                    mBundle.putString("districtName", districtName);
+                    mBundle.putString("districtId", districtId);
+                    mBundle.putString("cityName", cityName);
+                    mBundle.putString("cityId", cityId);
+                    intent.putExtras(mBundle);
+                    setResult(1000, intent);
+                    break;
+                case 1001:
+                    mBundle.putString("cityName", cityName);
+                    mBundle.putString("cityId", cityId);
+                    intent.putExtras(mBundle);
+                    setResult(1001, intent);
+                    break;
+            }
         }
         super.finish();
+    }
+
+    @Override
+    protected void onResume() {
+        isCheck = false;
+        super.onResume();
     }
 
     public static void start(Activity curAct, ArrayList<AddressCity> cityArrayList) {
@@ -147,27 +163,24 @@ public class AliteCheckCityActivity extends BaseActivity implements AdapterView.
         curAct.startActivityForResult(intent, 1);
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Logger.t("TAG").e("requestCode  ==  " + String.valueOf(requestCode));
-        Logger.t("TAG").e("data  ==  " + String.valueOf(data));
-        Logger.t("TAG").e("resultCode  ==  " + String.valueOf(resultCode));
         if (requestCode == 1) {
             if (data != null) {
                 Bundle mBundle = data.getExtras();
                 districtName = mBundle.getString("districtName");
                 districtId = mBundle.getString("districtId");
-                if (resultCode == 0) {
-                    type = 0;
-                    finish();
-                    finishActivity();
-                } else {
-                    type = 1000;
-                    finish();
-                    finishActivity();
+                switch (resultCode) {
+                    case 0:
+                        type = 0;
+                        break;
+                    case 1000:
+                        type = 1000;
+                        break;
                 }
+                finish();
+                finishActivity();
             }
         }
     }
