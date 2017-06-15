@@ -1,6 +1,9 @@
 package com.aliter.ui.activity.login;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,6 +18,8 @@ import android.widget.TextView;
 import com.aliter.base.BaseActivity;
 import com.aliter.entity.AuthCode;
 import com.aliter.entity.AuthCodeBean;
+import com.aliter.entity.CheckAuthCode;
+import com.aliter.entity.CheckAuthCodeBean;
 import com.aliter.entity.WeixinUserInfoBean;
 import com.aliter.injector.component.AliteWeixinUserPhoneHttpModule;
 import com.aliter.injector.component.activity.DaggerAliteWeixinUserPhoneComponent;
@@ -30,6 +35,7 @@ import com.zxly.o2o.util.ViewUtils;
 import com.zxly.o2o.view.CircleImageView;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
@@ -60,10 +66,32 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity<AliteWeixinUserPh
     ScrollView scrollView;
     @BindView(R.id.ll_verification_login)
     LinearLayout llVerificationLogin;
+    @BindView(R.id.tv_verification)
+    TextView tvVerification;
 
     private String iconurl;
 
+    private int resendTime = 0;
+    private final int TIME_CHANGE = 100;
 
+
+    private Handler handler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case TIME_CHANGE:
+                    resendTime--;
+                    if (resendTime > 0) {
+                        tvVerification.setText(String.format("%d秒后重发", resendTime));
+                        handler.sendEmptyMessageDelayed(TIME_CHANGE, 1000);
+                    } else {
+                        ViewUtils.setText(tvVerification, "重新发送");
+                    }
+                    break;
+            }
+        }
+    };
 
     @Override
     public void setState(int state) {
@@ -194,16 +222,46 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity<AliteWeixinUserPh
         });
     }
 
-    @OnClick({R.id.btn_clean_password, R.id.btn_back_pwd,R.id.ll_verification_login})
+    @OnClick({R.id.btn_clean_password, R.id.btn_back_pwd, R.id.ll_verification_login})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_clean_password:
                 editPassword.setText("");
                 break;
             case R.id.btn_back_pwd:
+
+
+                //  验证验证码
+                CheckAuthCode checkAuthCode = new CheckAuthCode();
+                checkAuthCode.setType(19);
+                checkAuthCode.setMobile(editPhone.getText().toString());
+                checkAuthCode.setCode(editPassword.getText().toString());
+                mPresenter.fetchCheckAuthCode(checkAuthCode);
+
+
+
+
+
+
                 ViewUtils.startActivity(new Intent(AliteWeixinUserPhoneActivity.this, AliteSettingShopInfoActivity.class), this);
                 break;
             case R.id.ll_verification_login:
+
+                if (resendTime > 0) {
+                    ViewUtils.showToast(resendTime + "秒后才可再次发送");
+                } else {
+                    resendTime = 54;
+                    handler.sendEmptyMessageDelayed(TIME_CHANGE, 1000);
+                    //获取验证码
+                    AuthCode authCode = new AuthCode();
+                    authCode.setMobile(editPhone.getText().toString());
+                    authCode.setType(AppController.WeiXinLoginType);
+                    authCode.setUserName(editPhone.getText().toString());
+                    mPresenter.fetchgetAuthCode(authCode);
+
+                }
+
+
                 AuthCode authCode = new AuthCode();
                 authCode.setMobile(editPhone.getText().toString());
                 authCode.setType(AppController.WeiXinLoginType);
@@ -214,11 +272,33 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity<AliteWeixinUserPh
 
     @Override
     public void onAuthCodeSuccessView(AuthCodeBean authCodeBean) {
-     ViewUtils.showToast("获取验证码成功");
+        ViewUtils.showToast("获取验证码成功");
+
+
+    }
+
+    @Override
+    public void onCheckAuthCodeSuccessView(CheckAuthCodeBean checkAuthCodeBean) {
+        //  验证成功
+
     }
 
     @Override
     public void onFailView(String errorMsg) {
 
+    }
+
+
+    @Override
+    public void finish() {
+        super.finish();
+        handler.removeMessages(TIME_CHANGE);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

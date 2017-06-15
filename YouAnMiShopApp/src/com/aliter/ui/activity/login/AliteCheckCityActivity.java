@@ -105,8 +105,10 @@ public class AliteCheckCityActivity extends BaseActivity implements AdapterView.
         cityId = cityList.get(position - 1).getCityId();
         districtList = (ArrayList<AddressDistrict>) cityList.get(position - 1).getDistricts();
         if (districtList.size() != 0) {
-            if (districtList.get(0).getDistrictId() != null)
+            if (districtList.get(0).getDistrictId() != null) {
                 AliteCheckDistrictActivity.start(AliteCheckCityActivity.this, districtList, 1);
+                startActivityIn();
+            }
         } else {
             type = 1001;
             finish();

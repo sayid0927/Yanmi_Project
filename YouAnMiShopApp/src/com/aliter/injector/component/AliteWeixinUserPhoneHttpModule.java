@@ -1,8 +1,8 @@
 package com.aliter.injector.component;
 
 
-import com.aliter.http.service.AuthCodeService;
-import com.aliter.http.utils.RetrofitAuthCodeHttpUtils;
+import com.aliter.http.service.WeixinUserPhoneService;
+import com.aliter.http.utils.RetrofitWeixinUserPhoneHttpUtils;
 
 import javax.inject.Singleton;
 
@@ -22,12 +22,12 @@ public class AliteWeixinUserPhoneHttpModule extends BaseHttpModule {
 
     @Singleton
     @Provides
-    AuthCodeService provideAuthCodeService(Retrofit retrofit) {
-        return retrofit.create(AuthCodeService.class);
+    WeixinUserPhoneService provideService(Retrofit retrofit) {
+        return retrofit.create(WeixinUserPhoneService.class);
     }
     @Provides
     @Singleton
-    RetrofitAuthCodeHttpUtils provideRetrofitAuthCodeUtils(AuthCodeService authCodeService) {
-        return new RetrofitAuthCodeHttpUtils(authCodeService);
+    RetrofitWeixinUserPhoneHttpUtils provideRetrofitAuthCodeUtils(WeixinUserPhoneService weixinUserPhoneService) {
+        return new RetrofitWeixinUserPhoneHttpUtils(weixinUserPhoneService);
     }
 }

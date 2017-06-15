@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:focusableInTouchMode="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:weightSum="1">
 
 
     <include
@@ -202,7 +203,6 @@
                         android:background="#00000000"
                         android:gravity="bottom"
                         android:hint="门店联系人"
-                        android:inputType="textPassword"
                         android:singleLine="true"
                         android:textColorHint="@color/gray_999999"
                         android:textSize="15sp" />
@@ -235,7 +235,7 @@
                         android:src="@drawable/al_icon_extension" />
 
                     <EditText
-                        android:id="@+id/edit_password"
+                        android:id="@+id/edit_generalizeCode"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginBottom="5dp"
@@ -272,7 +272,7 @@
                     android:layout_marginLeft="40dp"
                     android:layout_marginRight="40dp"
                     android:layout_marginTop="30dp"
-                    android:background="@drawable/alite_btn_login_phone"
+                    android:background="@drawable/alite_btn_login_default"
                     android:text="完成"
                     android:textColor="@color/white" />
 
@@ -280,5 +280,15 @@
 
         </LinearLayout>
     </ScrollView>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="30dp"
+        android:gravity="bottom|center"
+        android:text="@string/shop_setting_top" />
 
 </LinearLayout>

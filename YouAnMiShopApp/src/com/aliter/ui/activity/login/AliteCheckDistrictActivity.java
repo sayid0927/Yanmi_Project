@@ -136,7 +136,7 @@ public class AliteCheckDistrictActivity extends BaseActivity implements AdapterV
 
     @Override
     protected void onResume() {
-        isCheck=false;
+        isCheck = false;
         super.onResume();
     }
 
@@ -146,5 +146,6 @@ public class AliteCheckDistrictActivity extends BaseActivity implements AdapterV
         districtList = districtLists;
         Intent intent = new Intent(curAct, AliteCheckDistrictActivity.class);
         curAct.startActivityForResult(intent, 1);
+
     }
 }

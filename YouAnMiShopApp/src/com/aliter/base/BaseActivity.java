@@ -1,7 +1,5 @@
 package com.aliter.base;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -80,7 +78,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends SwipeBackAct
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+//                onBackPressed();
+                finish();
+                finishActivity();
             }
         });
     }
@@ -120,19 +120,18 @@ public abstract class BaseActivity<P extends BasePresenter> extends SwipeBackAct
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK)
+            finish();
             finishActivity();
         return super.onKeyDown(keyCode, event);
     }
 
     protected void finishActivity() {
         overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
+
     }
 
-    protected  void startActivityIn(Intent intent, Activity curAct) {
-        if (intent != null) {
-            curAct.startActivity(intent);
-            curAct.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
-        }
+    protected  void startActivityIn() {
+     overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
     }
 
 //    public void killAllActivity() {

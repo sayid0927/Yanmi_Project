@@ -21,6 +21,7 @@ public interface LoginPresenter {
          void  onCheckAuthCodeSuccessView(CheckAuthCodeBean checkAuthCodeBean);
          void  onFailView(String errorMsg);//获取数据失败调用该方法。
 
+
     }
 
     interface Presenter {

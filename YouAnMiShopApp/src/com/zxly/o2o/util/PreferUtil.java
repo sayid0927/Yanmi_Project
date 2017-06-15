@@ -27,7 +27,9 @@ public final class PreferUtil {
     private static final String ARTICLE_BV = "Articlebv";
     private static final String ARTICLEREPLY_BV = "ArticleReplybv";
     private static final String HOME_MAINTAIN = "homepage_maintain";
-
+    private static final String REGISTER_PHONE = "register_phone";
+    private static final String REGISTER_PWD = "register_pwd";
+    private static final String REGISTER_CODE = "register_code";
     private static final String NOTIFY_ALL = "notification_all";
     private static final String NOTIFY_LOGOUT = "notification_logout";
     private static final String NOTIFY_SLEEP = "notification_sleep";
@@ -136,7 +138,26 @@ public final class PreferUtil {
         putString(HOME_MAINTAIN, homeMaintain);
     }
 
+    public void setRegisterPwd(String Registerpwd) {
+        putString(REGISTER_PWD, Registerpwd);
+    }
+    public String getRegisterPwd() {
+        return getString(REGISTER_PWD, "");
+    }
 
+    public void setRegisterPhonenum(String RegisterPhonenum) {
+        putString(REGISTER_PHONE, RegisterPhonenum);
+    }
+    public String getRegisterPhonenum() {
+        return getString(REGISTER_PHONE, "");
+    }
+
+    public void setRegisterCode(String RegisterCode) {
+        putString(REGISTER_CODE, RegisterCode);
+    }
+    public String getRegisterCode() {
+        return getString(REGISTER_CODE, "");
+    }
 
 
     //保存微信个人信息

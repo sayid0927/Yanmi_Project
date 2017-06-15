@@ -8,12 +8,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aliter.base.BaseActivity;
+import com.blankj.utilcode.utils.NetworkUtils;
+import com.blankj.utilcode.utils.ToastUtils;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.zxly.o2o.dialog.LoadingDialog;
 import com.zxly.o2o.shop.R;
 import com.zxly.o2o.util.PreferUtil;
+import com.zxly.o2o.util.StringUtil;
 import com.zxly.o2o.util.ViewUtils;
 
 import java.util.Map;
@@ -68,7 +71,6 @@ public class AliteLaunchActivity extends BaseActivity {
     @Override
     protected void loadData() {
 
-
     }
 
     @Override
@@ -83,7 +85,17 @@ public class AliteLaunchActivity extends BaseActivity {
                 ViewUtils.startActivity(new Intent(AliteLaunchActivity.this, AliteLoginActivity.class), this);
                 break;
             case R.id.layout_wchat_login:
-                UMShareAPI.get(AliteLaunchActivity.this).getPlatformInfo(AliteLaunchActivity.this, WEIXIN, authListener);
+
+                if (!NetworkUtils.isConnected()) {
+                    ToastUtils.showShortToast("网络连接已断开");
+                    break;
+                }
+
+                if(StringUtil.isWeixinAvilible(this))
+                    UMShareAPI.get(AliteLaunchActivity.this).getPlatformInfo(AliteLaunchActivity.this, WEIXIN, authListener);
+                else
+                    ToastUtils.showShortToast("请先安装微信应用");
+
                 break;
             case R.id.registered_shop_account:
                 ViewUtils.startActivity(new Intent(AliteLaunchActivity.this, AlitePhoneRegisterActivity.class), this);
@@ -124,8 +136,6 @@ public class AliteLaunchActivity extends BaseActivity {
         public void onCancel(SHARE_MEDIA platform, int action) {
             if (loadingDialog.isShow())
                 loadingDialog.dismiss();
-
         }
     };
-
 }

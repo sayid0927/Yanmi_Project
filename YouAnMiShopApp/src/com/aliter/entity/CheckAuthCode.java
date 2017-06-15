@@ -7,12 +7,12 @@ package com.aliter.entity;
 public class CheckAuthCode {
 
 //    code	验证码	string
-//    command	短信模板类型，传递的是获取验证码传的是什么类型	number
-//    mobilePhone	获取短信验证码的手机号码	string
+//    mobile	获取短信验证码的手机号码	string
+//    type	短信模板类型	number	7:找回密码,18:手机验证码登录,19:绑定第三方平台,20:商户app注
 
     private  String code;
-    private  String mobilePhone;
-    private  int command;
+    private  String mobile;
+    private  int type;
 
     public String getCode() {
         return code;
@@ -22,28 +22,28 @@ public class CheckAuthCode {
         this.code = code;
     }
 
-    public String getMobilePhone() {
-        return mobilePhone;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setMobilePhone(String mobilePhone) {
-        this.mobilePhone = mobilePhone;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
-    public int getCommand() {
-        return command;
+    public int getType() {
+        return type;
     }
 
-    public void setCommand(int command) {
-        this.command = command;
+    public void setType(int type) {
+        this.type = type;
     }
 
     @Override
     public String toString() {
         return "CheckAuthCode{" +
                 "code='" + code + '\'' +
-                ", mobilePhone='" + mobilePhone + '\'' +
-                ", command=" + command +
+                ", mobile='" + mobile + '\'' +
+                ", type=" + type +
                 '}';
     }
 }

@@ -51,7 +51,7 @@ public class AliteCheckProvinceActivity extends BaseActivity implements AdapterV
 
     private String cityName, cityId, districtName, districtId;
     private int type;
-    private boolean isCheck=false;
+    private boolean isCheck = false;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -63,7 +63,7 @@ public class AliteCheckProvinceActivity extends BaseActivity implements AdapterV
             }
         }
     };
-    private String provinceName,provinceId;
+    private String provinceName, provinceId;
 
     @Override
     public void setState(int state) {
@@ -112,7 +112,7 @@ public class AliteCheckProvinceActivity extends BaseActivity implements AdapterV
 
     @Override
     protected void onResume() {
-        isCheck=false;
+        isCheck = false;
         super.onResume();
     }
 
@@ -143,23 +143,25 @@ public class AliteCheckProvinceActivity extends BaseActivity implements AdapterV
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        isCheck=true;
-        provinceName = provinceList.get(position-1).getProvinceName();
-        provinceId = provinceList.get(position-1).getProvinceId();
-        cityList = (ArrayList<AddressCity>) provinceList.get(position-1).getCitys();
-        if(cityList.get(0).getCityId() != null){
-            AliteCheckCityActivity.start(AliteCheckProvinceActivity.this,cityList);
+        isCheck = true;
+        provinceName = provinceList.get(position - 1).getProvinceName();
+        provinceId = provinceList.get(position - 1).getProvinceId();
+        cityList = (ArrayList<AddressCity>) provinceList.get(position - 1).getCitys();
+        if (cityList.get(0).getCityId() != null) {
+            AliteCheckCityActivity.start(AliteCheckProvinceActivity.this, cityList);
+            startActivityIn();
         } else {
             districtList = (ArrayList<AddressDistrict>) cityList.get(0).getDistricts();
             if (districtList.size() != 0) {
-                AliteCheckDistrictActivity.start(AliteCheckProvinceActivity.this,districtList,0);
+                AliteCheckDistrictActivity.start(AliteCheckProvinceActivity.this, districtList, 0);
+                startActivityIn();
             }
         }
     }
 
     @Override
     public void onBackPressed() {
-        type=99;
+        type = 99;
         super.onBackPressed();
     }
 
@@ -167,7 +169,7 @@ public class AliteCheckProvinceActivity extends BaseActivity implements AdapterV
     public void finish() {
         Bundle mBundle = new Bundle();
         Intent intent = new Intent();
-        if(isCheck) {
+        if (isCheck) {
             switch (type) {
                 case 0:
                     mBundle.putString("districtName", districtName);
@@ -199,13 +201,14 @@ public class AliteCheckProvinceActivity extends BaseActivity implements AdapterV
         }
         super.finish();
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (data != null) {
                 Bundle mBundle = data.getExtras();
-                switch (resultCode){
+                switch (resultCode) {
                     case 0:
                         districtName = mBundle.getString("districtName");
                         districtId = mBundle.getString("districtId");

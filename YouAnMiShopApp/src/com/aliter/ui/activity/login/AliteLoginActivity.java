@@ -30,6 +30,7 @@ import com.orhanobut.logger.Logger;
 import com.zxly.o2o.account.Account;
 import com.zxly.o2o.application.AppController;
 import com.zxly.o2o.application.Config;
+import com.zxly.o2o.dialog.LoadingDialog;
 import com.zxly.o2o.shop.R;
 import com.zxly.o2o.util.Constants;
 import com.zxly.o2o.util.DESUtils;
@@ -84,6 +85,7 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
     private int LoginType = 0;    //0 密码登录  1 验证码登录
     private int resendTime = 0;
     private final int TIME_CHANGE = 100;
+    private LoadingDialog loadingDialog;
 
     private Handler handler = new Handler() {
 
@@ -110,6 +112,7 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
 
     @Override
     public void onLoginSuccessView(IMUserInfoVO usserInfo) {
+
         Logger.t(TAG).d("登录成功返回信息  ==  " + usserInfo);
         if (!StringUtils.isEmpty(usserInfo.getSignKey())) {
             try {
@@ -127,23 +130,31 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
         usserInfo.setUserName(phoneNumber);
         Account.saveLoginUser(this, usserInfo);
         Account.user = usserInfo;
+        if(loadingDialog.isShow())
+            loadingDialog.dismiss();
 
         ViewUtils.startActivity(new Intent(AliteLoginActivity.this, AliterHomeActivity.class), this);
     }
 
     @Override
     public void onAuthCodeSuccessView(AuthCodeBean authCodeBean) {
+        if(loadingDialog.isShow())
+            loadingDialog.dismiss();
         Logger.t(TAG).d("成功获取验证码返回信息  ==  " + authCodeBean);
         ViewUtils.showToast("验证码已发送");
     }
 
     @Override
     public void onCheckAuthCodeSuccessView(CheckAuthCodeBean checkAuthCodeBean) {
+        if(loadingDialog.isShow())
+            loadingDialog.dismiss();
         Logger.t(TAG).d("成功验证验证码返回信息  ==  " + checkAuthCodeBean);
     }
 
     @Override
     public void onFailView(String errorMsg) {
+        if(loadingDialog.isShow())
+            loadingDialog.dismiss();
     }
 
     @Override
@@ -159,6 +170,7 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
     @Override
     public void initView() {
         initListener();
+        loadingDialog= new LoadingDialog(this);
         editPhone.setText("13592495216");
         editPassword.setText("123456");
     }
@@ -194,6 +206,7 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
                 break;
             case R.id.btn_login:
 
+
                 phoneNumber = editPhone.getText().toString();
                 password = editPassword.getText().toString();
 
@@ -225,11 +238,12 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
                     Login login = new Login();
                     login.setClientId(Config.getuiClientId);
                     login.setUserName(phoneNumber);
-                    login.setType(AppController.PhoneRigisterLoginType);
+                    login.setType(3);
                     login.setCode(editPassword.getText().toString());
                     mPresenter.fetchLogin(login);
 
                 }
+                loadingDialog.show();
                 break;
             case R.id.btn_pwd_login:
                 if (llVerificationLogin.getVisibility() == View.VISIBLE)

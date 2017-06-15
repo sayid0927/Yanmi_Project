@@ -2,4 +2,6 @@
     <string name="Shop_promotion">店店推</string>
     <string name="My_store">我的门店</string>
     <string name="Self">我</string>
+
+    <string name="shop_setting_top">更多的门店信息可在 \"我的门店\" 中设置</string>
 </resources>

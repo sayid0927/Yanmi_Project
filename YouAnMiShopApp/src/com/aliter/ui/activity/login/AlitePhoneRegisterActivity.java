@@ -10,7 +10,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.aliter.base.BaseActivity;
+import com.aliter.entity.AuthCode;
+import com.aliter.entity.AuthCodeBean;
+import com.aliter.injector.component.AlitePhoneRegisterHttpModule;
+import com.aliter.injector.component.activity.DaggerAlitePhoneRegisterComponent;
+import com.aliter.presenter.AlitePhoneRegisterPresenter;
+import com.aliter.presenter.impl.AlitePhoneRegisterPresenterImpl;
+import com.zxly.o2o.application.AppController;
 import com.zxly.o2o.shop.R;
+import com.zxly.o2o.util.PreferUtil;
 import com.zxly.o2o.util.ViewUtils;
 
 import butterknife.BindView;
@@ -20,7 +28,7 @@ import butterknife.OnClick;
  * Created by sayid on 2017/6/6.
  */
 
-public class AlitePhoneRegisterActivity extends BaseActivity {
+public class AlitePhoneRegisterActivity extends BaseActivity<AlitePhoneRegisterPresenterImpl> implements AlitePhoneRegisterPresenter.View {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.btn_clean_name)
@@ -60,7 +68,7 @@ public class AlitePhoneRegisterActivity extends BaseActivity {
 
     @Override
     protected void initInject() {
-
+        DaggerAlitePhoneRegisterComponent.builder().alitePhoneRegisterHttpModule(new AlitePhoneRegisterHttpModule()).build().injectData(this);
     }
 
     @OnClick({R.id.btn_clean_name, R.id.btn_register})
@@ -71,8 +79,13 @@ public class AlitePhoneRegisterActivity extends BaseActivity {
 
                 break;
             case R.id.btn_register:
+                //  手机号注册获取验证码
+                AuthCode authCode = new AuthCode();
+                authCode.setType(AppController.PhoneRigisterLoginType);
+                authCode.setMobile(editPhone.getText().toString());
+                mPresenter.fetchgetAuthCode(authCode);
 
-                ViewUtils.startActivity(new Intent(AlitePhoneRegisterActivity.this, AliteSMSVerificationActivity.class), this);
+//                ViewUtils.startActivity(new Intent(AlitePhoneRegisterActivity.this, AliteSMSVerificationActivity.class), this);
                 break;
         }
     }
@@ -120,4 +133,16 @@ public class AlitePhoneRegisterActivity extends BaseActivity {
         });
     }
 
+    @Override
+    public void onAuthCodeSuccessView(AuthCodeBean authCodeBean) {
+            //  获取验证码成功  后跳转
+        //ViewUtils.startActivity(new Intent(AlitePhoneRegisterActivity.this, AliteSMSVerificationActivity.class), this);
+    }
+
+    @Override
+    public void onFailView(String errorMsg) {
+        //  获取验证码失败
+        PreferUtil.getInstance().setRegisterPhonenum(editPhone.getText().toString());
+        ViewUtils.startActivity(new Intent(AlitePhoneRegisterActivity.this, AliteSMSVerificationActivity.class), this);
+    }
 }

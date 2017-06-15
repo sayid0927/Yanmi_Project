@@ -60,7 +60,7 @@
         <EditText
             android:id="@+id/edit_phone"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_toLeftOf="@id/btn_clean_name"
             android:layout_toRightOf="@id/name_icon"
             android:background="#00000000"
@@ -68,6 +68,7 @@
             android:layout_marginBottom="5dp"
             android:layout_alignParentBottom="true"
             android:inputType="number"
+            android:gravity="bottom"
             android:singleLine="true"
             android:textColorHint="@color/gray_999999"
             android:textSize="15sp" />

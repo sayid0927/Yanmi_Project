@@ -119,8 +119,8 @@ public class AliteForgetPwdActivity extends BaseActivity<AliteForgetPwdPresenter
 
                 CheckAuthCode checkAuthCode = new CheckAuthCode();
                 checkAuthCode.setCode(editPassword.getText().toString());
-                checkAuthCode.setMobilePhone(editPhone.getText().toString());
-                checkAuthCode.setCommand(18);
+                checkAuthCode.setMobile(editPhone.getText().toString());
+                checkAuthCode.setType(18);
                 mPresenter.fetchCheckAuthCode(checkAuthCode);
                 ViewUtils.startActivity(new Intent(AliteForgetPwdActivity.this, AliteChangePwdActivity.class), this);
                 break;

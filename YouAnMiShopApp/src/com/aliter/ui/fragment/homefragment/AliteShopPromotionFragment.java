@@ -69,7 +69,7 @@ public class AliteShopPromotionFragment extends BaseFragment implements AppBarLa
         myAdapter.notifyDataSetChanged();
         tabLayout.setupWithViewPager(vp);
 
-        collapsingtool.setTitleEnabled(false);
+
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
