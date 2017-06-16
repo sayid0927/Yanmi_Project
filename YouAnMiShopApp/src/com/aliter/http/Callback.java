@@ -51,11 +51,11 @@ public abstract class Callback<T> extends Subscriber<T> {
 //            errorMsg = "你连接的网络有问题，请检查网络";
         else
             errorMsg = StatusUtils.getErrorMsg();
-//        if (target != null)
-//            target.setState(AppController.STATE_ERROR);
+
         Logger.t(TAG).i("失败返回信息  ==  " + errorMsg);
         onFail(errorMsg);
         ViewUtils.showToast(errorMsg);
+
     }
 
     @Override
@@ -68,4 +68,5 @@ public abstract class Callback<T> extends Subscriber<T> {
     public abstract void onSuccess(T data);
 
     public abstract void onFail(String msg);
+
 }

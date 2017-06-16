@@ -556,9 +556,11 @@
             android:name="com.aliter.ui.activity.AliterHomeActivity"
             android:theme="@style/AliterAppTheme" />
 
+
         <activity
             android:name="com.aliter.ui.activity.login.AliteLoginActivity"
-            android:theme="@style/AliterAppWhiteBarTheme" />
+            android:theme="@style/AliterAppWhiteBarTheme"
+            android:launchMode="singleTop"/>
         <activity
             android:name="com.aliter.ui.activity.login.AliteForgetPwdActivity"
             android:theme="@style/AliterAppWhiteBarTheme" />

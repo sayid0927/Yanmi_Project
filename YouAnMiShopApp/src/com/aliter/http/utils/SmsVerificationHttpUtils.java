@@ -20,11 +20,11 @@ public class SmsVerificationHttpUtils extends HttpUtils {
         this.smsVerificationService = smsVerificationService;
     }
 
-    public Observable<BaseResponse<CheckAuthCodeBean>> fetchCheckAuthCode(CheckAuthCode checkAuthCode) {
-       return smsVerificationService.CheckAuthCode(checkAuthCode);
+    public Observable<BaseResponse<CheckAuthCodeBean>> shopAPPCheckSecurityCode(CheckAuthCode checkAuthCode) {
+       return smsVerificationService.shopAPPCheckSecurityCode(checkAuthCode);
     }
 
-    public Observable<BaseResponse<AuthCodeBean>> fetchgetAuthCode(AuthCode authCode) {
-        return smsVerificationService.getAuthCode(authCode);
+    public Observable<BaseResponse<AuthCodeBean>> ShopgetSecurityCode(AuthCode authCode) {
+        return smsVerificationService.ShopgetSecurityCode(authCode);
     }
 }

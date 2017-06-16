@@ -15,10 +15,10 @@ import rx.Observable;
 
 public interface SmsVerificationService {
 
-    @POST(AppController.check_auth_code)
-    Observable <BaseResponse<CheckAuthCodeBean>> CheckAuthCode(@Body CheckAuthCode checkAuthCode);
+    @POST(AppController.shopAPP_check_security_code)    //  验证验证码接口
+    Observable <BaseResponse<CheckAuthCodeBean>> ShopAPPCheckSecurityCode(@Body CheckAuthCode checkAuthCode);
 
-    @POST(AppController.shop_get_security_code)
-    Observable <BaseResponse<AuthCodeBean>> getAuthCode(@Body AuthCode authCode);
+    @POST(AppController.shop_get_security_code)       //  获取验证码接口
+    Observable <BaseResponse<AuthCodeBean>> ShopgetSecurityCode(@Body AuthCode authCode);
 
 }

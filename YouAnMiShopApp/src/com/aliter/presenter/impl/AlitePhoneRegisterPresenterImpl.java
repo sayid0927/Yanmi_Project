@@ -2,8 +2,8 @@ package com.aliter.presenter.impl;
 
 
 import com.aliter.base.BasePresenter;
-import com.aliter.entity.AuthCode;
-import com.aliter.entity.AuthCodeBean;
+import com.aliter.entity.MobileExist;
+import com.aliter.entity.MobileExistBean;
 import com.aliter.http.BaseResponse;
 import com.aliter.http.Callback;
 import com.aliter.http.utils.RetrofitPhoneRegisterHttpUtils;
@@ -21,13 +21,13 @@ public class AlitePhoneRegisterPresenterImpl extends BasePresenter<AlitePhoneReg
 
 
     @Override
-    public void fetchgetAuthCode(AuthCode authCode) {
-        invoke(retrofitPhoneRegisterHttpUtils.fetchgetPhoneRegisterAuthCode(authCode),new Callback<BaseResponse<AuthCodeBean>>(){
+    public void ShopAppisMobileExist(MobileExist mobileExist) {
+        invoke(retrofitPhoneRegisterHttpUtils.ShopAppisMobileExist(mobileExist),new Callback<BaseResponse<MobileExistBean>>(){
             @Override
-            public void onSuccess(BaseResponse<AuthCodeBean> data) {
-                AuthCodeBean authCodeBean = data.getData();
-                if(authCodeBean!=null)
-                    mView.onAuthCodeSuccessView(authCodeBean);
+            public void onSuccess(BaseResponse<MobileExistBean> data) {
+                MobileExistBean mobileExistBean = data.getData();
+                if(mobileExistBean!=null)
+                    mView.onShopAppisMobileExistSuccessView(mobileExistBean);
                 else
                     mView.onFailView("数据为空");
             }
@@ -36,8 +36,8 @@ public class AlitePhoneRegisterPresenterImpl extends BasePresenter<AlitePhoneReg
             public void onFail(String msg) {
                 mView.onFailView(msg);
             }
+
+
         });
     }
-
-
 }

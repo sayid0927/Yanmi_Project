@@ -1,7 +1,6 @@
 package com.aliter.ui.activity.login;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.Toolbar;
@@ -20,6 +19,8 @@ import com.aliter.entity.AuthCode;
 import com.aliter.entity.AuthCodeBean;
 import com.aliter.entity.CheckAuthCode;
 import com.aliter.entity.CheckAuthCodeBean;
+import com.aliter.entity.MobileExist;
+import com.aliter.entity.MobileExistBean;
 import com.aliter.entity.WeixinUserInfoBean;
 import com.aliter.injector.component.AliteWeixinUserPhoneHttpModule;
 import com.aliter.injector.component.activity.DaggerAliteWeixinUserPhoneComponent;
@@ -35,7 +36,6 @@ import com.zxly.o2o.util.ViewUtils;
 import com.zxly.o2o.view.CircleImageView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
@@ -230,57 +230,66 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity<AliteWeixinUserPh
                 break;
             case R.id.btn_back_pwd:
 
-
-                //  验证验证码
+                //  2. 验证验证码
                 CheckAuthCode checkAuthCode = new CheckAuthCode();
-                checkAuthCode.setType(19);
+                checkAuthCode.setType(AppController.WeiXinLoginType);
                 checkAuthCode.setMobile(editPhone.getText().toString());
                 checkAuthCode.setCode(editPassword.getText().toString());
                 mPresenter.fetchCheckAuthCode(checkAuthCode);
 
 
-
-
-
-
-                ViewUtils.startActivity(new Intent(AliteWeixinUserPhoneActivity.this, AliteSettingShopInfoActivity.class), this);
                 break;
             case R.id.ll_verification_login:
 
                 if (resendTime > 0) {
                     ViewUtils.showToast(resendTime + "秒后才可再次发送");
                 } else {
-                    resendTime = 54;
-                    handler.sendEmptyMessageDelayed(TIME_CHANGE, 1000);
-                    //获取验证码
+//                    resendTime = 54;
+//                    handler.sendEmptyMessageDelayed(TIME_CHANGE, 1000);
+                    // 1. 获取验证码
                     AuthCode authCode = new AuthCode();
                     authCode.setMobile(editPhone.getText().toString());
                     authCode.setType(AppController.WeiXinLoginType);
-                    authCode.setUserName(editPhone.getText().toString());
                     mPresenter.fetchgetAuthCode(authCode);
 
                 }
-
-
-                AuthCode authCode = new AuthCode();
-                authCode.setMobile(editPhone.getText().toString());
-                authCode.setType(AppController.WeiXinLoginType);
-                mPresenter.fetchgetAuthCode(authCode);
                 break;
         }
     }
 
     @Override
     public void onAuthCodeSuccessView(AuthCodeBean authCodeBean) {
+        //  1. 获取验证码
         ViewUtils.showToast("获取验证码成功");
-
+        //开启计时功能
+        resendTime = 54;
+        handler.sendEmptyMessageDelayed(TIME_CHANGE, 1000);
 
     }
 
     @Override
     public void onCheckAuthCodeSuccessView(CheckAuthCodeBean checkAuthCodeBean) {
-        //  验证成功
+        //  2. 验证验证码成功
+        ViewUtils.showToast("验证验证码成功");
 
+        //  3. 查询该手机号是否注册过
+        MobileExist mobileExist = new MobileExist();
+        mobileExist.setMobile(editPhone.getText().toString());
+        mPresenter.fetchMobileExist(mobileExist);
+
+    }
+
+    @Override
+    public void onisMobileExist(MobileExistBean mobileExistBean) {
+        // 4. 验证手机号是否注册过 是的话直接到首页 不是带他走注册流程
+        if (mobileExistBean.isExist()) {
+            //注册过
+
+
+        } else {
+            // 未注册过  走商户注册流程
+            ViewUtils.startActivity(new Intent(AliteWeixinUserPhoneActivity.this, AliteSettingShopInfoActivity.class), this);
+        }
     }
 
     @Override
@@ -295,10 +304,4 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity<AliteWeixinUserPh
         handler.removeMessages(TIME_CHANGE);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }

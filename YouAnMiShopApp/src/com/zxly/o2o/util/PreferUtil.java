@@ -30,6 +30,9 @@ public final class PreferUtil {
     private static final String REGISTER_PHONE = "register_phone";
     private static final String REGISTER_PWD = "register_pwd";
     private static final String REGISTER_CODE = "register_code";
+
+    private static final String SHOP_APPSETPASSWORD_CODE = "ShopAppSetPasswordCode";
+    private static final String SHOP_APPSETPASSWORD_NUM = "ShopAppSetPasswordNum";
     private static final String NOTIFY_ALL = "notification_all";
     private static final String NOTIFY_LOGOUT = "notification_logout";
     private static final String NOTIFY_SLEEP = "notification_sleep";
@@ -159,6 +162,20 @@ public final class PreferUtil {
         return getString(REGISTER_CODE, "");
     }
 
+
+    public void setShopAppSetPasswordCode(String code) {
+        putString(SHOP_APPSETPASSWORD_CODE, code);
+    }
+    public String getShopAppSetPasswordCode() {
+        return getString(SHOP_APPSETPASSWORD_CODE, "");
+    }
+
+    public void setShopAppSetPasswordPhoneNUm(String PhoneNUm) {
+        putString(SHOP_APPSETPASSWORD_NUM, PhoneNUm);
+    }
+    public String getShopAppSetPasswordPhoneNum() {
+        return getString(SHOP_APPSETPASSWORD_NUM, "");
+    }
 
     //保存微信个人信息
     public  void setWeixinUserInfo(Map<String, String> data) {

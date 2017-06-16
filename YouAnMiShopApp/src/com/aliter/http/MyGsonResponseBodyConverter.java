@@ -13,9 +13,6 @@ import okhttp3.MediaType;
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
 
-/**
- * Created by Administrator on 2017/5/21.
- */
 
 public class MyGsonResponseBodyConverter<T> implements Converter<ResponseBody, T> {
     private static final Charset UTF_8 = Charset.forName("UTF-8");
@@ -37,7 +34,6 @@ public class MyGsonResponseBodyConverter<T> implements Converter<ResponseBody, T
            int errorCode= Integer.valueOf(re.getCode());
             throw new ApiException(errorCode, errorMsg);
         }
-
         MediaType mediaType = value.contentType();
         Charset charset = mediaType != null ? mediaType.charset(UTF_8) : UTF_8;
         ByteArrayInputStream bis = new ByteArrayInputStream(response.getBytes());

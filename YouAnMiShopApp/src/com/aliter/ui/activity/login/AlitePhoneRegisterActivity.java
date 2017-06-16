@@ -10,13 +10,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.aliter.base.BaseActivity;
-import com.aliter.entity.AuthCode;
-import com.aliter.entity.AuthCodeBean;
+import com.aliter.entity.MobileExist;
+import com.aliter.entity.MobileExistBean;
 import com.aliter.injector.component.AlitePhoneRegisterHttpModule;
 import com.aliter.injector.component.activity.DaggerAlitePhoneRegisterComponent;
 import com.aliter.presenter.AlitePhoneRegisterPresenter;
 import com.aliter.presenter.impl.AlitePhoneRegisterPresenterImpl;
-import com.zxly.o2o.application.AppController;
 import com.zxly.o2o.shop.R;
 import com.zxly.o2o.util.PreferUtil;
 import com.zxly.o2o.util.ViewUtils;
@@ -76,16 +75,12 @@ public class AlitePhoneRegisterActivity extends BaseActivity<AlitePhoneRegisterP
         switch (view.getId()) {
             case R.id.btn_clean_name:
                 editPhone.setText("");
-
                 break;
             case R.id.btn_register:
-                //  手机号注册获取验证码
-                AuthCode authCode = new AuthCode();
-                authCode.setType(AppController.PhoneRigisterLoginType);
-                authCode.setMobile(editPhone.getText().toString());
-                mPresenter.fetchgetAuthCode(authCode);
-
-//                ViewUtils.startActivity(new Intent(AlitePhoneRegisterActivity.this, AliteSMSVerificationActivity.class), this);
+                //  1. 先查询手机是否注册过
+                MobileExist mobileExist = new MobileExist();
+                mobileExist.setMobile(editPhone.getText().toString());
+                mPresenter.ShopAppisMobileExist(mobileExist);
                 break;
         }
     }
@@ -134,15 +129,17 @@ public class AlitePhoneRegisterActivity extends BaseActivity<AlitePhoneRegisterP
     }
 
     @Override
-    public void onAuthCodeSuccessView(AuthCodeBean authCodeBean) {
-            //  获取验证码成功  后跳转
-        //ViewUtils.startActivity(new Intent(AlitePhoneRegisterActivity.this, AliteSMSVerificationActivity.class), this);
+    public void onShopAppisMobileExistSuccessView(MobileExistBean mobileExistBean) {
+        //    1.  先查询手机号是否注册过
+        if(mobileExistBean.isExist()){
+            ViewUtils.showToast("该手机号已经注册过");
+        }else {
+            PreferUtil.getInstance().setRegisterPhonenum(editPhone.getText().toString());
+            ViewUtils.startActivity(new Intent(AlitePhoneRegisterActivity.this, AliteSMSVerificationActivity.class), this);
+        }
     }
 
     @Override
     public void onFailView(String errorMsg) {
-        //  获取验证码失败
-        PreferUtil.getInstance().setRegisterPhonenum(editPhone.getText().toString());
-        ViewUtils.startActivity(new Intent(AlitePhoneRegisterActivity.this, AliteSMSVerificationActivity.class), this);
     }
 }

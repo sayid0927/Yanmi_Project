@@ -21,33 +21,37 @@ public class AliteSmsVerficationPresenterImpl extends BasePresenter<AliteSmsVeri
         this.smsVerificationHttpUtils = smsVerificationHttpUtils;
     }
 
+
+
     @Override
-    public void fetchgetAuthCode(CheckAuthCode checkAuthCode) {
-        invoke(smsVerificationHttpUtils.fetchCheckAuthCode(checkAuthCode),new Callback<BaseResponse<CheckAuthCodeBean>>(){
+    public void ShopAPPCheckSecurityCode(CheckAuthCode checkAuthCode) {
+        invoke(smsVerificationHttpUtils.shopAPPCheckSecurityCode(checkAuthCode),new Callback<BaseResponse<CheckAuthCodeBean>>(){
             @Override
             public void onSuccess(BaseResponse<CheckAuthCodeBean> data) {
                 CheckAuthCodeBean authCodeBean = data.getData();
                 if(authCodeBean!=null)
-                    mView.onCheckAuthCodeSuccessView(authCodeBean);
+                    mView.onShopAPPCheckSecurityCodeSuccessView();
                 else
                     mView.onFailView("数据为空");
             }
-
             @Override
             public void onFail(String msg) {
                 mView.onFailView(msg);
             }
+
         });
+
+
     }
 
     @Override
-    public void fetAuthCode(AuthCode authCode) {
-        invoke(smsVerificationHttpUtils.fetchgetAuthCode(authCode),new Callback<BaseResponse<AuthCodeBean>>(){
+    public void ShopgetSecurityCode(AuthCode authCode) {
+        invoke(smsVerificationHttpUtils.ShopgetSecurityCode(authCode),new Callback<BaseResponse<AuthCodeBean>>(){
             @Override
             public void onSuccess(BaseResponse<AuthCodeBean> data) {
                 AuthCodeBean authCodeBean = data.getData();
                 if(authCodeBean!=null)
-                    mView.onAuthCodeSuccessView(authCodeBean);
+                    mView.onShopgetSecurityCodeSuccessView();
                 else
                     mView.onFailView("数据为空");
             }
@@ -56,6 +60,7 @@ public class AliteSmsVerficationPresenterImpl extends BasePresenter<AliteSmsVeri
             public void onFail(String msg) {
                 mView.onFailView(msg);
             }
+
         });
     }
 }

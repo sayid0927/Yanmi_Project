@@ -6,6 +6,8 @@ import com.aliter.entity.AuthCode;
 import com.aliter.entity.AuthCodeBean;
 import com.aliter.entity.CheckAuthCode;
 import com.aliter.entity.CheckAuthCodeBean;
+import com.aliter.entity.MobileExist;
+import com.aliter.entity.MobileExistBean;
 import com.aliter.http.BaseResponse;
 import com.aliter.http.Callback;
 import com.aliter.http.utils.RetrofitWeixinUserPhoneHttpUtils;
@@ -23,6 +25,27 @@ public class AliteWeixinUserPhonePresenterImpl extends BasePresenter<AliteWeixin
 
 
     @Override
+    public void fetchMobileExist(MobileExist mobileExist) {
+        invoke(retrofitWeixinUserPhoneHttpUtils.getisMobileExist(mobileExist),new Callback<BaseResponse<MobileExistBean>>(){
+            @Override
+            public void onSuccess(BaseResponse<MobileExistBean> data) {
+                MobileExistBean mobileExistBean = data.getData();
+                if(mobileExistBean!=null)
+                    mView.onisMobileExist(mobileExistBean);
+                else
+                    mView.onFailView("数据为空");
+            }
+
+            @Override
+            public void onFail(String msg) {
+                mView.onFailView(msg);
+            }
+
+
+        });
+    }
+
+    @Override
     public void fetchgetAuthCode(AuthCode authCode) {
         invoke(retrofitWeixinUserPhoneHttpUtils.getAuthCode(authCode),new Callback<BaseResponse<AuthCodeBean>>(){
             @Override
@@ -38,6 +61,8 @@ public class AliteWeixinUserPhonePresenterImpl extends BasePresenter<AliteWeixin
             public void onFail(String msg) {
                 mView.onFailView(msg);
             }
+
+
         });
     }
 
@@ -57,6 +82,9 @@ public class AliteWeixinUserPhonePresenterImpl extends BasePresenter<AliteWeixin
             public void onFail(String msg) {
                 mView.onFailView(msg);
             }
+
         });
     }
+
+
 }

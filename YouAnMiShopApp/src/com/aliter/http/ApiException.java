@@ -1,9 +1,7 @@
 package com.aliter.http;
 
 
-/**
- * Created by mango on 16/8/18.
- */
+
 public class ApiException extends RuntimeException {
     private int errorCode;
     private String msg;

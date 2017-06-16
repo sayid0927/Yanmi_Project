@@ -38,6 +38,8 @@ public class StorArticlesPresenterImpl extends BasePresenter<StorArticlesPresent
             public void onFail(String msg) {
                 mView.onFailView(msg);
             }
+
+
         });
     }
 }

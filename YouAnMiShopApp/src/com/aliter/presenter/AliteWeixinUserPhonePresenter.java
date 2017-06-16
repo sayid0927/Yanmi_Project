@@ -6,6 +6,8 @@ import com.aliter.entity.AuthCode;
 import com.aliter.entity.AuthCodeBean;
 import com.aliter.entity.CheckAuthCode;
 import com.aliter.entity.CheckAuthCodeBean;
+import com.aliter.entity.MobileExist;
+import com.aliter.entity.MobileExistBean;
 
 
 /**
@@ -16,10 +18,12 @@ public interface AliteWeixinUserPhonePresenter {
     interface View extends BaseView<AuthCodeBean> {
         void  onAuthCodeSuccessView(AuthCodeBean authCodeBean);
         void  onCheckAuthCodeSuccessView(CheckAuthCodeBean checkAuthCodeBean);
+        void   onisMobileExist(MobileExistBean mobileExistBean);
         void  onFailView(String errorMsg);//获取数据失败调用该方法。
 
     }
     interface Presenter {
+        void  fetchMobileExist(MobileExist mobileExist);
         void fetchgetAuthCode(AuthCode authCode);
         void fetchCheckAuthCode(CheckAuthCode checkAuthCode);
     }

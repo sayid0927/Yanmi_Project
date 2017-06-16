@@ -1,8 +1,8 @@
 package com.aliter.http.utils;
 
 
-import com.aliter.entity.AuthCode;
-import com.aliter.entity.AuthCodeBean;
+import com.aliter.entity.MobileExist;
+import com.aliter.entity.MobileExistBean;
 import com.aliter.http.BaseResponse;
 import com.aliter.http.HttpUtils;
 import com.aliter.http.service.PhoneRegisterService;
@@ -18,8 +18,9 @@ public class RetrofitPhoneRegisterHttpUtils extends HttpUtils {
         this.phoneRegisterService = phoneRegisterService;
     }
 
-    public Observable<BaseResponse<AuthCodeBean>> fetchgetPhoneRegisterAuthCode(AuthCode authCode) {
-       return phoneRegisterService.getPhoneRegisterAuthCode(authCode);
+
+    public Observable<BaseResponse<MobileExistBean>> ShopAppisMobileExist(MobileExist mobileExist) {
+        return phoneRegisterService.ShopAppisMobileExist(mobileExist);
     }
 
 }

@@ -2,9 +2,6 @@ package com.aliter.http.service;
 
 
 import com.aliter.entity.AuthCode;
-import com.aliter.entity.AuthCodeBean;
-import com.aliter.entity.CheckAuthCode;
-import com.aliter.entity.CheckAuthCodeBean;
 import com.aliter.entity.Login;
 import com.aliter.http.BaseResponse;
 import com.easemob.easeui.model.IMUserInfoVO;
@@ -24,10 +21,7 @@ public interface LoginService {
     Observable <BaseResponse<IMUserInfoVO>> getLogin(@Body Login login);
 
 
-    @POST(AppController.shop_get_security_code)
-    Observable <BaseResponse<AuthCodeBean>> getAuthCode(@Body AuthCode authCode);
+    @POST(AppController.shop_get_security_code)    //  获取验证码接口
+    Observable <BaseResponse > ShopGetSecurityCode(@Body AuthCode authCode);
 
-
-    @POST(AppController.check_auth_code)
-    Observable <BaseResponse<CheckAuthCodeBean>> getCheckAuthCode(@Body CheckAuthCode checkAuthCode);
 }

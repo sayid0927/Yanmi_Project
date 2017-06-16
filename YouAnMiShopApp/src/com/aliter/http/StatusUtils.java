@@ -1,8 +1,6 @@
 package com.aliter.http;
 
-/**
- * Created by mango on 2016/10/8.
- */
+
 public class StatusUtils {
 
     public static class StatusResult{

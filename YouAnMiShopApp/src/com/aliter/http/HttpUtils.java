@@ -9,9 +9,6 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-/**
- * Created by quantan.liu on 2017/3/21.
- */
 
 public class HttpUtils {
 

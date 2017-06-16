@@ -1,8 +1,8 @@
 package com.aliter.http.service;
 
 
-import com.aliter.entity.AuthCode;
-import com.aliter.entity.AuthCodeBean;
+import com.aliter.entity.MobileExist;
+import com.aliter.entity.MobileExistBean;
 import com.aliter.http.BaseResponse;
 import com.zxly.o2o.application.AppController;
 
@@ -13,8 +13,9 @@ import rx.Observable;
 
 public interface PhoneRegisterService {
 
-    @POST(AppController.shop_get_security_code)
-    Observable <BaseResponse<AuthCodeBean>> getPhoneRegisterAuthCode(@Body AuthCode authCode);
+
+    @POST(AppController.shopApp_isMobileExist)  //查询手机号是否注册1.0-非鉴权
+    Observable <BaseResponse<MobileExistBean>> ShopAppisMobileExist (@Body MobileExist mobileExist);
 
 
 }

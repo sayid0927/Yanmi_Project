@@ -15,9 +15,7 @@ import android.widget.TextView;
 
 import com.aliter.base.BaseActivity;
 import com.aliter.entity.AuthCode;
-import com.aliter.entity.AuthCodeBean;
 import com.aliter.entity.CheckAuthCode;
-import com.aliter.entity.CheckAuthCodeBean;
 import com.aliter.injector.component.AliteSmsVerificationHttpModule;
 import com.aliter.injector.component.activity.DaggerAliteSmsVerificationComponent;
 import com.aliter.presenter.AliteSmsVerificationPresenter;
@@ -100,6 +98,17 @@ public class AliteSMSVerificationActivity extends BaseActivity<AliteSmsVerficati
 
     @Override
     public void initView() {
+
+
+        resendTime = 54;
+        handler.sendEmptyMessageDelayed(TIME_CHANGE, 1000);
+        //  1.  获取验证码
+        AuthCode authCode = new AuthCode();
+        authCode.setMobile(editPhone.getText().toString());
+        authCode.setType(AppController.PhoneRigisterLoginType);
+        mPresenter.ShopgetSecurityCode(authCode);
+
+
         PhoneNum = PreferUtil.getInstance().getRegisterPhonenum();
         if (!StringUtils.isEmpty(PhoneNum)) {
             if (PhoneNum.length() == 11) {
@@ -148,8 +157,7 @@ public class AliteSMSVerificationActivity extends BaseActivity<AliteSmsVerficati
                 checkAuthCode.setMobile(PhoneNum);
                 checkAuthCode.setCode(editPhone.getText().toString());
                 checkAuthCode.setType(AppController.PhoneRigisterLoginType);
-                mPresenter.fetchgetAuthCode(checkAuthCode);
-                // ViewUtils.startActivity(new Intent(AliteSMSVerificationActivity.this, AliteSettingShopInfoActivity.class), this);
+                mPresenter.ShopAPPCheckSecurityCode(checkAuthCode);
                 break;
 
             case R.id.tv_verification:  // 重新发送验证码
@@ -163,7 +171,7 @@ public class AliteSMSVerificationActivity extends BaseActivity<AliteSmsVerficati
                     authCode.setMobile(editPhone.getText().toString());
                     authCode.setType(AppController.PhoneRigisterLoginType);
                     authCode.setUserName(editPhone.getText().toString());
-                    mPresenter.fetAuthCode(authCode);
+                    mPresenter.ShopgetSecurityCode(authCode);
 
                 }
 
@@ -255,9 +263,8 @@ public class AliteSMSVerificationActivity extends BaseActivity<AliteSmsVerficati
         });
     }
 
-
     @Override
-    public void onCheckAuthCodeSuccessView(CheckAuthCodeBean checkAuthCodeBean) {
+    public void onShopAPPCheckSecurityCodeSuccessView( ) {
         //验证验证码成功
         PreferUtil.getInstance().setRegisterPwd(editPassword.getText().toString());  //保存密码    在注册页面提交到后台
         PreferUtil.getInstance().setRegisterCode(editPhone.getText().toString());    //保存验证码  在注册页面提交到后台
@@ -265,14 +272,14 @@ public class AliteSMSVerificationActivity extends BaseActivity<AliteSmsVerficati
     }
 
     @Override
-    public void onAuthCodeSuccessView(AuthCodeBean forgetPwdAuthCodeBean) {
-         //两次发送验证码成功
-
+    public void onShopgetSecurityCodeSuccessView( ) {
+        //发送验证码成功
+        ViewUtils.showToast("验证码已送，请注意查收");
     }
 
     @Override
     public void onFailView(String errorMsg) {
-        ViewUtils.startActivity(new Intent(AliteSMSVerificationActivity.this, AliteSettingShopInfoActivity.class), this);
+//        ViewUtils.showToast("验证码发送失败，请重新发送");
     }
 
 }

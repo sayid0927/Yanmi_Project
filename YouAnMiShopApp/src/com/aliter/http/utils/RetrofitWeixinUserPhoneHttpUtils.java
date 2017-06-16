@@ -5,15 +5,14 @@ import com.aliter.entity.AuthCode;
 import com.aliter.entity.AuthCodeBean;
 import com.aliter.entity.CheckAuthCode;
 import com.aliter.entity.CheckAuthCodeBean;
+import com.aliter.entity.MobileExist;
+import com.aliter.entity.MobileExistBean;
 import com.aliter.http.BaseResponse;
 import com.aliter.http.HttpUtils;
 import com.aliter.http.service.WeixinUserPhoneService;
 
 import rx.Observable;
 
-/**
- * Created by quantan.liu on 2017/3/21.
- */
 
 public class RetrofitWeixinUserPhoneHttpUtils extends HttpUtils {
 
@@ -30,5 +29,9 @@ public class RetrofitWeixinUserPhoneHttpUtils extends HttpUtils {
 
     public Observable<BaseResponse<CheckAuthCodeBean>> getCheckAuthCode(CheckAuthCode checkAuthCode) {
         return weixinUserPhoneService.getCheckAuthCode(checkAuthCode);
+    }
+
+    public Observable<BaseResponse<MobileExistBean>> getisMobileExist(MobileExist mobileExist) {
+        return weixinUserPhoneService.getisMobileExist(mobileExist);
     }
 }

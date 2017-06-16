@@ -3,15 +3,19 @@ package com.aliter.presenter.impl;
 
 import com.aliter.base.BasePresenter;
 import com.aliter.entity.AuthCode;
-import com.aliter.entity.AuthCodeBean;
-import com.aliter.entity.CheckAuthCode;
-import com.aliter.entity.CheckAuthCodeBean;
 import com.aliter.entity.Login;
 import com.aliter.http.BaseResponse;
 import com.aliter.http.Callback;
 import com.aliter.http.utils.RetrofitLoginHttpUtils;
 import com.aliter.presenter.LoginPresenter;
+import com.blankj.utilcode.utils.StringUtils;
+import com.easemob.chatuidemo.HXConstant;
 import com.easemob.easeui.model.IMUserInfoVO;
+import com.zxly.o2o.application.AppController;
+import com.zxly.o2o.application.Config;
+import com.zxly.o2o.util.DESUtils;
+import com.zxly.o2o.util.EncryptionUtils;
+import com.zxly.o2o.util.PreferUtil;
 
 import javax.inject.Inject;
 
@@ -30,6 +34,22 @@ public class LoginPresenterImpl extends BasePresenter<LoginPresenter.View> imple
             public void onSuccess(BaseResponse<IMUserInfoVO> data) {
                 IMUserInfoVO imUserInfoVO = data.getData();
                 if (imUserInfoVO != null) {
+
+                    if (!StringUtils.isEmpty(imUserInfoVO.getSignKey())) {
+                        try {
+                            Config.accessKey = DESUtils.decrypt(imUserInfoVO.getSignKey(), Config.USER_SIGN_KEY);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (!StringUtils.isEmpty(imUserInfoVO.getToken()))
+                        PreferUtil.getInstance().setLoginToken(imUserInfoVO.getToken());
+                    HXConstant.isLoginSuccess = true; //标识登录hx成功
+                    AppController.getInstance().initHXAccount(imUserInfoVO, true);   //登录环信
+                    imUserInfoVO.setPassword(EncryptionUtils.md5TransferPwd(imUserInfoVO.getPassword()));
+                    imUserInfoVO.setUserName(imUserInfoVO.getName());
+
+
                     mView.onLoginSuccessView(imUserInfoVO);
                 }
                 else
@@ -40,37 +60,23 @@ public class LoginPresenterImpl extends BasePresenter<LoginPresenter.View> imple
             public void onFail(String msg) {
                 mView.onFailView(msg);
             }
-        });
-    }
-    @Override
-    public void fetchgetAuthCode(AuthCode authCode) {
-        invoke(retrofitLoginHttpUtils.getAuthCode(authCode), new Callback<BaseResponse<AuthCodeBean>>() {
-            @Override
-            public void onSuccess(BaseResponse<AuthCodeBean> data) {
-                AuthCodeBean authCodeBean = data.getData();
-                if (authCodeBean != null) {
-                    mView.onAuthCodeSuccessView(authCodeBean);
-                } else
-                    mView.onFailView("数据为空");
-            }
-            @Override
-            public void onFail(String msg) {
-                mView.onFailView(msg);
-            }
+
+
         });
     }
 
     @Override
-    public void fetchCheckAuthCode(CheckAuthCode checkAuthCode) {
-        invoke(retrofitLoginHttpUtils.getCheckAuthCode(checkAuthCode), new Callback<BaseResponse<CheckAuthCodeBean>>() {
+    public void ShopGetSecurityCode(AuthCode authCode) {
+        invoke(retrofitLoginHttpUtils.ShopGetSecurityCode(authCode), new Callback<BaseResponse>() {
             @Override
-            public void onSuccess(BaseResponse<CheckAuthCodeBean> data) {
-                CheckAuthCodeBean checkAuthCodeBean = data.getData();
-                if (checkAuthCodeBean != null) {
-                    mView.onCheckAuthCodeSuccessView(checkAuthCodeBean);
-                } else
+            public void onSuccess(BaseResponse data) {
+                if(data!=null){
+                    mView.onShopGetSecurityCodeSuccessView();
+                }else {
                     mView.onFailView("数据为空");
+                }
             }
+
             @Override
             public void onFail(String msg) {
                 mView.onFailView(msg);

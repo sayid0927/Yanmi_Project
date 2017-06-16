@@ -5,7 +5,6 @@ import com.aliter.base.BasePresenter;
 import com.aliter.entity.AuthCode;
 import com.aliter.entity.AuthCodeBean;
 import com.aliter.entity.CheckAuthCode;
-import com.aliter.entity.CheckAuthCodeBean;
 import com.aliter.http.BaseResponse;
 import com.aliter.http.Callback;
 import com.aliter.http.utils.RetrofitForgetPwdAuthCodeHttpUtils;
@@ -23,35 +22,35 @@ public class AliteForgetPwdPresenterImpl extends BasePresenter<AliteForgetPwdPre
 
 
     @Override
-    public void fetchgetAuthCode(AuthCode forgetPwdAuthCode) {
-        invoke(retrofitForgetPwdAuthCodeHttpUtils.fetchgetForgetPwdAuthCode(forgetPwdAuthCode),new Callback<BaseResponse<AuthCodeBean>>(){
+    public void ShopGetSecurityCode(AuthCode authCode) {
+        invoke(retrofitForgetPwdAuthCodeHttpUtils.ShopGetSecurityCode(authCode), new Callback<BaseResponse<AuthCodeBean>>() {
             @Override
             public void onSuccess(BaseResponse<AuthCodeBean> data) {
-                AuthCodeBean authCodeBean = data.getData();
-                if(authCodeBean!=null)
-                    mView.onAuthCodeSuccessView(authCodeBean);
-                else
+                if(data!=null){
+                    mView.onShopGetSecurityCodeSuccessView();
+                }else {
                     mView.onFailView("数据为空");
+                }
             }
-
             @Override
             public void onFail(String msg) {
-                mView.onFailView(msg);
+                    mView.onFailView(msg);
             }
         });
     }
 
     @Override
-    public void fetchCheckAuthCode(CheckAuthCode checkAuthCode) {
-        invoke(retrofitForgetPwdAuthCodeHttpUtils.getCheckAuthCode(checkAuthCode), new Callback<BaseResponse<CheckAuthCodeBean>>() {
+    public void ShopAppCheckSecurityCode(CheckAuthCode checkAuthCode) {
+        invoke(retrofitForgetPwdAuthCodeHttpUtils.ShopAppCheckSecurityCode(checkAuthCode), new Callback<BaseResponse>() {
             @Override
-            public void onSuccess(BaseResponse<CheckAuthCodeBean> data) {
-                CheckAuthCodeBean checkAuthCodeBean = data.getData();
-                if (checkAuthCodeBean != null) {
-                    mView.onBackPwdSuccessView(checkAuthCodeBean);
-                } else
+            public void onSuccess(BaseResponse data) {
+                if(data!=null){
+                    mView.onShopAppCheckSecurityCodeSuccessView();
+                }else {
                     mView.onFailView("数据为空");
+                }
             }
+
             @Override
             public void onFail(String msg) {
                 mView.onFailView(msg);

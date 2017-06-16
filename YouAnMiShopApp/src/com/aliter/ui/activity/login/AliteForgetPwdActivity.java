@@ -15,15 +15,14 @@ import android.widget.TextView;
 
 import com.aliter.base.BaseActivity;
 import com.aliter.entity.AuthCode;
-import com.aliter.entity.AuthCodeBean;
 import com.aliter.entity.CheckAuthCode;
-import com.aliter.entity.CheckAuthCodeBean;
 import com.aliter.injector.component.AliteForgetPwdHttpModule;
 import com.aliter.injector.component.activity.DaggerAliteForgetPwdComponent;
 import com.aliter.presenter.AliteForgetPwdPresenter;
 import com.aliter.presenter.impl.AliteForgetPwdPresenterImpl;
 import com.zxly.o2o.application.AppController;
 import com.zxly.o2o.shop.R;
+import com.zxly.o2o.util.PreferUtil;
 import com.zxly.o2o.util.StringUtil;
 import com.zxly.o2o.util.ViewUtils;
 
@@ -104,7 +103,6 @@ public class AliteForgetPwdActivity extends BaseActivity<AliteForgetPwdPresenter
 
     @Override
     protected void initInject() {
-
         DaggerAliteForgetPwdComponent.builder().aliteForgetPwdHttpModule(new AliteForgetPwdHttpModule()).build().injectData(this);
     }
 
@@ -116,27 +114,26 @@ public class AliteForgetPwdActivity extends BaseActivity<AliteForgetPwdPresenter
                 editPassword.setText("");
                 break;
             case R.id.btn_back_pwd:
-
+                //验证验证码
                 CheckAuthCode checkAuthCode = new CheckAuthCode();
                 checkAuthCode.setCode(editPassword.getText().toString());
                 checkAuthCode.setMobile(editPhone.getText().toString());
-                checkAuthCode.setType(18);
-                mPresenter.fetchCheckAuthCode(checkAuthCode);
-                ViewUtils.startActivity(new Intent(AliteForgetPwdActivity.this, AliteChangePwdActivity.class), this);
+                checkAuthCode.setType(AppController.ForgetPwdType);
+                mPresenter.ShopAppCheckSecurityCode(checkAuthCode);
+
                 break;
             case R.id.ll_verification_login:
 
                 if (resendTime > 0) {
                     ViewUtils.showToast(resendTime + "秒后才可再次发送");
                 } else {
-                    resendTime = 54;
-                    handler.sendEmptyMessageDelayed(TIME_CHANGE, 1000);
+
                     //获取验证码
                     AuthCode authCode = new AuthCode();
                     authCode.setMobile(editPhone.getText().toString());
                     authCode.setType(AppController.ForgetPwdType);
                     authCode.setUserName(editPhone.getText().toString());
-                    mPresenter.fetchgetAuthCode(authCode);
+                    mPresenter.ShopGetSecurityCode(authCode);
 
                 }
 
@@ -239,16 +236,19 @@ public class AliteForgetPwdActivity extends BaseActivity<AliteForgetPwdPresenter
 
 
     @Override
-    public void onAuthCodeSuccessView(AuthCodeBean forgetPwdAuthCodeBean) {
-        ViewUtils.showToast("验证码已发送");
+    public void onShopAppCheckSecurityCodeSuccessView() {
+        //验证验证码成功
+        PreferUtil.getInstance().setShopAppSetPasswordCode(editPassword.getText().toString());           //保存验证码
+        PreferUtil.getInstance().setShopAppSetPasswordPhoneNUm(editPhone.getText().toString());          //保存手机号码
+        ViewUtils.startActivity(new Intent(AliteForgetPwdActivity.this, AliteChangePwdActivity.class), this);
     }
 
     @Override
-    public void onBackPwdSuccessView(CheckAuthCodeBean checkAuthCodeBean) {
-        ViewUtils.showToast("验证码成功");
-        ViewUtils.startActivity(new Intent(AliteForgetPwdActivity.this, AliteChangePwdActivity.class), this);
-
-
+    public void onShopGetSecurityCodeSuccessView() {
+        //验证码发送成功
+        resendTime = 54;
+        handler.sendEmptyMessageDelayed(TIME_CHANGE, 1000);
+        ViewUtils.showToast("验证码已发送");
     }
 
     @Override
