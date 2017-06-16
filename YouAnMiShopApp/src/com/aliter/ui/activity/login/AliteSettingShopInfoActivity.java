@@ -21,8 +21,16 @@ import com.aliter.injector.component.activity.DaggerAliteSettingShopInfoComponen
 import com.aliter.presenter.AliteSettingShopInfoPresenter;
 import com.aliter.presenter.impl.AliteSettingShopInfoPresenterImpl;
 import com.aliter.ui.activity.AliterHomeActivity;
+import com.blankj.utilcode.utils.StringUtils;
+import com.easemob.chatuidemo.HXConstant;
 import com.easemob.easeui.model.IMUserInfoVO;
+import com.zxly.o2o.account.Account;
+import com.zxly.o2o.application.AppController;
+import com.zxly.o2o.application.Config;
+import com.zxly.o2o.dialog.LoadingDialog;
 import com.zxly.o2o.shop.R;
+import com.zxly.o2o.util.DESUtils;
+import com.zxly.o2o.util.EncryptionUtils;
 import com.zxly.o2o.util.PreferUtil;
 import com.zxly.o2o.util.StringUtil;
 import com.zxly.o2o.util.ViewUtils;
@@ -68,6 +76,7 @@ public class AliteSettingShopInfoActivity extends BaseActivity<AliteSettingShopI
 
     private String provinceId, cityName, districtId, districtName, cityId, provinceName, GeneralizeCode;
     private WeixinUserInfoBean weixinUserInfo;
+    private LoadingDialog loadingDialog;
 
 
     @Override
@@ -87,6 +96,7 @@ public class AliteSettingShopInfoActivity extends BaseActivity<AliteSettingShopI
 
     @Override
     public void initView() {
+        loadingDialog= new LoadingDialog(this);
         initListener();
         btnBackPwd.setEnabled(false);
         btnBackPwd.setTextColor(getResources().getColor(R.color.white));
@@ -158,8 +168,8 @@ public class AliteSettingShopInfoActivity extends BaseActivity<AliteSettingShopI
                     shopRegister.setWxUnionId(weixinUserInfo.getUid());                 //微信用户统一id
                     shopRegister.setWxHeadUrl(weixinUserInfo.getIconurl());             // 微信头像地址
                 }
+                loadingDialog.show();
                 mPresenter.fetchShopRegister(shopRegister);
-                ViewUtils.startActivity(new Intent(AliteSettingShopInfoActivity.this, AliterHomeActivity.class), this);
                 break;
         }
     }
@@ -201,7 +211,27 @@ public class AliteSettingShopInfoActivity extends BaseActivity<AliteSettingShopI
     }
 
     @Override
-    public void onShopRegisterSuccessView(IMUserInfoVO imUserInfoVO) {
+    public void onShopRegisterSuccessView(IMUserInfoVO usserInfo) {
+
+        if (!StringUtils.isEmpty(usserInfo.getSignKey())) {
+            try {
+                Config.accessKey = DESUtils.decrypt(usserInfo.getSignKey(), Config.USER_SIGN_KEY);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if (!StringUtils.isEmpty(usserInfo.getToken()))
+            PreferUtil.getInstance().setLoginToken(usserInfo.getToken());
+        HXConstant.isLoginSuccess = true; //标识登录hx成功
+        AppController.getInstance().initHXAccount(usserInfo, true);   //登录环信
+        usserInfo.setPassword(EncryptionUtils.md5TransferPwd(usserInfo.getPassword()));
+        usserInfo.setUserName(usserInfo.getName());
+
+        Account.saveLoginUser(this, usserInfo);
+        Account.user = usserInfo;
+        if (loadingDialog.isShow())
+            loadingDialog.dismiss();
+        ViewUtils.startActivity(new Intent(AliteSettingShopInfoActivity.this, AliterHomeActivity.class), this);
 
     }
 

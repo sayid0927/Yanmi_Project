@@ -164,8 +164,7 @@ public class AliteSMSVerificationActivity extends BaseActivity<AliteSmsVerficati
                 if (resendTime > 0) {
                     ViewUtils.showToast(resendTime + "秒后才可再次发送");
                 } else {
-                    resendTime = 54;
-                    handler.sendEmptyMessageDelayed(TIME_CHANGE, 1000);
+
                     //获取验证码
                     AuthCode authCode = new AuthCode();
                     authCode.setMobile(editPhone.getText().toString());
@@ -275,6 +274,8 @@ public class AliteSMSVerificationActivity extends BaseActivity<AliteSmsVerficati
     public void onShopgetSecurityCodeSuccessView( ) {
         //发送验证码成功
         ViewUtils.showToast("验证码已送，请注意查收");
+        resendTime = 54;
+        handler.sendEmptyMessageDelayed(TIME_CHANGE, 1000);
     }
 
     @Override

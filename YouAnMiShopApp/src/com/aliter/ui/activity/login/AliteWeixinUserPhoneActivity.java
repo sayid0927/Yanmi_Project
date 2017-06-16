@@ -16,9 +16,8 @@ import android.widget.TextView;
 
 import com.aliter.base.BaseActivity;
 import com.aliter.entity.AuthCode;
-import com.aliter.entity.AuthCodeBean;
 import com.aliter.entity.CheckAuthCode;
-import com.aliter.entity.CheckAuthCodeBean;
+import com.aliter.entity.Login;
 import com.aliter.entity.MobileExist;
 import com.aliter.entity.MobileExistBean;
 import com.aliter.entity.WeixinUserInfoBean;
@@ -26,10 +25,18 @@ import com.aliter.injector.component.AliteWeixinUserPhoneHttpModule;
 import com.aliter.injector.component.activity.DaggerAliteWeixinUserPhoneComponent;
 import com.aliter.presenter.AliteWeixinUserPhonePresenter;
 import com.aliter.presenter.impl.AliteWeixinUserPhonePresenterImpl;
+import com.aliter.ui.activity.AliterHomeActivity;
 import com.aliter.utils.GlideUtils;
 import com.blankj.utilcode.utils.StringUtils;
+import com.easemob.chatuidemo.HXConstant;
+import com.easemob.easeui.model.IMUserInfoVO;
+import com.zxly.o2o.account.Account;
 import com.zxly.o2o.application.AppController;
+import com.zxly.o2o.application.Config;
+import com.zxly.o2o.dialog.LoadingDialog;
 import com.zxly.o2o.shop.R;
+import com.zxly.o2o.util.DESUtils;
+import com.zxly.o2o.util.EncryptionUtils;
 import com.zxly.o2o.util.PreferUtil;
 import com.zxly.o2o.util.StringUtil;
 import com.zxly.o2o.util.ViewUtils;
@@ -73,7 +80,9 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity<AliteWeixinUserPh
 
     private int resendTime = 0;
     private final int TIME_CHANGE = 100;
+    private WeixinUserInfoBean weixinUserInfo;
 
+    private LoadingDialog loadingDialog;
 
     private Handler handler = new Handler() {
 
@@ -92,6 +101,7 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity<AliteWeixinUserPh
             }
         }
     };
+
 
     @Override
     public void setState(int state) {
@@ -113,7 +123,7 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity<AliteWeixinUserPh
         btnBackPwd.setEnabled(false);
         btnBackPwd.setTextColor(getResources().getColor(R.color.white));
         initListener();
-        WeixinUserInfoBean weixinUserInfo = PreferUtil.getInstance().getWeixinUserInfo();
+        weixinUserInfo = PreferUtil.getInstance().getWeixinUserInfo();
         if (weixinUserInfo != null) {
             if (!StringUtils.isEmpty(weixinUserInfo.getIconurl())) {
                 iconurl = weixinUserInfo.getIconurl();
@@ -135,6 +145,7 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity<AliteWeixinUserPh
     }
 
     private void initListener() {
+        loadingDialog = new LoadingDialog(this);
         StringUtil.changeScrollView(editPhone, scrollView);
         StringUtil.changeScrollView(editPassword, scrollView);
         editPhone.addTextChangedListener(new TextWatcher() {
@@ -235,8 +246,8 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity<AliteWeixinUserPh
                 checkAuthCode.setType(AppController.WeiXinLoginType);
                 checkAuthCode.setMobile(editPhone.getText().toString());
                 checkAuthCode.setCode(editPassword.getText().toString());
-                mPresenter.fetchCheckAuthCode(checkAuthCode);
-
+                mPresenter.ShopAPPCheckSecurityCode(checkAuthCode);
+                loadingDialog.show();
 
                 break;
             case R.id.ll_verification_login:
@@ -244,52 +255,89 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity<AliteWeixinUserPh
                 if (resendTime > 0) {
                     ViewUtils.showToast(resendTime + "秒后才可再次发送");
                 } else {
-//                    resendTime = 54;
-//                    handler.sendEmptyMessageDelayed(TIME_CHANGE, 1000);
                     // 1. 获取验证码
                     AuthCode authCode = new AuthCode();
                     authCode.setMobile(editPhone.getText().toString());
                     authCode.setType(AppController.WeiXinLoginType);
-                    mPresenter.fetchgetAuthCode(authCode);
-
+                    mPresenter.ShopGetSecurityCod(authCode);
+                    loadingDialog.show();
                 }
                 break;
         }
     }
 
+
     @Override
-    public void onAuthCodeSuccessView(AuthCodeBean authCodeBean) {
-        //  1. 获取验证码
+    public void onShopGetSecurityCodeSuccessView() {
+        //  获取验证码成功
         ViewUtils.showToast("获取验证码成功");
         //开启计时功能
         resendTime = 54;
         handler.sendEmptyMessageDelayed(TIME_CHANGE, 1000);
-
     }
 
     @Override
-    public void onCheckAuthCodeSuccessView(CheckAuthCodeBean checkAuthCodeBean) {
-        //  2. 验证验证码成功
-        ViewUtils.showToast("验证验证码成功");
+    public void onShopAPPCheckSecurityCodeSuccessView() {
+        //  验证验证码成功
 
+        ViewUtils.showToast("验证验证码成功");
         //  3. 查询该手机号是否注册过
         MobileExist mobileExist = new MobileExist();
         mobileExist.setMobile(editPhone.getText().toString());
-        mPresenter.fetchMobileExist(mobileExist);
-
+        mPresenter.ShopAppisMobileExist(mobileExist);
     }
 
     @Override
-    public void onisMobileExist(MobileExistBean mobileExistBean) {
-        // 4. 验证手机号是否注册过 是的话直接到首页 不是带他走注册流程
+    public void onShopAppisMobileExistSuccessView(MobileExistBean mobileExistBean) {
+        //  查询手机号是否注册过成功
         if (mobileExistBean.isExist()) {
-            //注册过
-
+            //如果是老用户直接走验证码登录流程
+//            clientId	个推客户端id	string
+//            code	验证码	string	type为3，必传，店店推项目增加
+//            password	用户密码	string	type为1，必传
+//            type	登录类型,1:账号密码登录,2:微信登录,3:验证码登录	number	不传服务器默认为1，店店推项目增加
+//            userName	用户账号	string	type为1、3，必传
+//            wxOpenId	微信用户openId	string	type为2，必传，店店推项目增加
+//            wxUnionId	微信用户统一id	string	type为2，必传，店店推项目增加
+            Login login = new Login();
+            login.setClientId(Config.getuiClientId);
+            login.setCode(editPassword.getText().toString());
+            login.setType(3);
+            login.setUserName(editPhone.getText().toString());
+            login.setWxOpenId(weixinUserInfo.getOpenid());
+            login.setWxUnionId(weixinUserInfo.getUnionid());
+            mPresenter.AuthShopLogin2(login);
 
         } else {
+            if(loadingDialog.isShow())
+                loadingDialog.dismiss();
             // 未注册过  走商户注册流程
             ViewUtils.startActivity(new Intent(AliteWeixinUserPhoneActivity.this, AliteSettingShopInfoActivity.class), this);
         }
+    }
+
+    @Override
+    public void onAuthShopLogin2SuccessView(IMUserInfoVO usserInfo) {
+        //  微信老用户登录成功
+        if (!StringUtils.isEmpty(usserInfo.getSignKey())) {
+            try {
+                Config.accessKey = DESUtils.decrypt(usserInfo.getSignKey(), Config.USER_SIGN_KEY);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if (!StringUtils.isEmpty(usserInfo.getToken()))
+            PreferUtil.getInstance().setLoginToken(usserInfo.getToken());
+        HXConstant.isLoginSuccess = true; //标识登录hx成功
+        AppController.getInstance().initHXAccount(usserInfo, true);   //登录环信
+        usserInfo.setPassword(EncryptionUtils.md5TransferPwd(usserInfo.getPassword()));
+        usserInfo.setUserName(usserInfo.getName());
+
+        Account.saveLoginUser(this, usserInfo);
+        Account.user = usserInfo;
+        if (loadingDialog.isShow())
+            loadingDialog.dismiss();
+        ViewUtils.startActivity(new Intent(AliteWeixinUserPhoneActivity.this, AliterHomeActivity.class), this);
     }
 
     @Override
@@ -303,5 +351,4 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity<AliteWeixinUserPh
         super.finish();
         handler.removeMessages(TIME_CHANGE);
     }
-
 }
