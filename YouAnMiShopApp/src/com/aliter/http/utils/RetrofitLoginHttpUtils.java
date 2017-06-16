@@ -21,7 +21,7 @@ public class RetrofitLoginHttpUtils extends HttpUtils {
     }
 
     public Observable<BaseResponse<IMUserInfoVO>> fetchLogin(Login login) {
-       return loginService.getLogin(login);
+       return loginService.AuthShopLogin2(login);
     }
 
     public Observable<BaseResponse > ShopGetSecurityCode(AuthCode authCode) {

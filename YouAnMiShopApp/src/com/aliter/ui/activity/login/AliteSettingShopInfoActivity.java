@@ -72,8 +72,6 @@ public class AliteSettingShopInfoActivity extends BaseActivity<AliteSettingShopI
     EditText editGeneralizeCode;
 
     private String iconurl;
-
-
     private String provinceId, cityName, districtId, districtName, cityId, provinceName, GeneralizeCode;
     private WeixinUserInfoBean weixinUserInfo;
     private LoadingDialog loadingDialog;
@@ -212,7 +210,7 @@ public class AliteSettingShopInfoActivity extends BaseActivity<AliteSettingShopI
 
     @Override
     public void onShopRegisterSuccessView(IMUserInfoVO usserInfo) {
-
+          //  注册成功直接跳转到首页
         if (!StringUtils.isEmpty(usserInfo.getSignKey())) {
             try {
                 Config.accessKey = DESUtils.decrypt(usserInfo.getSignKey(), Config.USER_SIGN_KEY);

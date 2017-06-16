@@ -28,7 +28,7 @@ public class LoginPresenterImpl extends BasePresenter<LoginPresenter.View> imple
     }
 
     @Override
-    public void fetchLogin(Login login) {
+    public void AuthShopLogin2(Login login) {
         invoke(retrofitLoginHttpUtils.fetchLogin(login), new Callback<BaseResponse<IMUserInfoVO>>() {
             @Override
             public void onSuccess(BaseResponse<IMUserInfoVO> data) {
@@ -50,7 +50,7 @@ public class LoginPresenterImpl extends BasePresenter<LoginPresenter.View> imple
                     imUserInfoVO.setUserName(imUserInfoVO.getName());
 
 
-                    mView.onLoginSuccessView(imUserInfoVO);
+                    mView.onAuthShopLogin2SuccessView(imUserInfoVO);
                 }
                 else
                     mView.onFailView("数据为空");

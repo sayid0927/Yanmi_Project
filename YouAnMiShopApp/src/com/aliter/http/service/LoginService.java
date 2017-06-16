@@ -17,8 +17,8 @@ import rx.Observable;
 
 public interface LoginService {
 
-    @POST(AppController.auth_shop_login2)
-    Observable <BaseResponse<IMUserInfoVO>> getLogin(@Body Login login);
+    @POST(AppController.auth_shop_login2)   // 登录接口
+    Observable <BaseResponse<IMUserInfoVO>> AuthShopLogin2(@Body Login login);
 
 
     @POST(AppController.shop_get_security_code)    //  获取验证码接口

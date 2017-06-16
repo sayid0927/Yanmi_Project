@@ -107,8 +107,8 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
     }
 
     @Override
-    public void onLoginSuccessView(IMUserInfoVO usserInfo) {
-       //  登录成功返回
+    public void onAuthShopLogin2SuccessView(IMUserInfoVO usserInfo) {
+        //  登录成功返回
         Logger.t(TAG).d("登录成功返回信息  ==  " + usserInfo);
         Account.saveLoginUser(this, usserInfo);
         Account.user = usserInfo;
@@ -211,7 +211,7 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
                     login.setUserName(phoneNumber);
                     login.setType(1);
                     login.setPassword(EncryptionUtils.md5TransferPwd(password));
-                    mPresenter.fetchLogin(login);
+                    mPresenter.AuthShopLogin2(login);
                 } else {
                     //  手机验证码登录
                     Login login = new Login();
@@ -219,7 +219,7 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
                     login.setUserName(phoneNumber);
                     login.setType(3);
                     login.setCode(editPassword.getText().toString());
-                    mPresenter.fetchLogin(login);
+                    mPresenter.AuthShopLogin2(login);
 
                 }
                 loadingDialog.show();

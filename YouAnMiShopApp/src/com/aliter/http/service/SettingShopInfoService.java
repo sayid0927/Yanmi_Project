@@ -13,6 +13,6 @@ import rx.Observable;
 
 public interface SettingShopInfoService {
 
-    @POST(AppController.auth_shop_register)
+    @POST(AppController.auth_shop_register)   //注册接口
     Observable <BaseResponse<IMUserInfoVO>> AuthShopRegister(@Body ShopRegister shopRegister);
 }
