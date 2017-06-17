@@ -20,8 +20,6 @@ import rx.Observable;
 
 public interface WeixinUserPhoneService {
 
-
-
     @POST(AppController.shop_get_security_code)  //  获取验证码接口
     Observable <BaseResponse> ShopGetSecurityCode(@Body AuthCode authCode);
 

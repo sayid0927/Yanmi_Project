@@ -15,6 +15,7 @@ import com.aliter.injector.component.module.ActivityModule;
 import com.aliter.ui.SwipeBackActivity.SwipeBackActivity;
 import com.aliter.ui.SwipeBackActivity.SwipeBackLayout;
 import com.zxly.o2o.application.AppController;
+import com.zxly.o2o.dialog.LoadingDialog;
 import com.zxly.o2o.shop.R;
 
 import javax.inject.Inject;
@@ -29,6 +30,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends SwipeBackAct
 
     @Inject
     protected P mPresenter;
+
     public static BaseActivity activity;
     private SwipeBackLayout mSwipeBackLayout;
 
@@ -50,6 +52,8 @@ public abstract class BaseActivity<P extends BasePresenter> extends SwipeBackAct
 
 
     private Unbinder bind;
+    protected LoadingDialog loadingDialog;
+    protected   int State;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,10 +91,16 @@ public abstract class BaseActivity<P extends BasePresenter> extends SwipeBackAct
 
 
     @Override
+    public void setState(int state) {
+       State =state;
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         activity = this;
     }
+
 
     @Override
     protected void onPause() {
@@ -119,9 +129,13 @@ public abstract class BaseActivity<P extends BasePresenter> extends SwipeBackAct
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK)
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if(loadingDialog!=null&&loadingDialog.isShow()){
+                loadingDialog.dismiss();
+            }
             finish();
             finishActivity();
+        }
         return super.onKeyDown(keyCode, event);
     }
 
@@ -133,6 +147,23 @@ public abstract class BaseActivity<P extends BasePresenter> extends SwipeBackAct
     protected  void startActivityIn() {
      overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
     }
+    protected  void  ShowLoadingDialog(){
+        if(State!=AppController.STATE_ERROR) {
+            if (loadingDialog == null) {
+                loadingDialog = new LoadingDialog(this);
+                loadingDialog.show();
+            } else {
+                loadingDialog.show();
+            }
+        }
+    }
+
+    protected  void  DismissLoadingDialog(){
+        if(loadingDialog.isShow()){
+            loadingDialog.dismiss();
+        }
+    }
+
 
 //    public void killAllActivity() {
 //        List<Activity> copy;

@@ -62,7 +62,7 @@ public class AliteForgetPwdActivity extends BaseActivity<AliteForgetPwdPresenter
                 case TIME_CHANGE:
                     resendTime--;
                     if (resendTime > 0) {
-                        tvVerification.setText(String.format("%d秒后重发", resendTime));
+                        tvVerification.setText(String.format("重新发送 %d 秒", resendTime));
                         handler.sendEmptyMessageDelayed(TIME_CHANGE, 1000);
                     } else {
                         ViewUtils.setText(tvVerification, "重新发送");
@@ -71,11 +71,6 @@ public class AliteForgetPwdActivity extends BaseActivity<AliteForgetPwdPresenter
             }
         }
     };
-
-    @Override
-    public void setState(int state) {
-
-    }
 
     @Override
     public int getLayoutId() {
@@ -123,6 +118,11 @@ public class AliteForgetPwdActivity extends BaseActivity<AliteForgetPwdPresenter
 
                 break;
             case R.id.ll_verification_login:
+
+                if (editPhone.getText().length() < 11) {
+                    ViewUtils.showToast("请输入正确的手机号");
+                    break;
+                }
 
                 if (resendTime > 0) {
                     ViewUtils.showToast(resendTime + "秒后才可再次发送");
@@ -240,7 +240,12 @@ public class AliteForgetPwdActivity extends BaseActivity<AliteForgetPwdPresenter
         //验证验证码成功
         PreferUtil.getInstance().setShopAppSetPasswordCode(editPassword.getText().toString());           //保存验证码
         PreferUtil.getInstance().setShopAppSetPasswordPhoneNUm(editPhone.getText().toString());          //保存手机号码
-        ViewUtils.startActivity(new Intent(AliteForgetPwdActivity.this, AliteChangePwdActivity.class), this);
+
+        Intent intent = new Intent(AliteForgetPwdActivity.this, AliteChangePwdActivity.class);
+        AliteForgetPwdActivity.this.startActivityForResult(intent, 1);
+        startActivityIn();
+
+      //  ViewUtils.startActivity(new Intent(AliteForgetPwdActivity.this, AliteChangePwdActivity.class), this);
     }
 
     @Override
@@ -248,11 +253,27 @@ public class AliteForgetPwdActivity extends BaseActivity<AliteForgetPwdPresenter
         //验证码发送成功
         resendTime = 54;
         handler.sendEmptyMessageDelayed(TIME_CHANGE, 1000);
-        ViewUtils.showToast("验证码已发送");
+        ViewUtils.showToast(this.getResources().getString(R.string.sen_register_code));
     }
 
     @Override
     public void onFailView(String errorMsg) {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (data != null) {
+                 if(resultCode==0){
+                     Intent intent = new Intent();
+                     intent.putExtra("phoneNum",data.getStringExtra("phoneNum"));
+                     setResult(0, intent);
+                     finishActivity();
+                     finish();
+                 }
+            }
+        }
     }
 }

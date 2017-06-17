@@ -6,7 +6,6 @@ import android.os.Message;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,7 +27,7 @@ import com.orhanobut.logger.Logger;
 import com.zxly.o2o.account.Account;
 import com.zxly.o2o.application.AppController;
 import com.zxly.o2o.application.Config;
-import com.zxly.o2o.dialog.LoadingDialog;
+import com.zxly.o2o.request.GetuiBindRequest;
 import com.zxly.o2o.shop.R;
 import com.zxly.o2o.util.Constants;
 import com.zxly.o2o.util.EncryptionUtils;
@@ -81,7 +80,6 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
     private int LoginType = 0;    //0 密码登录  1 验证码登录
     private int resendTime = 0;
     private final int TIME_CHANGE = 100;
-    private LoadingDialog loadingDialog;
 
     private Handler handler = new Handler() {
 
@@ -91,7 +89,7 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
                 case TIME_CHANGE:
                     resendTime--;
                     if (resendTime > 0) {
-                        tvVerification.setText(String.format("%d秒后重发", resendTime));
+                        tvVerification.setText(String.format("重新发送 (%d s) ", resendTime));
                         handler.sendEmptyMessageDelayed(TIME_CHANGE, 1000);
                     } else {
                         ViewUtils.setText(tvVerification, "重新发送");
@@ -101,10 +99,6 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
         }
     };
 
-    @Override
-    public void setState(int state) {
-
-    }
 
     @Override
     public void onAuthShopLogin2SuccessView(IMUserInfoVO usserInfo) {
@@ -112,8 +106,8 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
         Logger.t(TAG).d("登录成功返回信息  ==  " + usserInfo);
         Account.saveLoginUser(this, usserInfo);
         Account.user = usserInfo;
-        if(loadingDialog.isShow())
-            loadingDialog.dismiss();
+        new GetuiBindRequest(Config.getuiClientId).start();
+        DismissLoadingDialog();
 
         ViewUtils.startActivity(new Intent(AliteLoginActivity.this, AliterHomeActivity.class), this);
     }
@@ -121,18 +115,16 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
     @Override
     public void onShopGetSecurityCodeSuccessView() {
         //  获取验证码成功返回
-        if(loadingDialog.isShow())
-            loadingDialog.dismiss();
+       DismissLoadingDialog();
         //开启计时功能
-        ViewUtils.showToast("验证码已发送");
+        ViewUtils.showToast(this.getResources().getString(R.string.sen_register_code));
         resendTime = 54;
         handler.sendEmptyMessageDelayed(TIME_CHANGE, 1000);
     }
 
     @Override
     public void onFailView(String errorMsg) {
-        if(loadingDialog.isShow())
-            loadingDialog.dismiss();
+        DismissLoadingDialog();
     }
 
     @Override
@@ -148,7 +140,7 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
     @Override
     public void initView() {
         initListener();
-        loadingDialog= new LoadingDialog(this);
+
         editPhone.setText("13592495216");
         editPassword.setText("123456");
     }
@@ -175,7 +167,12 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
                 editPassword.setText("");
                 break;
             case R.id.tv_forget_pwd:        //  忘记密码
-                ViewUtils.startActivity(new Intent(AliteLoginActivity.this, AliteForgetPwdActivity.class), this);
+
+                Intent intent = new Intent(AliteLoginActivity.this, AliteForgetPwdActivity.class);
+                AliteLoginActivity.this.startActivityForResult(intent, 1);
+                startActivityIn();
+
+//                ViewUtils.startActivity(new Intent(AliteLoginActivity.this, AliteForgetPwdActivity.class), this);
 
                 break;
             case R.id.tv_register_shop:    // 注册商户
@@ -198,6 +195,10 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
                     ViewUtils.showToast("请输入正确的电话号码！");
                     return;
                 }
+//                if(RegexUtils.isMobileSimple(phoneNumber)) {
+//                    ViewUtils.showToast("请输入正确的正确手机号码！");
+//                    return;
+//                }
                 Pattern p = Pattern.compile(Constants.PASSWORD_PATTERN);
                 Matcher m = p.matcher(password);
                 if (!m.matches()) {
@@ -222,7 +223,7 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
                     mPresenter.AuthShopLogin2(login);
 
                 }
-                loadingDialog.show();
+                ShowLoadingDialog();
                 break;
             case R.id.btn_pwd_login:
                 if (llVerificationLogin.getVisibility() == View.VISIBLE)
@@ -264,6 +265,12 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
                 break;
 
             case R.id.ll_verification_login:        //获取验证码
+
+                if (editPhone.getText().length() < 11) {
+                    ViewUtils.showToast("请输入正确的手机号");
+                    break;
+                }
+
                 if (resendTime > 0) {
                     ViewUtils.showToast(resendTime + "秒后才可再次发送");
                 } else {
@@ -272,8 +279,9 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
                     authCode.setMobile(editPhone.getText().toString());
                     authCode.setType(AppController.PhoneRigisterLoginType);
                     mPresenter.ShopGetSecurityCode(authCode);
-                    loadingDialog.show();
+//                    loadingDialog.show();
 
+                      ShowLoadingDialog();
                 }
                 break;
         }
@@ -379,15 +387,17 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
         handler.removeMessages(TIME_CHANGE);
     }
 
-    /**
-     * 回退键
-     */
+
+
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK){
-            if(loadingDialog.isShow())
-                loadingDialog.dismiss();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (data != null) {
+                if (resultCode == 0) { // 忘记密码返回
+                    editPhone.setText(data.getStringExtra("phoneNum"));
+                }
+            }
         }
-        return super.onKeyDown(keyCode, event);
     }
 }

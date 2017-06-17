@@ -3,7 +3,6 @@ package com.aliter.presenter.impl;
 
 import com.aliter.base.BasePresenter;
 import com.aliter.entity.AuthCode;
-import com.aliter.entity.AuthCodeBean;
 import com.aliter.entity.CheckAuthCode;
 import com.aliter.http.BaseResponse;
 import com.aliter.http.Callback;
@@ -23,9 +22,9 @@ public class AliteForgetPwdPresenterImpl extends BasePresenter<AliteForgetPwdPre
 
     @Override
     public void ShopGetSecurityCode(AuthCode authCode) {
-        invoke(retrofitForgetPwdAuthCodeHttpUtils.ShopGetSecurityCode(authCode), new Callback<BaseResponse<AuthCodeBean>>() {
+        invoke(retrofitForgetPwdAuthCodeHttpUtils.ShopGetSecurityCode(authCode), new Callback<BaseResponse>() {
             @Override
-            public void onSuccess(BaseResponse<AuthCodeBean> data) {
+            public void onSuccess(BaseResponse data) {
                 if(data!=null){
                     mView.onShopGetSecurityCodeSuccessView();
                 }else {

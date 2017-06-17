@@ -44,11 +44,7 @@ public class AliteChangePwdActivity extends BaseActivity<AliteChangePwdPresenter
         super.onResume();
     }
 
-    @Override
-    public void setState(int state) {
 
-
-    }
 
     @Override
     public int getLayoutId() {
@@ -80,8 +76,10 @@ public class AliteChangePwdActivity extends BaseActivity<AliteChangePwdPresenter
     @Override
     public void onShopSetPassword2SuccessView() {
         //设置密码成功返回
-        ViewUtils.showToast("设置密码成功");
-        startActivity(new Intent(AliteChangePwdActivity.this, AliteLoginActivity.class));
+        ViewUtils.showToast(this.getResources().getString(R.string.set_new_pwd));
+        Intent intent = new Intent();
+        intent.putExtra("phoneNum",PreferUtil.getInstance().getShopAppSetPasswordPhoneNum());
+        setResult(0, intent);
         finishActivity();
         finish();
 
@@ -90,7 +88,7 @@ public class AliteChangePwdActivity extends BaseActivity<AliteChangePwdPresenter
     @Override
     public void onFailView(String errorMsg) {
         //  设置密码失败返回
-        ViewUtils.showToast("设置密码失败");
+//        ViewUtils.showToast("设置密码失败");
     }
 
     @OnClick({R.id.btn_clean_password, R.id.btn_back_pwd})

@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.aliter.base.BaseActivity;
 import com.zxly.o2o.adapter.AddressAdapter;
 import com.zxly.o2o.application.AppController;
-import com.zxly.o2o.dialog.LoadingDialog;
 import com.zxly.o2o.model.AddressCountry;
 import com.zxly.o2o.model.AddressDistrict;
 import com.zxly.o2o.shop.R;
@@ -40,7 +39,6 @@ public class AliteCheckDistrictActivity extends BaseActivity implements AdapterV
     private AddressAdapter adapter = null;
     private static ArrayList<AddressDistrict> districtList = new ArrayList<AddressDistrict>();
     private ArrayList<String> dataList = new ArrayList<String>();
-    private LoadingDialog loadingDialog;
     private String districtName, districtId;
     private static int type;
     private boolean isCheck = false;
@@ -70,7 +68,7 @@ public class AliteCheckDistrictActivity extends BaseActivity implements AdapterV
         adapter.setCurrentState(2);
         ViewGroup headView = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.item_custom_article_list_header, null);
         TextView txCtys = (TextView) headView.findViewById(R.id.tx_ctiy);
-        txCtys.setText("请选择省/直辖市");
+        txCtys.setText("请选择区/县");
         listView.addHeaderView(headView);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);

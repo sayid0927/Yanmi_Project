@@ -16,7 +16,6 @@ import com.aliter.base.BaseActivity;
 import com.zxly.o2o.adapter.AddressAdapter;
 import com.zxly.o2o.application.AppController;
 import com.zxly.o2o.application.Config;
-import com.zxly.o2o.dialog.LoadingDialog;
 import com.zxly.o2o.model.AddressCity;
 import com.zxly.o2o.model.AddressCountry;
 import com.zxly.o2o.model.AddressDistrict;
@@ -47,7 +46,7 @@ public class AliteCheckProvinceActivity extends BaseActivity implements AdapterV
     private ArrayList<String> dataList = new ArrayList<String>();
     private ArrayList<AddressCity> cityList = new ArrayList<AddressCity>();
     private ArrayList<AddressDistrict> districtList = new ArrayList<AddressDistrict>();
-    private LoadingDialog loadingDialog;
+
 
     private String cityName, cityId, districtName, districtId;
     private int type;
@@ -57,8 +56,7 @@ public class AliteCheckProvinceActivity extends BaseActivity implements AdapterV
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (msg.what == 1000) {
-                if (loadingDialog.isShow())
-                    loadingDialog.dismiss();
+               DismissLoadingDialog();
                 initViews();
             }
         }
@@ -87,12 +85,11 @@ public class AliteCheckProvinceActivity extends BaseActivity implements AdapterV
         if (areaList != null && !areaList.isEmpty()) {
             initViews();
         } else {
-            loadingDialog = new LoadingDialog(AliteCheckProvinceActivity.this);
-            loadingDialog.show();
+          ShowLoadingDialog();
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    Config.areaList = AreaUtil.getAreaFromFile();
+                    Config.areaList = AreaUtil.getAreaFromFiles();
                     areaList = Config.areaList;
                     if (areaList != null && !areaList.isEmpty()) {
                         handler.sendEmptyMessage(1000);

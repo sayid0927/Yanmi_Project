@@ -27,7 +27,6 @@ import com.easemob.easeui.model.IMUserInfoVO;
 import com.zxly.o2o.account.Account;
 import com.zxly.o2o.application.AppController;
 import com.zxly.o2o.application.Config;
-import com.zxly.o2o.dialog.LoadingDialog;
 import com.zxly.o2o.shop.R;
 import com.zxly.o2o.util.DESUtils;
 import com.zxly.o2o.util.EncryptionUtils;
@@ -74,13 +73,7 @@ public class AliteSettingShopInfoActivity extends BaseActivity<AliteSettingShopI
     private String iconurl;
     private String provinceId, cityName, districtId, districtName, cityId, provinceName, GeneralizeCode;
     private WeixinUserInfoBean weixinUserInfo;
-    private LoadingDialog loadingDialog;
 
-
-    @Override
-    public void setState(int state) {
-
-    }
 
     @Override
     public int getLayoutId() {
@@ -94,7 +87,7 @@ public class AliteSettingShopInfoActivity extends BaseActivity<AliteSettingShopI
 
     @Override
     public void initView() {
-        loadingDialog= new LoadingDialog(this);
+
         initListener();
         btnBackPwd.setEnabled(false);
         btnBackPwd.setTextColor(getResources().getColor(R.color.white));
@@ -166,8 +159,8 @@ public class AliteSettingShopInfoActivity extends BaseActivity<AliteSettingShopI
                     shopRegister.setWxUnionId(weixinUserInfo.getUid());                 //微信用户统一id
                     shopRegister.setWxHeadUrl(weixinUserInfo.getIconurl());             // 微信头像地址
                 }
-                loadingDialog.show();
                 mPresenter.fetchShopRegister(shopRegister);
+                ShowLoadingDialog();
                 break;
         }
     }
@@ -227,15 +220,15 @@ public class AliteSettingShopInfoActivity extends BaseActivity<AliteSettingShopI
 
         Account.saveLoginUser(this, usserInfo);
         Account.user = usserInfo;
-        if (loadingDialog.isShow())
-            loadingDialog.dismiss();
+        PreferUtil.getInstance().CleanWeixinUserInfo(weixinUserInfo);
+        DismissLoadingDialog();
         ViewUtils.startActivity(new Intent(AliteSettingShopInfoActivity.this, AliterHomeActivity.class), this);
 
     }
 
     @Override
     public void onFailView(String errorMsg) {
-
+            DismissLoadingDialog();
     }
 
 

@@ -53,11 +53,13 @@ public class AliteStoreArticlesFragment extends BaseFragment<StorArticlesPresent
     private ShareDialog dialog;
     private int PageIndex = 1;
     private boolean isRefresh = false;
+    public  static  AliteStoreArticlesFragment install;
 
 
     @Override
     public void onGetDataSuccessView(List<StoreArticleBean> data) {
         this.data=data;
+        mSwipeRefreshLayout.setRefreshing(false);
         for (int i=0;i<data.size();i++){
             if(StringUtils.isEmpty(data.get(i).getHeadUrl())){
                 data.get(i).setType(StoreArticleBean.NO_ICON);
@@ -92,8 +94,14 @@ public class AliteStoreArticlesFragment extends BaseFragment<StorArticlesPresent
         return R.layout.alite_fragment_strore_articles;
     }
 
+
+
+    public  void  setmSwipeRefreshLayoutEnabled(boolean enabled){
+        mSwipeRefreshLayout.setEnabled(enabled);
+    }
     @Override
     protected void initView() {
+        install =this;
 //        mSwipeRefreshLayout.setEnabled(false);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mAdapter);

@@ -49,7 +49,7 @@
                     android:layout_weight="1"
                     android:checked="true"
                     android:drawableTop="@drawable/al_icon_name_click"
-                    android:textColor="@color/black"
+                    android:textColor="@color/half_transparent_orange"
                     android:textSize="11dp"
                     android:gravity="center"
                     android:text="@string/Shop_promotion" />

@@ -3,11 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ChatProject/ChatProject.iml" filepath="$PROJECT_DIR$/ChatProject/ChatProject.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Yanmi_Project.iml" filepath="$PROJECT_DIR$/Yanmi_Project.iml" />
-      <module fileurl="file://$PROJECT_DIR$/YouAnMiShopApp/YouAnMiShopApp.iml" filepath="$PROJECT_DIR$/YouAnMiShopApp/YouAnMiShopApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/YouAnMiShopApp/YouAnMiShopApp.iml" filepath="$PROJECT_DIR$/YouAnMiShopApp/YouAnMiShopApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/YouAnMiUserApp/YouAnMiUserApp.iml" filepath="$PROJECT_DIR$/YouAnMiUserApp/YouAnMiUserApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/greenlib/greenlib.iml" filepath="$PROJECT_DIR$/greenlib/greenlib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/imageviewseleck/imageviewseleck.iml" filepath="$PROJECT_DIR$/imageviewseleck/imageviewseleck.iml" />
+      <module fileurl="file://$PROJECT_DIR$/yanmi_Project.iml" filepath="$PROJECT_DIR$/yanmi_Project.iml" />
     </modules>
   </component>
 </project>

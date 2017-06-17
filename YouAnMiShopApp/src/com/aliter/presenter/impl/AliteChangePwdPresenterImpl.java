@@ -32,7 +32,7 @@ public class AliteChangePwdPresenterImpl extends BasePresenter<AliteChangePwdPre
 
             @Override
             public void onFail(String msg) {
-
+mView.onFailView(msg);
             }
 
         });

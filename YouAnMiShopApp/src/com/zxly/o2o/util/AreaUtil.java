@@ -50,6 +50,31 @@ public class AreaUtil {
 			is.close();
 			
 			JSONObject obj = new JSONObject(json);
+			String data = obj.getString("prvs");
+			TypeToken<List<AddressCountry>> type1 = new TypeToken<List<AddressCountry>>() {
+			};
+			List<AddressCountry> addressList = GsonParser.getInstance()
+					.fromJson(data, type1);
+			if (addressList != null && !addressList.isEmpty()) {
+				list.addAll(addressList);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	public static ArrayList<AddressCountry> getAreaFromFiles() {
+		ArrayList<AddressCountry> list = new ArrayList<AddressCountry>();
+		AssetManager s = AppController.getInstance().getResources().getAssets();
+		try {
+			InputStream is = s.open("addresss.json");
+			byte[] buffer = new byte[is.available()];
+			is.read(buffer);
+			String json = new String(buffer, "utf-8");
+			is.close();
+
+			JSONObject obj = new JSONObject(json);
 			String data = obj.getString("data");
 			TypeToken<List<AddressCountry>> type1 = new TypeToken<List<AddressCountry>>() {
 			};

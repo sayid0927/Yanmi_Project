@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+import com.aliter.ui.activity.AliterHomeActivity;
+import com.aliter.ui.activity.login.AliteLaunchActivity;
 import com.easemob.easeui.widget.viewpagerindicator.CirclePageIndicator;
 import com.zxly.o2o.account.Account;
 import com.zxly.o2o.application.AppController;
@@ -68,12 +70,19 @@ public class ShopGuideAct extends BasicAct {
             public void onClick(View v) {
                 PreferUtil.getInstance().setShopAppHasOpen();
                 if(Account.user==null){
-                    LoginAct.start(ShopGuideAct.this);
+//                    LoginAct.start(ShopGuideAct.this);
+//                    ShopGuideAct.this.finish();
+
+                    Intent intent = new Intent(ShopGuideAct.this, AliteLaunchActivity.class);
+                    ViewUtils.startActivity(intent, ShopGuideAct.this);
                     ShopGuideAct.this.finish();
                 }else {
                     AppController.getInstance().initHXAccount(Account.user,false);
-                    Intent intent = new Intent(ShopGuideAct.this, MainActivity.class);
+//                    Intent intent = new Intent(ShopGuideAct.this, MainActivity.class);
+//                    ViewUtils.startActivity(intent, ShopGuideAct.this);
+                    Intent intent = new Intent(ShopGuideAct.this, AliterHomeActivity.class);
                     ViewUtils.startActivity(intent, ShopGuideAct.this);
+                    ShopGuideAct.this.finish();
                 }
             }
         });

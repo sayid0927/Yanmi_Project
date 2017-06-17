@@ -58,53 +58,53 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
 
-        <!--<activity-->
-        <!--android:name="com.zxly.o2o.activity.LaunchAct"-->
-        <!--android:label="@string/app_name"-->
-        <!--android:exported="true"-->
-        <!--android:screenOrientation="portrait">-->
-        <!--<intent-filter>-->
-        <!--<action android:name="android.intent.action.MAIN"/>-->
-
-
-        <!--<category android:name="android.intent.category.LAUNCHER"/>-->
-        <!--</intent-filter>-->
-
-
-        <!--<intent-filter>-->
-        <!--<action android:name="android.intent.action.VIEW" />-->
-        <!--<category android:name="android.intent.category.DEFAULT" />-->
-        <!--<category android:name="android.intent.category.BROWSABLE" />-->
-        <!--<data-->
-        <!--android:host="shopapp.com"-->
-        <!--android:scheme="yam" />-->
-        <!--</intent-filter>-->
-
-
-        <!--</activity>-->
-
         <activity
-            android:name="com.aliter.ui.activity.login.AliteLaunchActivity"
-            android:exported="true"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:theme="@style/AliterAppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        android:name="com.zxly.o2o.activity.LaunchAct"
+        android:label="@string/app_name"
+        android:exported="true"
+        android:screenOrientation="portrait">
+        <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+        <category android:name="android.intent.category.LAUNCHER"/>
+        </intent-filter>
 
-                <data
-                    android:host="shopapp.com"
-                    android:scheme="yam" />
-            </intent-filter>
+
+        <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data
+        android:host="shopapp.com"
+        android:scheme="yam" />
+        </intent-filter>
+
+
         </activity>
+
+        <!--<activity-->
+            <!--android:name="com.aliter.ui.activity.login.AliteLaunchActivity"-->
+            <!--android:exported="true"-->
+            <!--android:label="@string/app_name"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:theme="@style/AliterAppTheme">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.VIEW" />-->
+
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
+                <!--<category android:name="android.intent.category.BROWSABLE" />-->
+
+                <!--<data-->
+                    <!--android:host="shopapp.com"-->
+                    <!--android:scheme="yam" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
 
 
         <activity
@@ -261,7 +261,8 @@
         <activity
             android:name="com.zxly.o2o.activity.SettingAct"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AliterAppTheme" />
         <activity
             android:name="com.zxly.o2o.activity.SecurityCenterAct"
             android:label="@string/app_name"
@@ -555,6 +556,10 @@
         <activity
             android:name="com.aliter.ui.activity.AliterHomeActivity"
             android:theme="@style/AliterAppTheme" />
+        <activity
+            android:name="com.aliter.ui.activity.login.AliteLaunchActivity"
+            android:theme="@style/AliterAppTheme" />
+
 
 
         <activity
@@ -599,6 +604,13 @@
             android:name="com.aliter.ui.activity.login.AliteCheckDistrictActivity"
             android:theme="@style/AliterAppWhiteBarTheme"
             android:launchMode="singleTop"/>
+
+
+        <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+        <activity android:name="com.yongchun.library.view.ImageSelectorActivity"/>
+        <activity android:name="com.yongchun.library.view.ImagePreviewActivity"/>
+        <activity android:name="com.yongchun.library.view.ImageCropActivity"/>
 
         <!--<activity-->
         <!--android:name= "com.aliter"-->

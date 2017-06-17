@@ -81,10 +81,6 @@ public class AliteSMSVerificationActivity extends BaseActivity<AliteSmsVerficati
         super.onResume();
     }
 
-    @Override
-    public void setState(int state) {
-
-    }
 
     @Override
     public int getLayoutId() {
@@ -103,18 +99,15 @@ public class AliteSMSVerificationActivity extends BaseActivity<AliteSmsVerficati
         resendTime = 54;
         handler.sendEmptyMessageDelayed(TIME_CHANGE, 1000);
         //  1.  获取验证码
-        AuthCode authCode = new AuthCode();
-        authCode.setMobile(editPhone.getText().toString());
-        authCode.setType(AppController.PhoneRigisterLoginType);
-        mPresenter.ShopgetSecurityCode(authCode);
-
 
         PhoneNum = PreferUtil.getInstance().getRegisterPhonenum();
         if (!StringUtils.isEmpty(PhoneNum)) {
             if (PhoneNum.length() == 11) {
-                StringBuilder sb = new StringBuilder(PhoneNum);
-                sb.replace(3, 7, "****");
-                tvPhoneNum.setText("短信验证码已发送至" + " " + sb.toString());
+
+                AuthCode authCode = new AuthCode();
+                authCode.setMobile(PhoneNum);
+                authCode.setType(AppController.ShopRigisterLoginType);
+                mPresenter.ShopgetSecurityCode(authCode);
             }
         }
         initListener();
@@ -156,7 +149,7 @@ public class AliteSMSVerificationActivity extends BaseActivity<AliteSmsVerficati
                 CheckAuthCode checkAuthCode = new CheckAuthCode();
                 checkAuthCode.setMobile(PhoneNum);
                 checkAuthCode.setCode(editPhone.getText().toString());
-                checkAuthCode.setType(AppController.PhoneRigisterLoginType);
+                checkAuthCode.setType(AppController.ShopRigisterLoginType);
                 mPresenter.ShopAPPCheckSecurityCode(checkAuthCode);
                 break;
 
@@ -167,8 +160,8 @@ public class AliteSMSVerificationActivity extends BaseActivity<AliteSmsVerficati
 
                     //获取验证码
                     AuthCode authCode = new AuthCode();
-                    authCode.setMobile(editPhone.getText().toString());
-                    authCode.setType(AppController.PhoneRigisterLoginType);
+                    authCode.setMobile(PhoneNum);
+                    authCode.setType(AppController.ShopRigisterLoginType);
                     authCode.setUserName(editPhone.getText().toString());
                     mPresenter.ShopgetSecurityCode(authCode);
 
@@ -273,9 +266,12 @@ public class AliteSMSVerificationActivity extends BaseActivity<AliteSmsVerficati
     @Override
     public void onShopgetSecurityCodeSuccessView( ) {
         //发送验证码成功
-        ViewUtils.showToast("验证码已送，请注意查收");
+        ViewUtils.showToast(this.getResources().getString(R.string.sen_register_code));
         resendTime = 54;
         handler.sendEmptyMessageDelayed(TIME_CHANGE, 1000);
+        StringBuilder sb = new StringBuilder(PhoneNum);
+        sb.replace(3, 7, "****");
+        tvPhoneNum.setText("短信验证码已发送至" + " " + sb.toString());
     }
 
     @Override

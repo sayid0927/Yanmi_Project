@@ -9,6 +9,8 @@ import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.aliter.ui.activity.AliterHomeActivity;
+import com.aliter.ui.activity.login.AliteLaunchActivity;
 import com.zxly.o2o.account.Account;
 import com.zxly.o2o.application.AppController;
 import com.zxly.o2o.request.AdQueryRequest;
@@ -63,8 +65,7 @@ public class LaunchAct extends BasicAct {
                 txtUpdatePercent.setText("正在为您下载最新版本请稍候(" + object + "%)");
             }
         });
-        versionCheckRequest
-                .setOnResponseStateListener(new BaseRequest.ResponseStateListener() {
+        versionCheckRequest.setOnResponseStateListener(new BaseRequest.ResponseStateListener() {
 
                     @Override
                     public void onOK() {
@@ -213,12 +214,15 @@ public class LaunchAct extends BasicAct {
         }else {
             if (Account.user != null) {
                 AppController.getInstance().initHXAccount(Account.user,false);
-                Intent intent = new Intent(LaunchAct.this, MainActivity.class);
-                intent.putExtra("extra_bundle",extra_bundle);
+//                Intent intent = new Intent(LaunchAct.this, MainActivity.class);
+//                intent.putExtra("extra_bundle",extra_bundle);
+                Intent intent = new Intent(LaunchAct.this, AliterHomeActivity.class);
                 ViewUtils.startActivity(intent, this);
                 finish();
             } else {
-                LoginAct.start(LaunchAct.this);
+//                LoginAct.start(LaunchAct.this);
+                Intent intent = new Intent(LaunchAct.this, AliteLaunchActivity.class);
+                ViewUtils.startActivity(intent, this);
                 finish();
             }
         }

@@ -28,7 +28,7 @@ public class LoadingDialog {
         //		context = AppController.getInstance().getTopAct();
         this.context = context;
         dialog = new Dialog(context, R.style.dialog);
-        dialog.setCancelable(false);
+        dialog.setCancelable(true);
         this.dialog.getWindow().setGravity(Gravity.CENTER);
         //之前加载动画图片
 //        progressAnima = AnimationUtils.loadAnimation(context,
@@ -46,7 +46,7 @@ public class LoadingDialog {
     public LoadingDialog() {
         context = AppController.getInstance().getTopAct();
         dialog = new Dialog(context, R.style.dialog);
-        dialog.setCancelable(false);
+//        dialog.setCancelable(false);
         this.dialog.getWindow().setGravity(Gravity.CENTER);
 //        progressAnima = AnimationUtils.loadAnimation(context,
 //                R.anim.loading_progressbar_anim);

@@ -6,31 +6,26 @@
     android:layout_height="match_parent"
     android:background="@android:color/background_light"
     android:clipToPadding="true"
+
     android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:fitsSystemWindows="true">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsingtool"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
-
-            app:layout_collapseMode="pin"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            >
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <include
                 layout="@layout/alite_collapsing_content"
-                android:minHeight="100dp"
-                app:layout_collapseMode="parallax"
-                app:layout_collapseParallaxMultiplier="0.5"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed" />
+                app:layout_collapseMode="pin"
+                app:layout_collapseParallaxMultiplier="0.7"/>
 
 
             <android.support.v7.widget.Toolbar
@@ -42,7 +37,8 @@
                 app:contentInsetLeft="0dp"
                 app:contentInsetStart="0dp"
                 app:layout_collapseMode="pin"
-                app:layout_collapseParallaxMultiplier="0.1">
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
                 <TextView
                     android:id="@+id/toolbar_title"

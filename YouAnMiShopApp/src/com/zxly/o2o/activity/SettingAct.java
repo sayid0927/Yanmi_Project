@@ -3,10 +3,11 @@ package com.zxly.o2o.activity;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.aliter.base.BaseActivity;
+import com.aliter.ui.activity.login.AliteLaunchActivity;
 import com.easemob.chatuidemo.HXHelper;
 import com.easemob.chatuidemo.utils.PreferenceManager;
 import com.zxly.o2o.account.Account;
@@ -20,18 +21,43 @@ import com.zxly.o2o.util.PreferUtil;
 import com.zxly.o2o.util.UmengUtil;
 import com.zxly.o2o.util.ViewUtils;
 
-public class SettingAct extends BasicAct implements
+public class SettingAct extends BaseActivity implements
         View.OnClickListener {
     private Dialog dialog;
     private TextView txtVersionNew;
     private static CallBack callBack;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.win_setting);
+    public int getLayoutId() {
+        return R.layout.win_setting;
+    }
+
+    @Override
+    public void setToolBar() {
+
+    }
+
+    @Override
+    public void initView() {
         initViews();
     }
+
+    @Override
+    protected void loadData() {
+
+    }
+
+    @Override
+    protected void initInject() {
+
+    }
+
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.win_setting);
+//        initViews();
+//    }
 
     public static void start(Activity curAct, CallBack _callBack) {
         callBack = _callBack;
@@ -143,9 +169,14 @@ public class SettingAct extends BasicAct implements
                 SettingAct.this.deleteFile("user");
                 Account.user = null;
                 PreferUtil.getInstance().setLoginToken("");
-                LoginAct.start(SettingAct.this);
+//                LoginAct.start(SettingAct.this);
+                Intent intent= new Intent(SettingAct.this, AliteLaunchActivity.class);
+                startActivity(intent);
+                finishActivity();
                 PreferenceManager.getInstance().cleanTopContacts();
-                callBack.onCall();
+                if(callBack!=null)
+                    callBack.onCall();
+
                 SettingAct.this.finish();
                 HXHelper.getInstance().logout(true, null); //退出环信
                 HXHelper.getInstance().deleteDBContactCache();  //清空本地联系人

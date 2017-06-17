@@ -37,10 +37,6 @@ public class AlitePhoneRegisterActivity extends BaseActivity<AlitePhoneRegisterP
     @BindView(R.id.edit_phone)
     EditText editPhone;
 
-    @Override
-    public void setState(int state) {
-
-    }
 
     @Override
     public int getLayoutId() {
@@ -54,6 +50,7 @@ public class AlitePhoneRegisterActivity extends BaseActivity<AlitePhoneRegisterP
 
     @Override
     public void initView() {
+
         initListener();
         btnRegister.setEnabled(false);
         btnRegister.setTextColor(getResources().getColor(R.color.white));
@@ -81,6 +78,7 @@ public class AlitePhoneRegisterActivity extends BaseActivity<AlitePhoneRegisterP
                 MobileExist mobileExist = new MobileExist();
                 mobileExist.setMobile(editPhone.getText().toString());
                 mPresenter.ShopAppisMobileExist(mobileExist);
+                ShowLoadingDialog();
                 break;
         }
     }
@@ -130,10 +128,12 @@ public class AlitePhoneRegisterActivity extends BaseActivity<AlitePhoneRegisterP
 
     @Override
     public void onShopAppisMobileExistSuccessView(MobileExistBean mobileExistBean) {
-        //    1.  先查询手机号是否注册过
-        if(mobileExistBean.isExist()){
+
+        //    1.先查询手机号是否注册过
+       DismissLoadingDialog();
+        if (mobileExistBean.isExist()) {
             ViewUtils.showToast("该手机号已经注册过");
-        }else {
+        } else {
             PreferUtil.getInstance().setRegisterPhonenum(editPhone.getText().toString());
             ViewUtils.startActivity(new Intent(AlitePhoneRegisterActivity.this, AliteSMSVerificationActivity.class), this);
         }

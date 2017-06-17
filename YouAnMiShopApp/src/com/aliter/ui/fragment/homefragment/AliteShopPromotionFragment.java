@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.aliter.base.BaseFragment;
 import com.aliter.base.BaseFragmentPageAdapter;
+import com.orhanobut.logger.Logger;
 import com.zxly.o2o.application.AppController;
 import com.zxly.o2o.shop.R;
 
@@ -37,6 +38,7 @@ public class AliteShopPromotionFragment extends BaseFragment implements AppBarLa
     ViewPager vp;
     @BindView(R.id.coordinator)
     CoordinatorLayout coordinator;
+    private AppBarLayout.Behavior behavior;
 
     private enum CollapsingToolbarLayoutState {
         EXPANDED,
@@ -62,13 +64,12 @@ public class AliteShopPromotionFragment extends BaseFragment implements AppBarLa
 
     @Override
     protected void initView() {
-
         initFragmentList();
+        collapseToolbar();
         myAdapter = new BaseFragmentPageAdapter(getChildFragmentManager(), mFragments, mTitleList);
         vp.setAdapter(myAdapter);
         myAdapter.notifyDataSetChanged();
         tabLayout.setupWithViewPager(vp);
-
 
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
@@ -110,13 +111,19 @@ public class AliteShopPromotionFragment extends BaseFragment implements AppBarLa
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
         if (verticalOffset == 0) {
+            Logger.t("TTT").e("TTTTTTTTTTTTTTTTTTTT  === " + String.valueOf(verticalOffset));
+
+            appbarLayout.setEnabled(false);
             if (state != CollapsingToolbarLayoutState.EXPANDED) {
                 state = CollapsingToolbarLayoutState.EXPANDED;//展开
                 ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
                 toolbarTitle.setVisibility(View.GONE);
                 collapsingtool.setTitle("");
+                if( AliteStoreArticlesFragment.install!=null)
+                AliteStoreArticlesFragment.install.setmSwipeRefreshLayoutEnabled(true);
             }
         } else if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()) {
+            Logger.t("TTT").e("BBBBBBBBBBB === " + String.valueOf(verticalOffset));
             if (state != CollapsingToolbarLayoutState.COLLAPSED) {
                 state = CollapsingToolbarLayoutState.COLLAPSED;//折叠
                 ((AppCompatActivity) getActivity()).getSupportActionBar().show();
@@ -124,8 +131,12 @@ public class AliteShopPromotionFragment extends BaseFragment implements AppBarLa
                 toolbarTitle.setTextColor(getActivity().getResources().getColor(R.color.white));
                 toolbar.getBackground().setAlpha(255);
                 collapsingtool.setTitle("");
+                if( AliteStoreArticlesFragment.install!=null)
+                AliteStoreArticlesFragment.install.setmSwipeRefreshLayoutEnabled(false);
             }
         } else {
+            collapsingtool.setEnabled(false);
+            Logger.t("TTT").e("CCCCCCCCCCCCCCCCCCCCCCCCCCC === " + String.valueOf(verticalOffset));
             if (state != CollapsingToolbarLayoutState.INTERNEDIATE) {
                 if (state == CollapsingToolbarLayoutState.COLLAPSED) {
 //                    if (toolbarTitle.getVisibility() == View.VISIBLE)
@@ -138,8 +149,18 @@ public class AliteShopPromotionFragment extends BaseFragment implements AppBarLa
                 toolbarTitle.setVisibility(View.VISIBLE);
                 toolbarTitle.setTextColor(getActivity().getResources().getColor(R.color.orange_1aff));
                 toolbar.getBackground().setAlpha(100);
-
+                if( AliteStoreArticlesFragment.install!=null)
+                AliteStoreArticlesFragment.install.setmSwipeRefreshLayoutEnabled(false);
             }
+        }
+    }
+
+
+    public void collapseToolbar(){
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) appbarLayout.getLayoutParams();
+        behavior = (AppBarLayout.Behavior) params.getBehavior();
+        if(behavior!=null) {
+            behavior.onNestedFling(coordinator, appbarLayout, null, 0, 10000, true);
         }
     }
 }
