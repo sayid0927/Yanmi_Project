@@ -3,9 +3,7 @@ package com.aliter.presenter.impl;
 
 import com.aliter.base.BasePresenter;
 import com.aliter.entity.AuthCode;
-import com.aliter.entity.AuthCodeBean;
 import com.aliter.entity.CheckAuthCode;
-import com.aliter.entity.CheckAuthCodeBean;
 import com.aliter.http.BaseResponse;
 import com.aliter.http.Callback;
 import com.aliter.http.utils.SmsVerificationHttpUtils;
@@ -25,11 +23,10 @@ public class AliteSmsVerficationPresenterImpl extends BasePresenter<AliteSmsVeri
 
     @Override
     public void ShopAPPCheckSecurityCode(CheckAuthCode checkAuthCode) {
-        invoke(smsVerificationHttpUtils.shopAPPCheckSecurityCode(checkAuthCode),new Callback<BaseResponse<CheckAuthCodeBean>>(){
+        invoke(smsVerificationHttpUtils.shopAPPCheckSecurityCode(checkAuthCode),new Callback<BaseResponse>(){
             @Override
-            public void onSuccess(BaseResponse<CheckAuthCodeBean> data) {
-                CheckAuthCodeBean authCodeBean = data.getData();
-                if(authCodeBean!=null)
+            public void onSuccess(BaseResponse data) {
+                if(data!=null)
                     mView.onShopAPPCheckSecurityCodeSuccessView();
                 else
                     mView.onFailView("数据为空");
@@ -46,11 +43,10 @@ public class AliteSmsVerficationPresenterImpl extends BasePresenter<AliteSmsVeri
 
     @Override
     public void ShopgetSecurityCode(AuthCode authCode) {
-        invoke(smsVerificationHttpUtils.ShopgetSecurityCode(authCode),new Callback<BaseResponse<AuthCodeBean>>(){
+        invoke(smsVerificationHttpUtils.ShopgetSecurityCode(authCode),new Callback<BaseResponse>(){
             @Override
-            public void onSuccess(BaseResponse<AuthCodeBean> data) {
-                AuthCodeBean authCodeBean = data.getData();
-                if(authCodeBean!=null)
+            public void onSuccess(BaseResponse data) {
+                if(data!=null)
                     mView.onShopgetSecurityCodeSuccessView();
                 else
                     mView.onFailView("数据为空");

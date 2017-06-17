@@ -2,7 +2,6 @@ package com.aliter.http.utils;
 
 
 import com.aliter.entity.AuthCode;
-import com.aliter.entity.AuthCodeBean;
 import com.aliter.entity.CheckAuthCode;
 import com.aliter.http.BaseResponse;
 import com.aliter.http.HttpUtils;
@@ -19,7 +18,7 @@ public class RetrofitForgetPwdAuthCodeHttpUtils extends HttpUtils {
         this.forgetPwdAuthCodeService = forgetPwdAuthCodeService;
     }
 
-    public Observable<BaseResponse<AuthCodeBean>> ShopGetSecurityCode(AuthCode authCode) {
+    public Observable<BaseResponse> ShopGetSecurityCode(AuthCode authCode) {
        return forgetPwdAuthCodeService.ShopGetSecurityCode(authCode);
     }
 

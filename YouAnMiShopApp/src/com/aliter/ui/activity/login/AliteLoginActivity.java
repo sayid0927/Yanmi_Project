@@ -91,7 +91,7 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
                 case TIME_CHANGE:
                     resendTime--;
                     if (resendTime > 0) {
-                        tvVerification.setText(String.format("%d秒后重发", resendTime));
+                        tvVerification.setText(String.format("重新发送 (%d s) ", resendTime));
                         handler.sendEmptyMessageDelayed(TIME_CHANGE, 1000);
                     } else {
                         ViewUtils.setText(tvVerification, "重新发送");
@@ -112,7 +112,7 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
         Logger.t(TAG).d("登录成功返回信息  ==  " + usserInfo);
         Account.saveLoginUser(this, usserInfo);
         Account.user = usserInfo;
-        if(loadingDialog.isShow())
+        if (loadingDialog.isShow())
             loadingDialog.dismiss();
 
         ViewUtils.startActivity(new Intent(AliteLoginActivity.this, AliterHomeActivity.class), this);
@@ -121,17 +121,17 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
     @Override
     public void onShopGetSecurityCodeSuccessView() {
         //  获取验证码成功返回
-        if(loadingDialog.isShow())
+        if (loadingDialog.isShow())
             loadingDialog.dismiss();
         //开启计时功能
-        ViewUtils.showToast("验证码已发送");
+        ViewUtils.showToast(this.getResources().getString(R.string.sen_register_code));
         resendTime = 54;
         handler.sendEmptyMessageDelayed(TIME_CHANGE, 1000);
     }
 
     @Override
     public void onFailView(String errorMsg) {
-        if(loadingDialog.isShow())
+        if (loadingDialog.isShow())
             loadingDialog.dismiss();
     }
 
@@ -148,9 +148,9 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
     @Override
     public void initView() {
         initListener();
-        loadingDialog= new LoadingDialog(this);
-        editPhone.setText("13592495216");
-        editPassword.setText("123456");
+        loadingDialog = new LoadingDialog(this);
+//        editPhone.setText("13592495216");
+//        editPassword.setText("123456");
     }
 
     @Override
@@ -175,7 +175,12 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
                 editPassword.setText("");
                 break;
             case R.id.tv_forget_pwd:        //  忘记密码
-                ViewUtils.startActivity(new Intent(AliteLoginActivity.this, AliteForgetPwdActivity.class), this);
+
+                Intent intent = new Intent(AliteLoginActivity.this, AliteForgetPwdActivity.class);
+                AliteLoginActivity.this.startActivityForResult(intent, 1);
+                startActivityIn();
+
+//                ViewUtils.startActivity(new Intent(AliteLoginActivity.this, AliteForgetPwdActivity.class), this);
 
                 break;
             case R.id.tv_register_shop:    // 注册商户
@@ -198,6 +203,10 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
                     ViewUtils.showToast("请输入正确的电话号码！");
                     return;
                 }
+//                if(RegexUtils.isMobileSimple(phoneNumber)) {
+//                    ViewUtils.showToast("请输入正确的正确手机号码！");
+//                    return;
+//                }
                 Pattern p = Pattern.compile(Constants.PASSWORD_PATTERN);
                 Matcher m = p.matcher(password);
                 if (!m.matches()) {
@@ -264,6 +273,12 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
                 break;
 
             case R.id.ll_verification_login:        //获取验证码
+
+                if (editPhone.getText().length() < 11) {
+                    ViewUtils.showToast("请输入正确的手机号");
+                    break;
+                }
+
                 if (resendTime > 0) {
                     ViewUtils.showToast(resendTime + "秒后才可再次发送");
                 } else {
@@ -384,10 +399,23 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK){
-            if(loadingDialog.isShow())
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (loadingDialog.isShow())
                 loadingDialog.dismiss();
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (data != null) {
+                if (resultCode == 0) { // 忘记密码返回
+                    editPhone.setText(data.getStringExtra("phoneNum"));
+                }
+            }
+        }
     }
 }

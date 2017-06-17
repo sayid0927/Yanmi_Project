@@ -6,6 +6,7 @@ import android.os.Message;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -92,7 +93,7 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity<AliteWeixinUserPh
                 case TIME_CHANGE:
                     resendTime--;
                     if (resendTime > 0) {
-                        tvVerification.setText(String.format("%d秒后重发", resendTime));
+                        tvVerification.setText(String.format("重新发送 %d 秒", resendTime));
                         handler.sendEmptyMessageDelayed(TIME_CHANGE, 1000);
                     } else {
                         ViewUtils.setText(tvVerification, "重新发送");
@@ -243,7 +244,7 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity<AliteWeixinUserPh
 
                 //  2. 验证验证码
                 CheckAuthCode checkAuthCode = new CheckAuthCode();
-                checkAuthCode.setType(AppController.WeiXinLoginType);
+                checkAuthCode.setType(AppController.ShopRigisterLoginType);
                 checkAuthCode.setMobile(editPhone.getText().toString());
                 checkAuthCode.setCode(editPassword.getText().toString());
                 mPresenter.ShopAPPCheckSecurityCode(checkAuthCode);
@@ -252,13 +253,18 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity<AliteWeixinUserPh
                 break;
             case R.id.ll_verification_login:
 
+                if (editPhone.getText().length() < 11) {
+                    ViewUtils.showToast("请输入正确的手机号");
+                    break;
+                }
+
                 if (resendTime > 0) {
                     ViewUtils.showToast(resendTime + "秒后才可再次发送");
                 } else {
                     // 1. 获取验证码
                     AuthCode authCode = new AuthCode();
                     authCode.setMobile(editPhone.getText().toString());
-                    authCode.setType(AppController.WeiXinLoginType);
+                    authCode.setType(AppController.ShopRigisterLoginType);
                     mPresenter.ShopGetSecurityCod(authCode);
                     loadingDialog.show();
                 }
@@ -270,7 +276,9 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity<AliteWeixinUserPh
     @Override
     public void onShopGetSecurityCodeSuccessView() {
         //  获取验证码成功
-        ViewUtils.showToast("获取验证码成功");
+        ViewUtils.showToast(this.getResources().getString(R.string.sen_register_code));
+        if(loadingDialog.isShow())
+            loadingDialog.dismiss();
         //开启计时功能
         resendTime = 54;
         handler.sendEmptyMessageDelayed(TIME_CHANGE, 1000);
@@ -280,7 +288,7 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity<AliteWeixinUserPh
     public void onShopAPPCheckSecurityCodeSuccessView() {
         //  验证验证码成功
 
-        ViewUtils.showToast("验证验证码成功");
+//        ViewUtils.showToast("验证验证码成功");
         //  3. 查询该手机号是否注册过
         MobileExist mobileExist = new MobileExist();
         mobileExist.setMobile(editPhone.getText().toString());
@@ -291,7 +299,7 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity<AliteWeixinUserPh
     public void onShopAppisMobileExistSuccessView(MobileExistBean mobileExistBean) {
         //  查询手机号是否注册过成功
         if (mobileExistBean.isExist()) {
-            //如果是老用户直接走验证码登录流程
+            //如果是老用户直接登录到首页
 //            clientId	个推客户端id	string
 //            code	验证码	string	type为3，必传，店店推项目增加
 //            password	用户密码	string	type为1，必传
@@ -302,16 +310,20 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity<AliteWeixinUserPh
             Login login = new Login();
             login.setClientId(Config.getuiClientId);
             login.setCode(editPassword.getText().toString());
-            login.setType(3);
+            login.setType(2);
             login.setUserName(editPhone.getText().toString());
             login.setWxOpenId(weixinUserInfo.getOpenid());
             login.setWxUnionId(weixinUserInfo.getUnionid());
             mPresenter.AuthShopLogin2(login);
 
         } else {
+            PreferUtil.getInstance().setRegisterPhonenum(editPhone.getText().toString());
+            PreferUtil.getInstance().setRegisterCode(editPassword.getText().toString());
+            PreferUtil.getInstance().setRegisterPwd("");
             if(loadingDialog.isShow())
                 loadingDialog.dismiss();
             // 未注册过  走商户注册流程
+
             ViewUtils.startActivity(new Intent(AliteWeixinUserPhoneActivity.this, AliteSettingShopInfoActivity.class), this);
         }
     }
@@ -342,7 +354,8 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity<AliteWeixinUserPh
 
     @Override
     public void onFailView(String errorMsg) {
-
+           if(loadingDialog.isShow())
+               loadingDialog.dismiss();
     }
 
 
@@ -350,5 +363,16 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity<AliteWeixinUserPh
     public void finish() {
         super.finish();
         handler.removeMessages(TIME_CHANGE);
+    }
+    /**
+     * 回退键
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK){
+            if(loadingDialog.isShow())
+                loadingDialog.dismiss();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

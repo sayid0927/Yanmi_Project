@@ -92,7 +92,7 @@ public class AliteCheckProvinceActivity extends BaseActivity implements AdapterV
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    Config.areaList = AreaUtil.getAreaFromFile();
+                    Config.areaList = AreaUtil.getAreaFromFiles();
                     areaList = Config.areaList;
                     if (areaList != null && !areaList.isEmpty()) {
                         handler.sendEmptyMessage(1000);

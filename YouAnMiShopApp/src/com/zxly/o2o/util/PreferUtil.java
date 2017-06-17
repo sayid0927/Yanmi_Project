@@ -185,6 +185,25 @@ public final class PreferUtil {
             putString(key, data.get(key));
         }
     }
+    public void CleanWeixinUserInfo(WeixinUserInfoBean user){
+        user.setUnionid("");
+        user.setScreen_name("");
+        user.setCity("");
+        user.setAccessToken("");
+        user.setRefreshToken("");
+        user.setGender("");
+        user.setProvince("");
+        user.setOpenid("");
+        user.setProfile_image_url("");
+        user.setCountry("");
+        user.setAccess_token("");
+        user.setIconurl("");
+        user.setName("");
+        user.setUid("");
+        user.setExpiration("");
+        user.setLanguage("");
+        user.setExpires_in("");
+    }
 
     //获取微信个人信息
     public  WeixinUserInfoBean getWeixinUserInfo() {

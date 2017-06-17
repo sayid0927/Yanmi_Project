@@ -148,7 +148,6 @@
                 android:background="#00000000"
                 android:gravity="bottom"
                 android:hint="请输入6位验证码"
-                android:inputType="textPassword"
                 android:singleLine="true"
                 android:textColorHint="@color/gray_999999"
                 android:textSize="15sp" />

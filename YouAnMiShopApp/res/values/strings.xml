@@ -4,4 +4,6 @@
     <string name="Self">我</string>
 
     <string name="shop_setting_top">更多的门店信息可在 \"我的门店\" 中设置</string>
+    <string name="sen_register_code">验证码发送,请查收</string>
+    <string name="set_new_pwd">设置成功,请重新登录</string>
 </resources>

@@ -32,6 +32,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/alite_btn_login_check"
                 android:text="密码登录"
+
                 android:textColor="#FF903E"
                 android:textSize="18dp" />
 

@@ -33,9 +33,8 @@ public class AliteSettingShopInfoPresenterImpl extends BasePresenter<AliteSettin
 
             @Override
             public void onFail(String msg) {
-
+                   mView.onFailView(msg);
             }
-
         });
     }
 }

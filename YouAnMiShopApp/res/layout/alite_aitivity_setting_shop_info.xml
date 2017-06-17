@@ -244,7 +244,6 @@
                         android:background="#00000000"
                         android:gravity="bottom"
                         android:hint="推广人ID，若没有可不填 "
-                        android:inputType="textPassword"
                         android:singleLine="true"
                         android:textColorHint="@color/gray_999999"
                         android:textSize="15sp" />

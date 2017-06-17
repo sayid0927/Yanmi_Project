@@ -16,6 +16,7 @@ import com.aliter.injector.component.AlitePhoneRegisterHttpModule;
 import com.aliter.injector.component.activity.DaggerAlitePhoneRegisterComponent;
 import com.aliter.presenter.AlitePhoneRegisterPresenter;
 import com.aliter.presenter.impl.AlitePhoneRegisterPresenterImpl;
+import com.zxly.o2o.dialog.LoadingDialog;
 import com.zxly.o2o.shop.R;
 import com.zxly.o2o.util.PreferUtil;
 import com.zxly.o2o.util.ViewUtils;
@@ -36,6 +37,7 @@ public class AlitePhoneRegisterActivity extends BaseActivity<AlitePhoneRegisterP
     Button btnRegister;
     @BindView(R.id.edit_phone)
     EditText editPhone;
+    private LoadingDialog loadingDialog;
 
     @Override
     public void setState(int state) {
@@ -54,6 +56,7 @@ public class AlitePhoneRegisterActivity extends BaseActivity<AlitePhoneRegisterP
 
     @Override
     public void initView() {
+        loadingDialog = new LoadingDialog(this);
         initListener();
         btnRegister.setEnabled(false);
         btnRegister.setTextColor(getResources().getColor(R.color.white));
@@ -81,6 +84,7 @@ public class AlitePhoneRegisterActivity extends BaseActivity<AlitePhoneRegisterP
                 MobileExist mobileExist = new MobileExist();
                 mobileExist.setMobile(editPhone.getText().toString());
                 mPresenter.ShopAppisMobileExist(mobileExist);
+                loadingDialog.isShow();
                 break;
         }
     }
@@ -130,10 +134,13 @@ public class AlitePhoneRegisterActivity extends BaseActivity<AlitePhoneRegisterP
 
     @Override
     public void onShopAppisMobileExistSuccessView(MobileExistBean mobileExistBean) {
-        //    1.  先查询手机号是否注册过
-        if(mobileExistBean.isExist()){
+
+        //    1.先查询手机号是否注册过
+        if (loadingDialog.isShow())
+            loadingDialog.dismiss();
+        if (mobileExistBean.isExist()) {
             ViewUtils.showToast("该手机号已经注册过");
-        }else {
+        } else {
             PreferUtil.getInstance().setRegisterPhonenum(editPhone.getText().toString());
             ViewUtils.startActivity(new Intent(AlitePhoneRegisterActivity.this, AliteSMSVerificationActivity.class), this);
         }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -166,8 +167,8 @@ public class AliteSettingShopInfoActivity extends BaseActivity<AliteSettingShopI
                     shopRegister.setWxUnionId(weixinUserInfo.getUid());                 //微信用户统一id
                     shopRegister.setWxHeadUrl(weixinUserInfo.getIconurl());             // 微信头像地址
                 }
-                loadingDialog.show();
                 mPresenter.fetchShopRegister(shopRegister);
+                loadingDialog.show();
                 break;
         }
     }
@@ -227,6 +228,7 @@ public class AliteSettingShopInfoActivity extends BaseActivity<AliteSettingShopI
 
         Account.saveLoginUser(this, usserInfo);
         Account.user = usserInfo;
+        PreferUtil.getInstance().CleanWeixinUserInfo(weixinUserInfo);
         if (loadingDialog.isShow())
             loadingDialog.dismiss();
         ViewUtils.startActivity(new Intent(AliteSettingShopInfoActivity.this, AliterHomeActivity.class), this);
@@ -235,7 +237,8 @@ public class AliteSettingShopInfoActivity extends BaseActivity<AliteSettingShopI
 
     @Override
     public void onFailView(String errorMsg) {
-
+             if(loadingDialog.isShow())
+                 loadingDialog.dismiss();
     }
 
 
@@ -326,5 +329,16 @@ public class AliteSettingShopInfoActivity extends BaseActivity<AliteSettingShopI
                 }
             }
         });
+    }
+
+    /**
+     * 回退键
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK)
+         if(loadingDialog.isShow())
+             loadingDialog.dismiss();
+        return super.onKeyDown(keyCode, event);
     }
 }
