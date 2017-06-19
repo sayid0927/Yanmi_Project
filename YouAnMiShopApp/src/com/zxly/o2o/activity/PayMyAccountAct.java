@@ -4,13 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.aliter.base.BaseActivity;
 import com.android.volley.toolbox.NetworkImageView;
 import com.easemob.easeui.widget.SwipeLayout;
 import com.zxly.o2o.adapter.ObjectAdapter;
@@ -39,7 +39,7 @@ import java.util.Set;
  * @author fengrongjian 2015-5-20
  * @description 我的账户
  */
-public class PayMyAccountAct extends BasicAct implements View.OnClickListener {
+public class PayMyAccountAct extends BaseActivity implements View.OnClickListener {
     private Context context;
     private View contentLayout;
     private LoadingView loadingview;
@@ -54,24 +54,46 @@ public class PayMyAccountAct extends BasicAct implements View.OnClickListener {
     private Set<SwipeLayout> mShownLayouts = new HashSet<SwipeLayout>();
     private List<SlideDelete> slideDeleteArrayList = new ArrayList<SlideDelete>();
     private Drawable drawable;
-//    private LoadingView footerView;
+    //    private LoadingView footerView;
     private View footerView;
     private boolean listIsEmpty;
     private PayMyAccountRequest payMyAccountRequest;
     private PaySetDialog setDialog;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.win_pay_my_account);
+    public int getLayoutId() {
+        return R.layout.win_pay_my_account;
+    }
+
+    @Override
+    public void setToolBar() {
+
+    }
+
+    @Override
+    public void initView() {
         context = this;
         initViews();
     }
 
     @Override
+    protected void loadData() {
+
+    }
+
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.win_pay_my_account);
+//        context = this;
+//        initViews();
+//    }
+
+    @Override
     protected void onResume() {
         super.onResume();
-        loadData();
+        loadData2();
     }
 
     public static void start(Activity curAct) {
@@ -100,10 +122,11 @@ public class PayMyAccountAct extends BasicAct implements View.OnClickListener {
         listView.addFooterView(footerView);
         listView.setAdapter(adapter);
 
-        UmengUtil.onEvent(PayMyAccountAct.this,new UmengUtil().ACCOUNT_ENTER,null);
+        UmengUtil.onEvent(PayMyAccountAct.this, new UmengUtil().ACCOUNT_ENTER, null);
     }
 
-    private void loadData() {
+
+    private void loadData2() {
         payMyAccountRequest = new PayMyAccountRequest();
         payMyAccountRequest.setOnResponseStateListener(new BaseRequest.ResponseStateListener() {
 
@@ -138,7 +161,7 @@ public class PayMyAccountAct extends BasicAct implements View.OnClickListener {
                     UserBankCard userBankCard = bankcardList.get(0);
                     String userName = userBankCard.getUserName();
                     String idCard = userBankCard.getIdCard();
-                    if(!StringUtil.isNull(userName) && !StringUtil.isNull(idCard)){
+                    if (!StringUtil.isNull(userName) && !StringUtil.isNull(idCard)) {
                         ViewUtils.setText(mHeaderView.findViewById(R.id.txt_user_info), "【" + StringUtil.getHideName(userName) + " " + StringUtil.getHiddenString(idCard) + "】");
                     }
                     if (footerView != null) {
@@ -174,21 +197,26 @@ public class PayMyAccountAct extends BasicAct implements View.OnClickListener {
     }
 
     @Override
+    protected void initInject() {
+
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_back:
                 finish();
-
-                UmengUtil.onEvent(PayMyAccountAct.this,new UmengUtil().ACOCUNT_BACK_CLICK,null);
+                finishActivity();
+                UmengUtil.onEvent(PayMyAccountAct.this, new UmengUtil().ACOCUNT_BACK_CLICK, null);
                 break;
             case R.id.btn_takeout:
                 PayTakeoutAct.start(PayMyAccountAct.this);
-                UmengUtil.onEvent(PayMyAccountAct.this,new UmengUtil().ACOCUNT_WITHDRAW_CLICK,null);
+                UmengUtil.onEvent(PayMyAccountAct.this, new UmengUtil().ACOCUNT_WITHDRAW_CLICK, null);
 
                 break;
             case R.id.btn_payment_detail:
                 PayAccountRecordAct.start(0, PayMyAccountAct.this);
-                UmengUtil.onEvent(PayMyAccountAct.this,new UmengUtil().ACOCUNT_BILL_CLICK,null);
+                UmengUtil.onEvent(PayMyAccountAct.this, new UmengUtil().ACOCUNT_BILL_CLICK, null);
 
                 break;
             case R.id.btn_add:
@@ -197,7 +225,7 @@ public class PayMyAccountAct extends BasicAct implements View.OnClickListener {
                 } else {
                     PayIdentityCheckAct.start(PayMyAccountAct.this, Constants.PAY_TYPE_LIANLIAN, 0f, Constants.TYPE_JUST_ADD, null, callBack);
                 }
-                UmengUtil.onEvent(PayMyAccountAct.this,new UmengUtil().ACOCUNT_ADDCARD_CLICK,null);
+                UmengUtil.onEvent(PayMyAccountAct.this, new UmengUtil().ACOCUNT_ADDCARD_CLICK, null);
                 break;
         }
     }
@@ -304,7 +332,7 @@ public class PayMyAccountAct extends BasicAct implements View.OnClickListener {
 
         class ViewHolder {
             View viewTopLine;
-//            SwipeLayout swipeLayout;
+            //            SwipeLayout swipeLayout;
             SlideDelete viewSlide;
             NetworkImageView imgBankLogo;
             TextView txtBankName;
@@ -313,9 +341,9 @@ public class PayMyAccountAct extends BasicAct implements View.OnClickListener {
             TextView btnDel;
         }
 
-        private void closeOtherItem(){
+        private void closeOtherItem() {
             ListIterator<SlideDelete> slideDeleteListIterator = slideDeleteArrayList.listIterator();
-            while(slideDeleteListIterator.hasNext()){
+            while (slideDeleteListIterator.hasNext()) {
                 SlideDelete slideDelete = slideDeleteListIterator.next();
                 slideDelete.isShowDelete(false);
             }

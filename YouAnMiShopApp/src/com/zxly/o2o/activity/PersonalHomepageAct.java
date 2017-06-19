@@ -5,16 +5,18 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aliter.base.BaseActivity;
 import com.easemob.easeui.model.IMUserInfoVO;
 import com.zxly.o2o.account.Account;
 import com.zxly.o2o.application.Config;
@@ -45,12 +47,14 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * @author fengrongjian 2015-12-10
  * @description 个人信息页面
  */
-public class PersonalHomepageAct extends BasicAct implements
+public class PersonalHomepageAct extends BaseActivity implements
         View.OnClickListener, OnScrollChangedCallback {
     private Context context;
     private View viewTitle;
@@ -67,15 +71,50 @@ public class PersonalHomepageAct extends BasicAct implements
     private int scrollHeight, screenHeight;
     private IMGetUserDetailInfoRequest imGetUserDetailInfoRequest;
     private IMUserInfoVO userInfoVO = new IMUserInfoVO();
+    private  boolean isSetUserHead=false;
+    private String provinceId, cityName, districtId, districtName, cityId, provinceName, GeneralizeCode;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.win_personal_homepage);
+    public int getLayoutId() {
+        return R.layout.win_personal_homepage;
+    }
+
+    @Override
+    public void setToolBar() {
+
+    }
+
+    @Override
+    public void initView() {
         context = this;
         loadPersonalInfo();
         UmengUtil.onEvent(PersonalHomepageAct.this,new UmengUtil().INFO_ENTER,null);
     }
+
+    @Override
+    protected void loadData() {
+
+    }
+
+    @Override
+    protected void initInject() {
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isSetUserHead=false;
+
+    }
+    //    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.win_personal_homepage);
+//        context = this;
+//        loadPersonalInfo();
+//        UmengUtil.onEvent(PersonalHomepageAct.this,new UmengUtil().INFO_ENTER,null);
+//    }
 
     private void loadPersonalInfo() {
         if (Account.user != null) {
@@ -131,7 +170,8 @@ public class PersonalHomepageAct extends BasicAct implements
 
     public static void start(Activity curAct) {
         Intent intent = new Intent(curAct, PersonalHomepageAct.class);
-        ViewUtils.startActivity(intent, curAct);
+//        ViewUtils.startActivity(intent, curAct);
+        ViewUtils.startActivityForResult(intent,curAct,1);
     }
 
     private void initViews() {
@@ -196,6 +236,7 @@ public class PersonalHomepageAct extends BasicAct implements
 
     private void setUserHead() {
         String thumHeadUrl = Account.user.getThumHeadUrl();
+
         if (StringUtil.isNull(thumHeadUrl)) {
             imgUserHead.setImageResource(R.drawable.default_head_small);
         } else {
@@ -212,6 +253,7 @@ public class PersonalHomepageAct extends BasicAct implements
         } else if (requestCode == Crop.REQUEST_CROP) {
             handleCrop(resultCode, result);
         }
+
     }
 
     private void beginCrop(Uri source) {
@@ -231,50 +273,90 @@ public class PersonalHomepageAct extends BasicAct implements
     private void postFile(File file) {
         Map<String, Object> params = new HashMap<String, Object>();
         fileUploadRequest = new FileUploadRequest(file, params,
-                "shop/photo/edit", mMainHandler);
+                "shop/photo/edit", handler);
         fileUploadRequest.startUpload();
     }
 
-    @Override
-    protected void handleMessage(Message msg) {
-        super.handleMessage(msg);
-        switch (msg.what) {
-            case Constants.GET_PIC_FROM_CELLPHONE:
-                Crop.pickImage(this);
-                break;
-            case Constants.GET_PIC_FROM_CAMERA:
-                Crop.cameraImage(this);
-                break;
-            case Constants.MSG_SUCCEED:
-                ViewUtils.showToast("上传成功!");
-                String data = (String) msg.obj;
-                try {
-                    JSONObject object = new JSONObject(data);
-                    String url = object.getString("thumHeadUrl");
-                    String originUrl = object.getString("originHeadUrl");
 
-                    IMUserInfoVO user = Account.readLoginUser(context);
-                    user.setThumHeadUrl(url);
-                    user.setOriginHeadUrl(originUrl);
-                    Account.user = user;
-                    Account.saveLoginUser(context, user);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                setUserHead();
-                break;
+
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            switch (msg.what) {
+                case Constants.GET_PIC_FROM_CELLPHONE:
+                    Crop.pickImage(PersonalHomepageAct.this);
+                    break;
+                case Constants.GET_PIC_FROM_CAMERA:
+                    Crop.cameraImage(PersonalHomepageAct.this);
+                    break;
+                case Constants.MSG_SUCCEED:
+                    ViewUtils.showToast("上传成功!");
+                    String data = (String) msg.obj;
+                    try {
+                        JSONObject object = new JSONObject(data);
+                        String url = object.getString("thumHeadUrl");
+                        String originUrl = object.getString("originHeadUrl");
+                        IMUserInfoVO user = Account.readLoginUser(context);
+                        user.setThumHeadUrl(url);
+                        user.setOriginHeadUrl(originUrl);
+                        Account.user = user;
+                        Account.saveLoginUser(context, user);
+                        isSetUserHead=true;
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    setUserHead();
+                    break;
+            }
         }
-    }
+    };
+
+
+
+
+//    @Override
+//    protected void handleMessage(Message msg) {
+//        super.handleMessage(msg);
+//        switch (msg.what) {
+//            case Constants.GET_PIC_FROM_CELLPHONE:
+//                Crop.pickImage(this);
+//                break;
+//            case Constants.GET_PIC_FROM_CAMERA:
+//                Crop.cameraImage(this);
+//                break;
+//            case Constants.MSG_SUCCEED:
+//                ViewUtils.showToast("上传成功!");
+//                String data = (String) msg.obj;
+//                try {
+//                    JSONObject object = new JSONObject(data);
+//                    String url = object.getString("thumHeadUrl");
+//                    String originUrl = object.getString("originHeadUrl");
+//
+//                    IMUserInfoVO user = Account.readLoginUser(context);
+//                    user.setThumHeadUrl(url);
+//                    user.setOriginHeadUrl(originUrl);
+//                    Account.user = user;
+//                    Account.saveLoginUser(context, user);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//                setUserHead();
+//                break;
+//        }
+//    }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_back:
                 finish();
+                finishActivity();
                 UmengUtil.onEvent(PersonalHomepageAct.this,new UmengUtil().INFO_BACK_CLICK,null);
                 break;
             case R.id.btn_user_head:
-                new GetPictureDialog(false).show(mMainHandler);
+                new GetPictureDialog(false).show(handler);
                 UmengUtil.onEvent(PersonalHomepageAct.this,new UmengUtil().INFO_AVATAR_CLICK,null);
 
                 break;
@@ -300,6 +382,7 @@ public class PersonalHomepageAct extends BasicAct implements
             case R.id.btn_city:
 
                 UmengUtil.onEvent(PersonalHomepageAct.this,new UmengUtil().INFO_REGION_CLICK,null);
+
                 AreaAct.start(PersonalHomepageAct.this, new ParameCallBack() {
                     @Override
                     public void onCall(Object object) {
@@ -395,6 +478,7 @@ public class PersonalHomepageAct extends BasicAct implements
                 Account.saveLoginUser(context, user);
                 //同步已修改的数据
                 updateContactList();
+
             }
 
             @Override
@@ -514,6 +598,7 @@ public class PersonalHomepageAct extends BasicAct implements
                 Account.user = user;
                 Account.saveLoginUser(context, user);
                 ViewUtils.showToast("修改成功");
+                isSetUserHead=true;
                 updateContactList();
             }
 
@@ -604,11 +689,16 @@ public class PersonalHomepageAct extends BasicAct implements
 
     @Override
     public void finish() {
-        super.finish();
+
         if (personalUserEditRequest != null) {
             personalUserEditRequest.cancel();
         }
         Config.areaList = null;
+        if(isSetUserHead){
+            setResult(1000);
+        }
+        super.finish();
+
     }
 
     @Override
@@ -617,5 +707,15 @@ public class PersonalHomepageAct extends BasicAct implements
         scrollHeight = scrollView.getChildAt(0).getMeasuredHeight() - screenHeight;
         float alpha = (float) t / scrollHeight;
         viewTitle.setAlpha(alpha);
+    }
+    public void showKeyboard() {
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE)).toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        }, 500);
     }
 }

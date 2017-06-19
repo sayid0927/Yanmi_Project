@@ -3,13 +3,12 @@ package com.zxly.o2o.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.view.Window;
 import android.widget.TextView;
 
+import com.aliter.base.BaseActivity;
 import com.easemob.easeui.widget.viewpagerindicator.ViewPageFragmentAdapter;
 import com.zxly.o2o.fragment.SalesmanRankingListFragment;
 import com.zxly.o2o.shop.R;
@@ -21,7 +20,7 @@ import java.util.List;
 /**
  * Created by wuchenhui on 2015/5/25.
  */
-public class SalesmanRankingAct extends BasicAct implements View.OnClickListener {
+public class SalesmanRankingAct extends BaseActivity implements View.OnClickListener {
 
     public static final int PROMOTION_TYPE_USER=0;
     public static final int PROMOTION_TYPE_ARTICLE=1;
@@ -30,12 +29,20 @@ public class SalesmanRankingAct extends BasicAct implements View.OnClickListener
     List<TextView> allTabs;
     ViewPager pager;
     public int curType;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.win_salesman_ranking);
 
+    @Override
+    public int getLayoutId() {
+        return R.layout.win_salesman_ranking;
+    }
+
+    @Override
+    public void setToolBar() {
+
+    }
+
+    @Override
+    public void initView() {
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
         TextView btnUserPromotion= (TextView) findViewById(R.id.btn_user_promotion);
         TextView btnArticlePromotion= (TextView) findViewById(R.id.btn_article_promotion);
         TextView btnProductPromotion= (TextView) findViewById(R.id.btn_product_promotion);
@@ -79,9 +86,70 @@ public class SalesmanRankingAct extends BasicAct implements View.OnClickListener
 
             }
         });
+    }
 
+    @Override
+    protected void loadData() {
 
     }
+
+    @Override
+    protected void initInject() {
+
+    }
+
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        //setContentView(R.layout.win_salesman_ranking);
+//
+//        TextView btnUserPromotion= (TextView) findViewById(R.id.btn_user_promotion);
+//        TextView btnArticlePromotion= (TextView) findViewById(R.id.btn_article_promotion);
+//        TextView btnProductPromotion= (TextView) findViewById(R.id.btn_product_promotion);
+//
+//        btnArticlePromotion.setOnClickListener(this);
+//        btnProductPromotion.setOnClickListener(this);
+//        btnUserPromotion.setOnClickListener(this);
+//        findViewById(R.id.btn_back).setOnClickListener(this);
+//
+//        allTabs=new ArrayList<TextView>();
+//        allTabs.add(btnUserPromotion);
+//        allTabs.add(btnArticlePromotion);
+//        allTabs.add(btnProductPromotion);
+//
+//        pager = (ViewPager) findViewById(R.id.pager);
+//
+//        fragments = new ArrayList<Fragment>();
+//        fragments.add(SalesmanRankingListFragment.newInstance(PROMOTION_TYPE_USER));
+//        fragments.add(SalesmanRankingListFragment.newInstance(PROMOTION_TYPE_ARTICLE));
+//        fragments.add(SalesmanRankingListFragment.newInstance(PROMOTION_TYPE_PRODUCT));
+//
+//
+//        curType=PROMOTION_TYPE_USER;
+//        String strings[] = {"会员推广", "文章推广","商品推广"};
+//        pager.setAdapter(new ViewPageFragmentAdapter(getSupportFragmentManager(), fragments, strings));
+//
+//
+//        pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageScrolled(int i, float v, int i1) {
+//
+//            }
+//
+//            @Override
+//            public void onPageSelected(int i) {
+//                setCurTab(allTabs,i);
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int i) {
+//
+//            }
+//        });
+//
+//
+//    }
 
 
     @Override
@@ -118,6 +186,7 @@ public class SalesmanRankingAct extends BasicAct implements View.OnClickListener
 
             case R.id.btn_back:
                 finish();
+                finishActivity();
                 break;
 
 

@@ -97,7 +97,8 @@ public class AliteStoreArticlesFragment extends BaseFragment<StorArticlesPresent
 
 
     public  void  setmSwipeRefreshLayoutEnabled(boolean enabled){
-        mSwipeRefreshLayout.setEnabled(enabled);
+        if(mSwipeRefreshLayout!=null)
+       mSwipeRefreshLayout.setEnabled(enabled);
     }
     @Override
     protected void initView() {

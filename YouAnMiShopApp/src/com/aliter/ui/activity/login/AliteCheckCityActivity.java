@@ -72,6 +72,7 @@ public class AliteCheckCityActivity extends BaseActivity implements AdapterView.
         ViewGroup headView = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.item_custom_article_list_header, null);
         TextView txCtys = (TextView) headView.findViewById(R.id.tx_ctiy);
         txCtys.setText("请选择市/县");
+        txCtys.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
         listView.addHeaderView(headView);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);

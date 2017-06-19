@@ -2,9 +2,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/app_white_bg"
     android:orientation="vertical"
     android:paddingRight="9.5dp"
+    android:background="@drawable/ripple_one_item_bg"
     android:paddingTop="8dp">
 
     <RelativeLayout

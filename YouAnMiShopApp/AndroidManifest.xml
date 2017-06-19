@@ -142,6 +142,7 @@
         <activity
             android:name="com.zxly.o2o.activity.H5DetailAct"
             android:label="@string/app_name"
+            android:theme="@style/AliterAppTheme"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"></activity>
         <activity
@@ -168,6 +169,7 @@
         <activity
             android:name="com.zxly.o2o.activity.MobileDataAct"
             android:label="@string/app_name"
+            android:theme="@style/AliterMobileAppTheme"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.zxly.o2o.activity.CommonQuestionAct"
@@ -224,6 +226,7 @@
         <activity
             android:name="com.zxly.o2o.activity.PayMyAccountAct"
             android:label="@string/app_name"
+            android:theme="@style/AliterAppTheme"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.zxly.o2o.activity.PayAccountRecordAct"
@@ -241,6 +244,7 @@
         <activity
             android:name="com.zxly.o2o.activity.PersonalHomepageAct"
             android:label="@string/app_name"
+            android:theme="@style/AliterAppTheme"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.zxly.o2o.cropView.CropImageActivity"
@@ -270,6 +274,7 @@
         <activity
             android:name="com.zxly.o2o.activity.VerifyMobileAct"
             android:label="@string/app_name"
+
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.zxly.o2o.activity.VerifyIdentityAct"
@@ -310,6 +315,7 @@
         <activity
             android:name="com.zxly.o2o.activity.FeedbackAct"
             android:label="@string/app_name"
+            android:theme="@style/AliterAppTheme"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"></activity>
         <activity
@@ -357,7 +363,7 @@
             android:name="com.zxly.o2o.activity.MyOrderAct"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo"
+            android:theme="@style/AliterAppTheme"
             android:windowSoftInputMode="adjustPan"></activity>
         <activity
             android:name="com.zxly.o2o.activity.ShippingListAct"
@@ -368,6 +374,7 @@
         <activity
             android:name="com.zxly.o2o.activity.FragmentListAct"
             android:label="@string/app_name"
+            android:theme="@style/AliterAppTheme"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.zxly.o2o.shop.action.ACTION_FRAGMENTLIST_ACTIVITY" />
@@ -392,6 +399,7 @@
         <activity
             android:name="com.zxly.o2o.activity.SalesmanRankingAct"
             android:label="@string/app_name"
+             android:theme="@style/AliterAppTheme"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.zxly.o2o.activity.CommissionRecordAct"
@@ -494,6 +502,7 @@
         <activity
             android:name="com.zxly.o2o.activity.GetuiShopH5DetailAct"
             android:launchMode="singleTop"
+
             android:screenOrientation="portrait"></activity>
 
         <!-- 商户到店优惠列表 -->
@@ -608,9 +617,6 @@
 
         <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
         <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-        <activity android:name="com.yongchun.library.view.ImageSelectorActivity"/>
-        <activity android:name="com.yongchun.library.view.ImagePreviewActivity"/>
-        <activity android:name="com.yongchun.library.view.ImageCropActivity"/>
 
         <!--<activity-->
         <!--android:name= "com.aliter"-->

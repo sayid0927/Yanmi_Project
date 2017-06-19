@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
+import com.aliter.base.BaseActivity;
 import com.easemob.easeui.ui.EaseHXMainFragment;
 import com.zxly.o2o.application.AppController;
 import com.zxly.o2o.fragment.CustomArticleFragment;
@@ -24,23 +25,23 @@ import com.zxly.o2o.util.ViewUtils;
 /**
  * Created by kenwu on 2015/12/17.
  */
-public class FragmentListAct extends BasicAct {
+public class FragmentListAct extends BaseActivity {
 
     private static ParameCallBack callBack;
 
-    public static final int PAGE_TASK_TARGET=1;
+    public static final int PAGE_TASK_TARGET = 1;
 
-    public static final int PAGE_CUSTOM_ARTICLE_LIST=2;
+    public static final int PAGE_CUSTOM_ARTICLE_LIST = 2;
 
-    public static final int PAGE_CUSTOM_ARTICLE_DETAIL=3;
+    public static final int PAGE_CUSTOM_ARTICLE_DETAIL = 3;
 
-    public static final int PAGE_SCANER_RESULT=4;
+    public static final int PAGE_SCANER_RESULT = 4;
 
-    public static final int PAGE_GUARANTEE_MANAGE=5;
+    public static final int PAGE_GUARANTEE_MANAGE = 5;
 
-    public static final int PAGE_GUARANTEE_PAY=6;
-    public static final int PAGE_GUARANTEE_MSG=7;
-    public static final int PAGE_INDUSTRIES_ARTICLE_LIST=8;
+    public static final int PAGE_GUARANTEE_PAY = 6;
+    public static final int PAGE_GUARANTEE_MSG = 7;
+    public static final int PAGE_INDUSTRIES_ARTICLE_LIST = 8;
 
     Fragment fragment;
     FragmentTransaction ft;
@@ -48,91 +49,99 @@ public class FragmentListAct extends BasicAct {
     public View btnShare;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.win_common);
+    public int getLayoutId() {
+        return R.layout.win_common;
+    }
 
-        View btnBack=findViewById(R.id.btn_back);
+    @Override
+    public void setToolBar() {
+
+    }
+
+    @Override
+    public void initView() {
+        View btnBack = findViewById(R.id.btn_back);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
-                UmengUtil.onEvent(FragmentListAct.this,new UmengUtil().INSURANCE_BACK_CLICK,null);
+                finishActivity();
+                UmengUtil.onEvent(FragmentListAct.this, new UmengUtil().INSURANCE_BACK_CLICK, null);
             }
         });
 
-        btnShare=findViewById(R.id.btn_share);
+        btnShare = findViewById(R.id.btn_share);
 
-        int pageId=getIntent().getIntExtra("pageId",-1);
+        int pageId = getIntent().getIntExtra("pageId", -1);
 
 
-        if(pageId==-1)
+        if (pageId == -1) {
             finish();
-
-
-        ((TextView)findViewById(R.id.txt_title)).setText(getIntent().getStringExtra("pageName"));
+            finishActivity();
+        }
+        ((TextView) findViewById(R.id.txt_title)).setText(getIntent().getStringExtra("pageName"));
 
         ft = getSupportFragmentManager().beginTransaction();
 
-        switch (pageId){
+        switch (pageId) {
             case PAGE_TASK_TARGET:
                 ViewUtils.setGone(findViewById(R.id.layout_title));
-                fragment= TaskTargetListFragment.newInstance();
+                fragment = TaskTargetListFragment.newInstance();
                 ft.add(R.id.layout_content, fragment);
                 ft.show(fragment);
                 ft.commit();
                 break;
 
             case PAGE_CUSTOM_ARTICLE_LIST:
-                fragment= CustomArticleFragment.newInstance(1);
-                ((CustomArticleFragment)fragment).setArticleDeleteCallBack(callBack);
+                fragment = CustomArticleFragment.newInstance(1);
+                ((CustomArticleFragment) fragment).setArticleDeleteCallBack(callBack);
                 ft.add(R.id.layout_content, fragment);
                 ft.show(fragment);
                 ft.commit();
                 break;
 
             case PAGE_SCANER_RESULT:
-                fragment= ScanResultFragment.newInstance(getIntent().getExtras());
+                fragment = ScanResultFragment.newInstance(getIntent().getExtras());
                 ft.add(R.id.layout_content, fragment);
                 ft.show(fragment);
                 ft.commit();
                 break;
             case PAGE_INDUSTRIES_ARTICLE_LIST:
-                fragment= CustomArticleFragment.newInstance(2);
-                ((CustomArticleFragment)fragment).setArticleDeleteCallBack(callBack);
+                fragment = CustomArticleFragment.newInstance(2);
+                ((CustomArticleFragment) fragment).setArticleDeleteCallBack(callBack);
                 ft.add(R.id.layout_content, fragment);
                 ft.show(fragment);
                 ft.commit();
                 break;
             case PAGE_CUSTOM_ARTICLE_DETAIL:
-                Bundle bundle=getIntent().getExtras();
-                if(bundle.getString("wxUrl")!=null){
-                    bundle.putString("pageTitle","自定义文章");
-                }else {
-                    bundle.putString("pageTitle","文章详情");
+                Bundle bundle = getIntent().getExtras();
+                if (bundle.getString("wxUrl") != null) {
+                    bundle.putString("pageTitle", "自定义文章");
+                } else {
+                    bundle.putString("pageTitle", "文章详情");
                 }
-                fragment= H5CustomArticleDetailFragment.newInstance(bundle);
-                ((H5CustomArticleDetailFragment)fragment).setArticleRefreshCallBack(callBack);
+                fragment = H5CustomArticleDetailFragment.newInstance(bundle);
+                ((H5CustomArticleDetailFragment) fragment).setArticleRefreshCallBack(callBack);
                 ft.add(R.id.layout_content, fragment);
                 ft.show(fragment);
                 ft.commit();
                 break;
 
             case PAGE_GUARANTEE_MANAGE:
-                fragment= GuaranteeManageFragmnet.newInstance();
+                fragment = GuaranteeManageFragmnet.newInstance();
                 ft.add(R.id.layout_content, fragment);
                 ft.show(fragment);
                 ft.commit();
                 break;
 
             case PAGE_GUARANTEE_PAY:
-                fragment= GuaranteePayFragment.newInstance(getIntent().getExtras());
+                fragment = GuaranteePayFragment.newInstance(getIntent().getExtras());
                 ft.add(R.id.layout_content, fragment);
                 ft.show(fragment);
                 ft.commit();
                 break;
             case PAGE_GUARANTEE_MSG:
-                fragment= new EaseHXMainFragment();
+                fragment = new EaseHXMainFragment();
                 ft.add(R.id.layout_content, fragment);
                 ft.show(fragment);
                 ft.commit();
@@ -141,40 +150,147 @@ public class FragmentListAct extends BasicAct {
                 break;
         }
 
-        UmengUtil.onEvent(FragmentListAct.this,new UmengUtil().INSURANCE_ENTER,null);
-     //  PromotionAcitcityFragment fragment=PromotionAcitcityFragment.newInstance();
-     //   Fragment fragment=PromotionFragment.newInstance();
-    // Fragment fragment= PromotionArticleFragment.newInstance();
+        UmengUtil.onEvent(FragmentListAct.this, new UmengUtil().INSURANCE_ENTER, null);
+    }
+
+    @Override
+    protected void loadData() {
 
     }
+
+    @Override
+    protected void initInject() {
+
+    }
+
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.win_common);
+//
+//        View btnBack=findViewById(R.id.btn_back);
+//        btnBack.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//                UmengUtil.onEvent(FragmentListAct.this,new UmengUtil().INSURANCE_BACK_CLICK,null);
+//            }
+//        });
+//
+//        btnShare=findViewById(R.id.btn_share);
+//
+//        int pageId=getIntent().getIntExtra("pageId",-1);
+//
+//
+//        if(pageId==-1)
+//            finish();
+//
+//
+//        ((TextView)findViewById(R.id.txt_title)).setText(getIntent().getStringExtra("pageName"));
+//
+//        ft = getSupportFragmentManager().beginTransaction();
+//
+//        switch (pageId){
+//            case PAGE_TASK_TARGET:
+//                ViewUtils.setGone(findViewById(R.id.layout_title));
+//                fragment= TaskTargetListFragment.newInstance();
+//                ft.add(R.id.layout_content, fragment);
+//                ft.show(fragment);
+//                ft.commit();
+//                break;
+//
+//            case PAGE_CUSTOM_ARTICLE_LIST:
+//                fragment= CustomArticleFragment.newInstance(1);
+//                ((CustomArticleFragment)fragment).setArticleDeleteCallBack(callBack);
+//                ft.add(R.id.layout_content, fragment);
+//                ft.show(fragment);
+//                ft.commit();
+//                break;
+//
+//            case PAGE_SCANER_RESULT:
+//                fragment= ScanResultFragment.newInstance(getIntent().getExtras());
+//                ft.add(R.id.layout_content, fragment);
+//                ft.show(fragment);
+//                ft.commit();
+//                break;
+//            case PAGE_INDUSTRIES_ARTICLE_LIST:
+//                fragment= CustomArticleFragment.newInstance(2);
+//                ((CustomArticleFragment)fragment).setArticleDeleteCallBack(callBack);
+//                ft.add(R.id.layout_content, fragment);
+//                ft.show(fragment);
+//                ft.commit();
+//                break;
+//            case PAGE_CUSTOM_ARTICLE_DETAIL:
+//                Bundle bundle=getIntent().getExtras();
+//                if(bundle.getString("wxUrl")!=null){
+//                    bundle.putString("pageTitle","自定义文章");
+//                }else {
+//                    bundle.putString("pageTitle","文章详情");
+//                }
+//                fragment= H5CustomArticleDetailFragment.newInstance(bundle);
+//                ((H5CustomArticleDetailFragment)fragment).setArticleRefreshCallBack(callBack);
+//                ft.add(R.id.layout_content, fragment);
+//                ft.show(fragment);
+//                ft.commit();
+//                break;
+//
+//            case PAGE_GUARANTEE_MANAGE:
+//                fragment= GuaranteeManageFragmnet.newInstance();
+//                ft.add(R.id.layout_content, fragment);
+//                ft.show(fragment);
+//                ft.commit();
+//                break;
+//
+//            case PAGE_GUARANTEE_PAY:
+//                fragment= GuaranteePayFragment.newInstance(getIntent().getExtras());
+//                ft.add(R.id.layout_content, fragment);
+//                ft.show(fragment);
+//                ft.commit();
+//                break;
+//            case PAGE_GUARANTEE_MSG:
+//                fragment= new EaseHXMainFragment();
+//                ft.add(R.id.layout_content, fragment);
+//                ft.show(fragment);
+//                ft.commit();
+//                break;
+//            default:
+//                break;
+//        }
+//
+//        UmengUtil.onEvent(FragmentListAct.this,new UmengUtil().INSURANCE_ENTER,null);
+//     //  PromotionAcitcityFragment fragment=PromotionAcitcityFragment.newInstance();
+//     //   Fragment fragment=PromotionFragment.newInstance();
+//    // Fragment fragment= PromotionArticleFragment.newInstance();
+//
+//    }
 
 
     @Override
     protected void onDestroy() {
-        callBack=null;
+        callBack = null;
         super.onDestroy();
     }
 
-    public static void start(String pageName,int pageId){
+    public static void start(String pageName, int pageId) {
         Intent it = new Intent();
-        it.setClass(AppController.getInstance().getTopAct(),FragmentListAct.class);
+        it.setClass(AppController.getInstance().getTopAct(), FragmentListAct.class);
         it.putExtra("pageId", pageId);
         it.putExtra("pageName", pageName);
         ViewUtils.startActivity(it, AppController.getInstance().getTopAct());
     }
 
-    public static void start(String pageName,int pageId,ParameCallBack callBack){
+    public static void start(String pageName, int pageId, ParameCallBack callBack) {
         Intent it = new Intent();
-        it.setClass(AppController.getInstance().getTopAct(),FragmentListAct.class);
+        it.setClass(AppController.getInstance().getTopAct(), FragmentListAct.class);
         it.putExtra("pageId", pageId);
         it.putExtra("pageName", pageName);
-        FragmentListAct.callBack=callBack;
-        ViewUtils.startActivity(it,AppController.getInstance().getTopAct());
+        FragmentListAct.callBack = callBack;
+        ViewUtils.startActivity(it, AppController.getInstance().getTopAct());
     }
 
 
-    public static void start(String pageName,int pageId,Bundle extData,ParameCallBack callBack){
-        FragmentListAct.callBack=callBack;
+    public static void start(String pageName, int pageId, Bundle extData, ParameCallBack callBack) {
+        FragmentListAct.callBack = callBack;
         Intent it = new Intent();
         it.setClass(AppController.getInstance().getTopAct(), FragmentListAct.class);
         it.putExtra("pageId", pageId);
@@ -184,8 +300,8 @@ public class FragmentListAct extends BasicAct {
     }
 
 
-    public void onCall(Object data){
-        if(callBack!=null)
+    public void onCall(Object data) {
+        if (callBack != null)
             callBack.onCall(data);
     }
 

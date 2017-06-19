@@ -394,6 +394,15 @@
         <item name="windowActionBar">false</item>
     </style>
 
+    <style name="AliterMobileAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/alite_bar_colors</item>
+        <item name="colorPrimaryDark">@color/orange_20a2</item>
+        <item name="colorAccent">@color/white</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
+
 
 
     <style name="AliterAppWhiteBarTheme" parent="Theme.AppCompat.Light.DarkActionBar">

@@ -2,7 +2,7 @@ package com.zxly.o2o.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.aliter.base.BaseActivity;
 import com.zxly.o2o.account.Account;
 import com.zxly.o2o.request.FileUploadRequest;
 import com.zxly.o2o.shop.R;
@@ -28,7 +29,7 @@ import java.util.regex.Pattern;
  * @author fengrongjian 2015-6-24
  * @description 意见反馈
  */
-public class FeedbackAct extends BasicAct implements
+public class FeedbackAct extends BaseActivity implements
         OnClickListener {
     private EditText editFeedback;
     private EditText editContactNumber;
@@ -36,25 +37,69 @@ public class FeedbackAct extends BasicAct implements
     private String lengthNo;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.win_feedback);
+    public int getLayoutId() {
+        return R.layout.win_feedback;
+    }
+
+    @Override
+    public void setToolBar() {
+
+    }
+
+    @Override
+    public void initView() {
         initViews();
     }
 
     @Override
-    protected void handleMessage(Message msg) {
-        super.handleMessage(msg);
-        switch (msg.what) {
-            case Constants.MSG_SUCCEED:
-                finish();
-                ViewUtils.showToast("提交成功");
-                break;
-            case Constants.MSG_FAILED:
-                ViewUtils.showToast("提交失败，稍后重试!");
-                break;
-        }
+    protected void loadData() {
+
     }
+
+    @Override
+    protected void initInject() {
+
+    }
+
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.win_feedback);
+//        initViews();
+//    }
+
+
+    private Handler handler = new Handler(){
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case Constants.MSG_SUCCEED:
+                    finish();
+                    ViewUtils.showToast("提交成功");
+                    break;
+                case Constants.MSG_FAILED:
+                    ViewUtils.showToast("提交失败，稍后重试!");
+                    break;
+
+            }
+        }
+    };
+
+//    @Override
+//    protected void handleMessage(Message msg) {
+//        super.handleMessage(msg);
+//        switch (msg.what) {
+//            case Constants.MSG_SUCCEED:
+//                finish();
+//                ViewUtils.showToast("提交成功");
+//                break;
+//            case Constants.MSG_FAILED:
+//                ViewUtils.showToast("提交失败，稍后重试!");
+//                break;
+//        }
+//    }
 
     public static void start(Activity curAct) {
         Intent intent = new Intent(curAct, FeedbackAct.class);
@@ -119,7 +164,7 @@ public class FeedbackAct extends BasicAct implements
         params.put("contactInfo", contact);
         File file = null;
         new FileUploadRequest(file, params, "shopApp/publish",
-                mMainHandler).startUpload();
+                handler).startUpload();
     }
 
     @Override
@@ -127,6 +172,7 @@ public class FeedbackAct extends BasicAct implements
         switch (v.getId()) {
             case R.id.btn_back:
                 finish();
+                finishActivity();
                 break;
             case R.id.btn_feedback:
                 submitFeedback();

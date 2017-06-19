@@ -93,6 +93,7 @@ public class SettingAct extends BaseActivity implements
     @Override
     public void finish() {
         super.finish();
+
         callBack = null;
     }
 
@@ -101,6 +102,7 @@ public class SettingAct extends BaseActivity implements
         switch (v.getId()) {
             case R.id.btn_back:
                 finish();
+                finishActivity();
                 break;
             case R.id.btn_security_center:
                 SecurityCenterAct.start(SettingAct.this);

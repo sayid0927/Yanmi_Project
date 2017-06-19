@@ -13,8 +13,12 @@ import android.widget.TextView;
 
 import com.aliter.base.BaseFragment;
 import com.aliter.base.BaseFragmentPageAdapter;
-import com.orhanobut.logger.Logger;
 import com.zxly.o2o.application.AppController;
+import com.zxly.o2o.fragment.LocalArticleFragement;
+import com.zxly.o2o.fragment.PromotionAcitcityFragment;
+import com.zxly.o2o.fragment.PromotionArticleFragment;
+import com.zxly.o2o.fragment.StoreArticleFragement;
+import com.zxly.o2o.fragment.TerraceArticleFragement;
 import com.zxly.o2o.shop.R;
 
 import java.util.ArrayList;
@@ -89,11 +93,13 @@ public class AliteShopPromotionFragment extends BaseFragment implements AppBarLa
         mTitleList.add("网络热文");
         mTitleList.add("自定义文章");
         mTitleList.add("活动");
-        mFragments.add(new AliteStoreArticlesFragment());
-        mFragments.add(new AliteStoreArticlesFragment());
-        mFragments.add(new AliteStoreArticlesFragment());
-        mFragments.add(new AliteStoreArticlesFragment());
-        mFragments.add(new AliteStoreArticlesFragment());
+        StoreArticleFragement storeArticleFragement = StoreArticleFragement.newInstance(1);
+        LocalArticleFragement localArticleFragement = LocalArticleFragement.newInstance(1);
+        mFragments.add(storeArticleFragement);
+        mFragments.add(localArticleFragement);
+        mFragments.add(new TerraceArticleFragement());
+        mFragments.add(PromotionArticleFragment.newInstance());
+        mFragments.add(PromotionAcitcityFragment.newInstance());
     }
 
     @Override
@@ -111,7 +117,6 @@ public class AliteShopPromotionFragment extends BaseFragment implements AppBarLa
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
         if (verticalOffset == 0) {
-            Logger.t("TTT").e("TTTTTTTTTTTTTTTTTTTT  === " + String.valueOf(verticalOffset));
 
             appbarLayout.setEnabled(false);
             if (state != CollapsingToolbarLayoutState.EXPANDED) {
@@ -123,7 +128,6 @@ public class AliteShopPromotionFragment extends BaseFragment implements AppBarLa
                 AliteStoreArticlesFragment.install.setmSwipeRefreshLayoutEnabled(true);
             }
         } else if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()) {
-            Logger.t("TTT").e("BBBBBBBBBBB === " + String.valueOf(verticalOffset));
             if (state != CollapsingToolbarLayoutState.COLLAPSED) {
                 state = CollapsingToolbarLayoutState.COLLAPSED;//折叠
                 ((AppCompatActivity) getActivity()).getSupportActionBar().show();
@@ -136,7 +140,6 @@ public class AliteShopPromotionFragment extends BaseFragment implements AppBarLa
             }
         } else {
             collapsingtool.setEnabled(false);
-            Logger.t("TTT").e("CCCCCCCCCCCCCCCCCCCCCCCCCCC === " + String.valueOf(verticalOffset));
             if (state != CollapsingToolbarLayoutState.INTERNEDIATE) {
                 if (state == CollapsingToolbarLayoutState.COLLAPSED) {
 //                    if (toolbarTitle.getVisibility() == View.VISIBLE)

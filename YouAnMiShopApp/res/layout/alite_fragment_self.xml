@@ -55,8 +55,9 @@
 
                     <LinearLayout
                         android:layout_width="wrap_content"
+                        android:id="@+id/ll_setting_user_name"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="5dp"
                         android:layout_marginTop="15dp"
                         android:layout_weight="6"
                         android:orientation="vertical">
@@ -95,6 +96,7 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
+                            android:id="@+id/ll_my_messages"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -125,6 +127,7 @@
 
 
                 <LinearLayout
+                    android:id="@+id/ll_earnings_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="9"
@@ -195,11 +198,11 @@
 
 
             <RelativeLayout
-                android:id="@+id/btn_user_balance"
+                android:background="@drawable/ripple_one_item_bg"
+                android:id="@+id/rl_user_balance"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/white">
+                android:layout_height="45dp"
+                android:layout_marginTop="10dp">
 
                 <ImageView
                     android:id="@+id/imageView3"
@@ -238,14 +241,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
                 android:layout_alignParentBottom="true"
-                android:layout_marginTop="10dp"
                 android:background="@color/gray_dcdcdc" />
 
 
             <RelativeLayout
+                android:background="@drawable/ripple_one_item_bg"
+                android:id="@+id/rl_task_index"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@color/white">
+                android:layout_height="45dp">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -276,9 +279,9 @@
 
 
             <RelativeLayout
+                android:background="@drawable/ripple_one_item_bg"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@color/white">
+                android:layout_height="45dp">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -297,12 +300,7 @@
                     android:textColor="@color/gray_333333"
                     android:textSize="14sp" />
 
-                <!--<View-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="0.5dp"-->
-                    <!--android:layout_alignParentBottom="true"-->
-                    <!--android:layout_marginLeft="10dp"-->
-                    <!--android:background="@color/gray_dcdcdc" />-->
+             
 
             </RelativeLayout>
 
@@ -315,9 +313,9 @@
 
 
             <RelativeLayout
+                android:background="@drawable/ripple_one_item_bg"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@color/white">
+                android:layout_height="45dp">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -347,9 +345,10 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:background="@drawable/ripple_one_item_bg"
+                android:id="@+id/rl_feedback"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@color/white">
+                android:layout_height="45dp">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -379,10 +378,10 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:background="@drawable/ripple_one_item_bg"
                 android:id="@+id/rl_service_phone"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@color/white">
+                android:layout_height="45dp">
 
                 <ImageView
                     android:id="@+id/imageView4"

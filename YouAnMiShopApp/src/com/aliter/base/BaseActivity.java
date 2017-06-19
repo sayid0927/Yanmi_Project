@@ -40,14 +40,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends SwipeBackAct
 
     public abstract void initView();
 
-    /**
-     * 1
-     * 根据网络获取的数据返回状态，每一个子类的获取网络返回的都不一样，所以要交给子类去完成
-     */
+
     protected abstract void loadData();
-    /**
-     * dagger2注入
-     */
+
     protected abstract void initInject();
 
 
@@ -179,7 +174,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends SwipeBackAct
 
     private CompositeSubscription mCompositeSubscription;
 
-    //用于添加rx的监听的在onDestroy中记得关闭不然会内存泄漏。
+
     @Override
     public void bindSubscription(Subscription subscription) {
         if (this.mCompositeSubscription == null) {
@@ -197,19 +192,19 @@ public abstract class BaseActivity<P extends BasePresenter> extends SwipeBackAct
     public void setEdgeTrackingEnabled(int size, int position) {
         if (size == 0) {
         }
-        // 只有一个fragment  - 左右滑关闭
+
         else if (size == 1 && position == 0) {
             mSwipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_ALL);
         }
-        // 多个fragment  - 位于左侧尽头 - 只可左滑关闭
+
         else if (size != 1 && position == 0) {
             mSwipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT);
         }
-        // 多个fragment  - 位于右侧尽头 - 只可右滑关闭
+
         else if (size != 1 && position == size - 1) {
             mSwipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_RIGHT);
         }
-        // 多个fragment  - 位于中间 - 屏蔽所有左右滑关闭事件
+
         else {
             mSwipeBackLayout.setEdgeTrackingEnabled(0);
         }

@@ -50,7 +50,7 @@ public class AreaUtil {
 			is.close();
 			
 			JSONObject obj = new JSONObject(json);
-			String data = obj.getString("prvs");
+			String data = obj.getString("data");
 			TypeToken<List<AddressCountry>> type1 = new TypeToken<List<AddressCountry>>() {
 			};
 			List<AddressCountry> addressList = GsonParser.getInstance()

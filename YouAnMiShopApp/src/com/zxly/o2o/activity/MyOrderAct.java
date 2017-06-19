@@ -4,13 +4,12 @@ package com.zxly.o2o.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.TypedValue;
 import android.view.View;
-import android.view.Window;
 
+import com.aliter.base.BaseActivity;
 import com.easemob.easeui.widget.viewpagerindicator.ViewPageFragmentAdapter;
 import com.zxly.o2o.fragment.MyOrderListFragment;
 import com.zxly.o2o.shop.R;
@@ -25,7 +24,7 @@ import java.util.List;
 /**
  * Created by wuchenhui on 2015/5/25.
  */
-public class MyOrderAct extends BasicAct{
+public class MyOrderAct extends BaseActivity{
 	public static final int ORDER_REQUEST_ALL = 0;
 	public static final int ORDER_REQUEST_WAIT_FOR_SEND = 1;
     public static final int ORDER_REQUEST_SENDED = 2;
@@ -46,12 +45,19 @@ public class MyOrderAct extends BasicAct{
 
 
     private View layoutTips,btnCloseTips;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.win_orders);
 
+    @Override
+    public int getLayoutId() {
+        return R.layout.win_orders;
+    }
+
+    @Override
+    public void setToolBar() {
+
+    }
+
+    @Override
+    public void initView() {
         layoutTips=findViewById(R.id.layout_tips);
         btnCloseTips=findViewById(R.id.btn_close_tips);
 
@@ -64,7 +70,7 @@ public class MyOrderAct extends BasicAct{
         });
 
         if(PreferUtil.getInstance().getIsFirstOpen()){
-           layoutTips.setVisibility(View.VISIBLE);
+            layoutTips.setVisibility(View.VISIBLE);
         }
 
 
@@ -81,32 +87,32 @@ public class MyOrderAct extends BasicAct{
 
         Intent it=getIntent();
         if(it!=null){
-        	curStatus=it.getIntExtra("status", 0);
+            curStatus=it.getIntExtra("status", 0);
         }
 
         switch (curStatus) {
-			case ORDER_REQUEST_ALL :
-				curTab=0;
-				break;
-			case ORDER_REQUEST_WAIT_FOR_SEND :
-				curTab=1;
-				break;		
-			case ORDER_REQUEST_SENDED :
-				curTab=2;
-				break;				
-			case ORDER_REQUEST_RECEIVED :
-				curTab=3;
-				break;
+            case ORDER_REQUEST_ALL :
+                curTab=0;
+                break;
+            case ORDER_REQUEST_WAIT_FOR_SEND :
+                curTab=1;
+                break;
+            case ORDER_REQUEST_SENDED :
+                curTab=2;
+                break;
+            case ORDER_REQUEST_RECEIVED :
+                curTab=3;
+                break;
             case ORDER_REQUEST_REFUND:
                 curTab=4;
                 break;
             case ORDER_REQUEST_FINISH :
                 curTab=5;
                 break;
-			default :
-				break;
-		}
-               
+            default :
+                break;
+        }
+
         String strings[] = {"全部", "待发货", "待收货","已收货","退款","结束"};
         pager.setAdapter(new ViewPageFragmentAdapter(getSupportFragmentManager(), fragments, strings));
         tabs.setViewPager(pager);
@@ -114,6 +120,85 @@ public class MyOrderAct extends BasicAct{
         pager.setCurrentItem(curTab);
         UmengUtil.onEvent(MyOrderAct.this,new UmengUtil().ORDER_ENTER,null);
     }
+
+    @Override
+    protected void loadData() {
+
+    }
+
+    @Override
+    protected void initInject() {
+
+    }
+
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        setContentView(R.layout.win_orders);
+//
+//        layoutTips=findViewById(R.id.layout_tips);
+//        btnCloseTips=findViewById(R.id.btn_close_tips);
+//
+//        btnCloseTips.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                layoutTips.setVisibility(View.GONE);
+//                PreferUtil.getInstance().getIsFirstOpen();
+//            }
+//        });
+//
+//        if(PreferUtil.getInstance().getIsFirstOpen()){
+//           layoutTips.setVisibility(View.VISIBLE);
+//        }
+//
+//
+//        initTitle("我的订单", this);
+//        ViewPager pager = (ViewPager) findViewById(R.id.pager);
+//        tabs = (MPagerSlidingTab) findViewById(R.id.tabs);
+//        fragments = new ArrayList<Fragment>();
+//        fragments.add(MyOrderListFragment.newInstance(TYPE_ORDER_LIST,ORDER_REQUEST_ALL));
+//        fragments.add(MyOrderListFragment.newInstance(TYPE_ORDER_LIST,ORDER_REQUEST_WAIT_FOR_SEND));
+//        fragments.add(MyOrderListFragment.newInstance(TYPE_ORDER_LIST,ORDER_REQUEST_SENDED));
+//        fragments.add(MyOrderListFragment.newInstance(TYPE_ORDER_LIST,ORDER_REQUEST_RECEIVED));
+//        fragments.add(MyOrderListFragment.newInstance(TYPE_ORDER_LIST, ORDER_REQUEST_REFUND));
+//        fragments.add(MyOrderListFragment.newInstance(TYPE_ORDER_LIST,ORDER_REQUEST_FINISH));
+//
+//        Intent it=getIntent();
+//        if(it!=null){
+//        	curStatus=it.getIntExtra("status", 0);
+//        }
+//
+//        switch (curStatus) {
+//			case ORDER_REQUEST_ALL :
+//				curTab=0;
+//				break;
+//			case ORDER_REQUEST_WAIT_FOR_SEND :
+//				curTab=1;
+//				break;
+//			case ORDER_REQUEST_SENDED :
+//				curTab=2;
+//				break;
+//			case ORDER_REQUEST_RECEIVED :
+//				curTab=3;
+//				break;
+//            case ORDER_REQUEST_REFUND:
+//                curTab=4;
+//                break;
+//            case ORDER_REQUEST_FINISH :
+//                curTab=5;
+//                break;
+//			default :
+//				break;
+//		}
+//
+//        String strings[] = {"全部", "待发货", "待收货","已收货","退款","结束"};
+//        pager.setAdapter(new ViewPageFragmentAdapter(getSupportFragmentManager(), fragments, strings));
+//        tabs.setViewPager(pager);
+//        setTabsValue();
+//        pager.setCurrentItem(curTab);
+//        UmengUtil.onEvent(MyOrderAct.this,new UmengUtil().ORDER_ENTER,null);
+//    }
 
 
 
@@ -148,6 +233,7 @@ public class MyOrderAct extends BasicAct{
             @Override
             public void onClick(View v) {
                 activity.finish();
+                finishActivity();
 
                 UmengUtil.onEvent(MyOrderAct.this,new UmengUtil().ORDER_BACK_CLICK,null);
             }

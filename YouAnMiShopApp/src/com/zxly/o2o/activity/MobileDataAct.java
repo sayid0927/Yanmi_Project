@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
-import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.View;
 import android.webkit.JsResult;
@@ -16,6 +15,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.aliter.base.BaseActivity;
 import com.zxly.o2o.account.Account;
 import com.zxly.o2o.application.Config;
 import com.zxly.o2o.service.RemoteInvokeService;
@@ -30,7 +30,7 @@ import com.zxly.o2o.view.LoadingView;
  * @author fengrongjian 2015-8-17
  * @description 流量充值界面
  */
-public class MobileDataAct extends BasicAct implements View.OnClickListener {
+public class MobileDataAct extends BaseActivity implements View.OnClickListener {
     private WebView webView;
     private String browserUrl;
     private View btnBack, btnRecharge;
@@ -40,9 +40,17 @@ public class MobileDataAct extends BasicAct implements View.OnClickListener {
     public static final int WEBVIEW_STATUS_NOMAL=1;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.win_mobile_data);
+    public int getLayoutId() {
+        return R.layout.win_mobile_data;
+    }
+
+    @Override
+    public void setToolBar() {
+
+    }
+
+    @Override
+    public void initView() {
         viewTitle = findViewById(R.id.title);
         btnBack = findViewById(R.id.btn_back);
         btnRecharge = findViewById(R.id.btn_recharge);
@@ -52,6 +60,30 @@ public class MobileDataAct extends BasicAct implements View.OnClickListener {
         initViews();
         UmengUtil.onEvent(MobileDataAct.this,new UmengUtil().ADDDATA_ENTER,null);
     }
+
+    @Override
+    protected void loadData() {
+
+    }
+
+    @Override
+    protected void initInject() {
+
+    }
+
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//       // setContentView(R.layout.win_mobile_data);
+//        viewTitle = findViewById(R.id.title);
+//        btnBack = findViewById(R.id.btn_back);
+//        btnRecharge = findViewById(R.id.btn_recharge);
+//        loadingView = (LoadingView) findViewById(R.id.view_loading);
+//        btnBack.setOnClickListener(this);
+//        btnRecharge.setOnClickListener(this);
+//        initViews();
+//        UmengUtil.onEvent(MobileDataAct.this,new UmengUtil().ADDDATA_ENTER,null);
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -213,6 +245,7 @@ public class MobileDataAct extends BasicAct implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.btn_back:
                 finish();
+                finishActivity();
                 UmengUtil.onEvent(MobileDataAct.this,new  UmengUtil().ADDDATA_BACK_CLICK,null);
                 break;
             case R.id.btn_recharge:
@@ -220,6 +253,11 @@ public class MobileDataAct extends BasicAct implements View.OnClickListener {
                 UmengUtil.onEvent(MobileDataAct.this,new UmengUtil().ADDDATA_RECORDS_CLICK,null);
                 break;
         }
+    }
+
+    public static void start(Activity curAct) {
+        Intent intent = new Intent(curAct, MobileDataAct.class);
+        ViewUtils.startActivity(intent, curAct);
     }
 
 }

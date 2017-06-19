@@ -120,6 +120,7 @@ public class AliteCheckProvinceActivity extends BaseActivity implements AdapterV
         adapter.setCurrentState(1);
         ViewGroup headView = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.item_custom_article_list_header, null);
         TextView txCtys = (TextView) headView.findViewById(R.id.tx_ctiy);
+        txCtys.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
         txCtys.setText("请选择省/直辖市");
         listView.addHeaderView(headView);
         listView.setAdapter(adapter);
@@ -145,8 +146,17 @@ public class AliteCheckProvinceActivity extends BaseActivity implements AdapterV
         provinceId = provinceList.get(position - 1).getProvinceId();
         cityList = (ArrayList<AddressCity>) provinceList.get(position - 1).getCitys();
         if (cityList.get(0).getCityId() != null) {
-            AliteCheckCityActivity.start(AliteCheckProvinceActivity.this, cityList);
-            startActivityIn();
+            String tmp =cityList.get(0).getCityName();
+            if(!tmp.equals(provinceName)) {
+                AliteCheckCityActivity.start(AliteCheckProvinceActivity.this, cityList);
+                startActivityIn();
+            }else {
+                districtList = (ArrayList<AddressDistrict>) cityList.get(0).getDistricts();
+                if (districtList.size() != 0) {
+                    AliteCheckDistrictActivity.start(AliteCheckProvinceActivity.this, districtList, 0);
+                    startActivityIn();
+                }
+            }
         } else {
             districtList = (ArrayList<AddressDistrict>) cityList.get(0).getDistricts();
             if (districtList.size() != 0) {

@@ -13,7 +13,6 @@ import com.aliter.base.BaseFragmentPageAdapter;
 import com.aliter.ui.fragment.MyStoreFragmentAlite;
 import com.aliter.ui.fragment.SelfFragmentAlite;
 import com.aliter.ui.fragment.homefragment.AliteShopPromotionFragment;
-import com.yongchun.library.view.ImageSelectorActivity;
 import com.zxly.o2o.shop.R;
 
 import java.util.ArrayList;
@@ -177,10 +176,11 @@ public class AliterHomeActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK && requestCode == ImageSelectorActivity.REQUEST_IMAGE){
-            ArrayList<String> images = (ArrayList<String>) data.getSerializableExtra(ImageSelectorActivity.REQUEST_OUTPUT);
-            if(SelfFragmentAlite.install!=null)
-            SelfFragmentAlite.install.setImgUserHead(images);
+        if(requestCode==1){
+            if(resultCode==1000){
+                if(SelfFragmentAlite.install!=null)
+                SelfFragmentAlite.install.setImgUserHead();
+            }
         }
     }
 }
