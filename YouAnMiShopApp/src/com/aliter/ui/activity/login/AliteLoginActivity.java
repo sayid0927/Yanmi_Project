@@ -100,6 +100,7 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
     };
 
 
+
     @Override
     public void onAuthShopLogin2SuccessView(IMUserInfoVO usserInfo) {
         //  登录成功返回
