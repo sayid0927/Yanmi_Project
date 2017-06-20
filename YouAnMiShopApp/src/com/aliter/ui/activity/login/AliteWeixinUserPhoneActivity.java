@@ -82,7 +82,6 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity<AliteWeixinUserPh
     private WeixinUserInfoBean weixinUserInfo;
 
 
-
     private Handler handler = new Handler() {
 
         @Override
@@ -269,7 +268,7 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity<AliteWeixinUserPh
     public void onShopGetSecurityCodeSuccessView() {
         //  获取验证码成功
         ViewUtils.showToast(this.getResources().getString(R.string.sen_register_code));
-       DismissLoadingDialog();
+        DismissLoadingDialog();
         //开启计时功能
         resendTime = 54;
         handler.sendEmptyMessageDelayed(TIME_CHANGE, 1000);
@@ -311,7 +310,7 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity<AliteWeixinUserPh
             PreferUtil.getInstance().setRegisterPhonenum(editPhone.getText().toString());
             PreferUtil.getInstance().setRegisterCode(editPassword.getText().toString());
             PreferUtil.getInstance().setRegisterPwd("");
-           DismissLoadingDialog();
+            DismissLoadingDialog();
             // 未注册过  走商户注册流程
 
             ViewUtils.startActivity(new Intent(AliteWeixinUserPhoneActivity.this, AliteSettingShopInfoActivity.class), this);
@@ -337,7 +336,7 @@ public class AliteWeixinUserPhoneActivity extends BaseActivity<AliteWeixinUserPh
 
         Account.saveLoginUser(this, usserInfo);
         Account.user = usserInfo;
-    DismissLoadingDialog();
+        DismissLoadingDialog();
         ViewUtils.startActivity(new Intent(AliteWeixinUserPhoneActivity.this, AliterHomeActivity.class), this);
     }
 

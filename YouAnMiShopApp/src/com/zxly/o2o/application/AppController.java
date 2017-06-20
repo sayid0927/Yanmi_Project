@@ -93,8 +93,8 @@ public class AppController extends Application {
     public  static  final  int ForgetPwdType=7;
 
 
-  public  static  final   String data_base_url="http://sasp.youanmi.com/";
-//    public  static  final   String data_base_url="http://192.168.1.202:8081/web-sis/";
+//  public  static  final   String data_base_url="http://sasp.youanmi.com/";
+    public  static  final   String data_base_url="http://192.168.1.24:28004/";
     public  static  final  String auth_shop_login2="auth/shop/login2";
     public  static  final  String keduoduo_promote_articles="/keduoduo/promote/articles";
     public  static  final  String shop_get_security_code="shopApp/get_security_code";         //获取验证码
@@ -102,7 +102,7 @@ public class AppController extends Application {
     public  static  final  String auth_shop_register="register/reg";                          //注册接口1.0
     public  static  final  String shopApp_isMobileExist="shopApp/isMobileExist";              //查询手机号是否注册1.0-非鉴权
     public  static  final  String shopApp_setpassword2="shopApp/setPassword2";                //设置新密码
-
+    public  static  final  String shopApp_menu="shopApp/menu";                        //获取商户APP菜单权限
 
 
     @Override

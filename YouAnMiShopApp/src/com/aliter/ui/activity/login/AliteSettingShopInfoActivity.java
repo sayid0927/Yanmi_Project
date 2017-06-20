@@ -178,6 +178,8 @@ public class AliteSettingShopInfoActivity extends BaseActivity<AliteSettingShopI
                         districtId = mBundle.getString("districtId");
                         provinceName = mBundle.getString("provinceName");
                         provinceId = mBundle.getString("provinceId");
+                        cityName = mBundle.getString("cityName");
+                        cityId = mBundle.getString("cityId");
                         tvShopIntroduce.setText(provinceName + " " + districtName);
                         break;
                     case 1000:

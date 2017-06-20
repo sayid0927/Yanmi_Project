@@ -10,17 +10,25 @@ import android.widget.RadioGroup;
 
 import com.aliter.base.BaseActivity;
 import com.aliter.base.BaseFragmentPageAdapter;
+import com.aliter.entity.ShopAppMenu;
+import com.aliter.entity.ShopAppMenuBean;
+import com.aliter.injector.component.AliteHomeActivityModule;
+import com.aliter.injector.component.activity.DaggerHomeActivityComponent;
+import com.aliter.presenter.HomeActivityPresenter;
+import com.aliter.presenter.impl.HomeActivityPresenterImpl;
 import com.aliter.ui.fragment.MyStoreFragmentAlite;
 import com.aliter.ui.fragment.SelfFragmentAlite;
 import com.aliter.ui.fragment.homefragment.AliteShopPromotionFragment;
+import com.orhanobut.logger.Logger;
 import com.zxly.o2o.shop.R;
+import com.zxly.o2o.util.ViewUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 
-public class AliterHomeActivity extends BaseActivity {
+public class AliterHomeActivity extends BaseActivity<HomeActivityPresenterImpl>implements HomeActivityPresenter.View {
 
     @BindView(R.id.vp_content)
     ViewPager vpContent;
@@ -60,9 +68,17 @@ public class AliterHomeActivity extends BaseActivity {
         mySelfIconSelected = this.getResources().getDrawable(R.drawable.al_icon_me_click);
 
 
+
+
         getSwipeBackLayout().setEnableGesture(false);
         setVpContentChangeListener();
         initFragmentList();
+//
+//        ShopAppMenu shopAppMenu = new ShopAppMenu();
+//        shopAppMenu.setShopId("1");
+//
+//
+//        mPresenter.ShopAppMenu(shopAppMenu);
     }
 
 
@@ -74,6 +90,7 @@ public class AliterHomeActivity extends BaseActivity {
 
     @Override
     protected void initInject() {
+        DaggerHomeActivityComponent.builder().aliteHomeActivityModule(new AliteHomeActivityModule()).build().injectWeChat(this);
     }
 
     private void initFragmentList() {
@@ -125,12 +142,17 @@ public class AliterHomeActivity extends BaseActivity {
                        // vpContent.setCurrentItem(0);// 设置当前页面
                         vpContent.setCurrentItem(0,false);// false去掉viewpager切换页面的动画
                         setSelectedIcon(0);
+
                         break;
 
                     case R.id.rb_my_store:
 //                        vpContent.setCurrentItem(1);
-                        vpContent.setCurrentItem(1,false);
-                        setSelectedIcon(1);
+//                        vpContent.setCurrentItem(1,false);
+//                        setSelectedIcon(1);
+
+                        ShopAppMenu shopAppMenu = new ShopAppMenu();
+                        shopAppMenu.setShopId("1");
+                        mPresenter.ShopAppMenu(shopAppMenu);
 
                         break;
                     case R.id.rb_self:
@@ -182,5 +204,24 @@ public class AliterHomeActivity extends BaseActivity {
                 SelfFragmentAlite.install.setImgUserHead();
             }
         }
+    }
+
+
+    @Override
+    public void onShopAppMenuSuccessView(List<ShopAppMenuBean> shopAppMenuBean) {
+        ViewUtils.showToast("BBBBB");
+String tmp;
+        Logger.t("TAG").d(shopAppMenuBean);
+        for(int i=0;i<shopAppMenuBean.size();i++){
+            tmp=shopAppMenuBean.get(i).getCode();
+            if(tmp.equals("dpwz001")){
+
+            }
+        }
+    }
+
+    @Override
+    public void onFailView(String errorMsg) {
+        ViewUtils.showToast("CCCCCC");
     }
 }

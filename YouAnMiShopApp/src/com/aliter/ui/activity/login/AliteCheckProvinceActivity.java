@@ -146,8 +146,9 @@ public class AliteCheckProvinceActivity extends BaseActivity implements AdapterV
         provinceId = provinceList.get(position - 1).getProvinceId();
         cityList = (ArrayList<AddressCity>) provinceList.get(position - 1).getCitys();
         if (cityList.get(0).getCityId() != null) {
-            String tmp =cityList.get(0).getCityName();
-            if(!tmp.equals(provinceName)) {
+            cityName =cityList.get(0).getCityName();
+            cityId=cityList.get(0).getCityId();
+            if(!cityName.equals(provinceName)) {
                 AliteCheckCityActivity.start(AliteCheckProvinceActivity.this, cityList);
                 startActivityIn();
             }else {
@@ -183,6 +184,8 @@ public class AliteCheckProvinceActivity extends BaseActivity implements AdapterV
                     mBundle.putString("districtId", districtId);
                     mBundle.putString("provinceName", provinceName);
                     mBundle.putString("provinceId", provinceId);
+                    mBundle.putString("cityName", cityName);
+                    mBundle.putString("cityId", cityId);
                     intent.putExtras(mBundle);
                     setResult(0, intent);
                     break;

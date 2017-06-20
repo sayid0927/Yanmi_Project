@@ -56,7 +56,6 @@ public class MyStoreFragmentAlite extends BaseFragment {
         switch (view.getId()) {
             case R.id.tv_recharge:  //  流量冲值
                 MobileDataAct.start(getActivity());
-
                 break;
             case R.id.tv_youbao:    //  碎柚宝
                 break;
@@ -65,7 +64,6 @@ public class MyStoreFragmentAlite extends BaseFragment {
                 break;
             case R.id.tv_employee_list:   // 店员榜单
                 SalesmanRankingAct.start(getActivity());
-
                 break;
             case R.id.btn_user_collect:
                 break;

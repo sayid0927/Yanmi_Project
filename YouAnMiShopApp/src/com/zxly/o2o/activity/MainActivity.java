@@ -24,6 +24,7 @@ import com.easemob.easeui.request.HXNormalRequest;
 import com.easemob.easeui.ui.EaseHXMainFragment;
 import com.easemob.exceptions.EaseMobException;
 import com.easemob.util.EMLog;
+import com.orhanobut.logger.Logger;
 import com.zxly.o2o.account.Account;
 import com.zxly.o2o.application.AppController;
 import com.zxly.o2o.application.Config;
@@ -326,6 +327,9 @@ public class MainActivity extends BasicAct {
                                         conflictBuilder = null;
                                         AppController.getInstance().exitAndGoToMainPage();
                                         LoginAct.start(AppController.getInstance().getTopAct());
+                                        Logger.t("TAG").e("显示帐号在别处登录dialog");
+//                                        Intent  intent = new Intent(AppController.getInstance().getTopAct(), AliteLaunchActivity.class);
+//                                        startActivity(i);
                                         finish();
                                     }
                                 });

@@ -210,6 +210,8 @@ public abstract class BaseActivity<P extends BasePresenter> extends SwipeBackAct
         }
     }
 
+
+
     protected ActivityComponent getActivityComponent() {
         return DaggerActivityComponent.builder()
                 .activityModule(getActivityModule())

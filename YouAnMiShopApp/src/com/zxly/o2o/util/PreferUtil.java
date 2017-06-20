@@ -33,6 +33,24 @@ public final class PreferUtil {
 
     private static final String SHOP_APPSETPASSWORD_CODE = "ShopAppSetPasswordCode";
     private static final String SHOP_APPSETPASSWORD_NUM = "ShopAppSetPasswordNum";
+
+
+    private static final String SHOP_DPWZ_001 = "shop_dpwz_001";
+    private static final String SHOP_BDRW_001 = "shop_bdrw_001";
+    private static final String SHOP_WLRW_001 = "shop_wlrw_001";
+    private static final String SHOP_ZDYWZ_001 = "shop_zdywz_001";
+    private static final String SHOP_HD_001 = "shop_hd_001";
+    private static final String SHOP_WDWD_001 = "shop_wdwd_001";
+    private static final String SHOP_SYB_001 = "shop_syb_001";
+    private static final String SHOP_LLCZ_001 = "shop_llcz_001";
+    private static final String SHOP_ZYJ_001 = "shop_zyj_001";
+    private static final String SHOP_SYBD_001 = "shop_sybd_001";
+    private static final String SHOP_SHQD_001 = "shop_shqd_001";
+    private static final String SHOP_YHLQ_001 = "shop_yhlq_001";
+    private static final String SHOP_YHTJ_001 = "shop_yhtj_001";
+    private static final String SHOP_DDGL_001 = "shop_DDGL_001";
+    private static final String SHOP_ZQGL_001 = "shop_zqgl_001";
+    private static final String SHOP_DYBD_001 = "shop_dybd_001";
     private static final String NOTIFY_ALL = "notification_all";
     private static final String NOTIFY_LOGOUT = "notification_logout";
     private static final String NOTIFY_SLEEP = "notification_sleep";
@@ -176,6 +194,162 @@ public final class PreferUtil {
     public String getShopAppSetPasswordPhoneNum() {
         return getString(SHOP_APPSETPASSWORD_NUM, "");
     }
+
+
+    /**获取店铺文章是否显示 */
+    public boolean getDpwz001() {
+        return getBoolean(SHOP_DPWZ_001, false);
+    }
+    /**设置店铺文章是否显示 */
+    public void setDpwz001(boolean flag) {
+        putBoolean(SHOP_DPWZ_001, flag);
+    }
+
+    /**获取本地热文是否显示 */
+    public boolean getBdrw001() {
+        return getBoolean(SHOP_BDRW_001, false);
+    }
+    /**设置本地热文是否显示 */
+    public void setBdrw001(boolean flag) {
+        putBoolean(SHOP_BDRW_001, flag);
+    }
+
+    /**获取网络热文是否`显示 */
+    public boolean getWlrw001() {
+        return getBoolean(SHOP_WLRW_001, false);
+    }
+    /**设置网络热文是否显示 */
+    public void setWlrw001(boolean flag) {
+        putBoolean(SHOP_WLRW_001, flag);
+    }
+
+
+    /**获取自定义文章是否`显示 */
+    public boolean getZdywz001() {
+        return getBoolean(SHOP_ZDYWZ_001, false);
+    }
+    /**设置自定义文章是否显示 */
+    public void setZdywz001(boolean flag) {
+        putBoolean(SHOP_ZDYWZ_001, flag);
+    }
+
+
+    /**获取活动是否`显示 */
+    public boolean getHd001() {
+        return getBoolean(SHOP_HD_001, false);
+    }
+    /**设置活动是否显示 */
+    public void setHd001(boolean flag) {
+        putBoolean(SHOP_HD_001, flag);
+    }
+
+    /**获取我的网店是否`显示 */
+    public boolean getWdwd001() {
+        return getBoolean(SHOP_WDWD_001, false);
+    }
+    /**设置我的网店是否显示 */
+    public void setWdwd001(boolean flag) {
+        putBoolean(SHOP_WDWD_001, flag);
+    }
+
+
+    /**获取碎柚宝是否`显示 */
+    public boolean getSyb001() {
+        return getBoolean(SHOP_SYB_001, false);
+    }
+    /**设置碎柚宝是否显示 */
+    public void setSyb001(boolean flag) {
+        putBoolean(SHOP_SYB_001, flag);
+    }
+
+
+
+    /**获取流量冲值是否`显示 */
+    public boolean getLlczb001() {
+        return getBoolean(SHOP_LLCZ_001, false);
+    }
+    /**设置流量冲值是否显示 */
+    public void setLlcz001(boolean flag) {
+        putBoolean(SHOP_LLCZ_001, flag);
+    }
+
+
+    /**获取赚佣金是否`显示 */
+    public boolean getZyj001() {
+        return getBoolean(SHOP_ZYJ_001, false);
+    }
+    /**设置赚佣金是否显示 */
+    public void setZyj001(boolean flag) {
+        putBoolean(SHOP_ZYJ_001, flag);
+    }
+
+
+    /**获取店员榜单是否`显示 */
+    public boolean getDybd001() {
+        return getBoolean(SHOP_DYBD_001, false);
+    }
+    /**设置店员榜单是否显示 */
+    public void setDybd001(boolean flag) {
+        putBoolean(SHOP_DYBD_001, flag);
+    }
+
+    /**获取送货清单是否`显示 */
+    public boolean getShqd001() {
+        return getBoolean(SHOP_SHQD_001, false);
+    }
+    /**设置送货清单是否显示 */
+    public void setShqd001(boolean flag) {
+        putBoolean(SHOP_SHQD_001, flag);
+    }
+
+    /**获取优惠领取是否`显示 */
+    public boolean getYhlq001() {
+        return getBoolean(SHOP_YHLQ_001, false);
+    }
+    /**设置优惠领取是否显示 */
+    public void setYhlq001(boolean flag) {
+        putBoolean(SHOP_YHLQ_001, flag);
+    }
+
+    /**获取优惠统计是否`显示 */
+    public boolean getYhtj001() {
+        return getBoolean(SHOP_YHTJ_001, false);
+    }
+    /**设置优惠统计是否显示 */
+    public void setYhtj001(boolean flag) {
+        putBoolean(SHOP_YHTJ_001, flag);
+    }
+
+
+    /**获取订单管理是否`显示 */
+    public boolean getDdgl001() {
+        return getBoolean(SHOP_DDGL_001, false);
+    }
+    /**设置订单管理是否显示 */
+    public void setDdgl001(boolean flag) {
+        putBoolean(SHOP_DDGL_001, flag);
+    }
+
+    /**获取赚钱攻略是否`显示 */
+    public boolean getZqgl001() {
+        return getBoolean(SHOP_DDGL_001, false);
+    }
+    /**设置赚钱攻略是否显示 */
+    public void setZqgl001(boolean flag) {
+        putBoolean(SHOP_DDGL_001, flag);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     //保存微信个人信息
     public  void setWeixinUserInfo(Map<String, String> data) {

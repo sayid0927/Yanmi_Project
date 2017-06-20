@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
+import android.os.Bundle;
 import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
@@ -13,7 +14,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
-import com.aliter.base.BaseActivity;
 import com.zxly.o2o.account.Account;
 import com.zxly.o2o.dialog.ShareDialog;
 import com.zxly.o2o.model.ActicityInfo;
@@ -33,7 +33,7 @@ import com.zxly.o2o.view.LoadingView;
  * @author wuchenhui 2015-7-2
  * @description H5页面
  */
-public class H5DetailAct extends BaseActivity implements View.OnClickListener {
+public class H5DetailAct extends BasicAct implements View.OnClickListener {
 	public static final int TYPE_OPEN_PRODUCT_H5=1;
 	public static final int TYPE_OPEN_ARTICLE_H5=2;
 	public static final int TYPE_OPEN_ACTICITY_H5=3;
@@ -54,32 +54,32 @@ public class H5DetailAct extends BaseActivity implements View.OnClickListener {
 
 	private boolean shouldOverrideUrlLoading;
 
-//	@Override
-//	protected void onCreate(Bundle savedInstanceState) {
-//		super.onCreate(savedInstanceState);
-//		setContentView(getLayoutId());
-//
-//		shareDialog=new ShareDialog();
-//		title = getIntent().getStringExtra("title");
-//		loadUrl=getIntent().getStringExtra("loadUrl");
-//		shouldOverrideUrlLoading=getIntent().getBooleanExtra("shouldOverrideUrlLoading",false);
-//		pageType=getIntent().getIntExtra("pageType", TYPE_DEFAULT);
-//		if(pageType==TYPE_H5_GAME){
-//			if(shareInfo.getType()==ActicityInfo.TYPE_DSD){
-//				title="剁手党活动";
-//				loadUrl=loadUrl+"&fromApp=true";
-//			} else if(shareInfo.getType()==ActicityInfo.TYPE_DZP){
-//				title="大转盘活动";
-////				loadUrl = loadUrl+"&DeviceID="+Config.imei+
-////						"&Authorization="+ PreferUtil.getInstance().getLoginToken()+
-////						"&type="+ Constants.OPEN_FROM_APP+"&baseUrl="+Config.dataBaseUrl+"&brand="+ Build.BRAND;
-//			}
-//		}
-//
-//		initViews();
-//		loadH5(loadUrl);
-//
-//	}
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(getLayoutId());
+
+		shareDialog=new ShareDialog();
+		title = getIntent().getStringExtra("title");
+		loadUrl=getIntent().getStringExtra("loadUrl");
+		shouldOverrideUrlLoading=getIntent().getBooleanExtra("shouldOverrideUrlLoading",false);
+		pageType=getIntent().getIntExtra("pageType", TYPE_DEFAULT);
+		if(pageType==TYPE_H5_GAME){
+			if(shareInfo.getType()==ActicityInfo.TYPE_DSD){
+				title="剁手党活动";
+				loadUrl=loadUrl+"&fromApp=true";
+			} else if(shareInfo.getType()==ActicityInfo.TYPE_DZP){
+				title="大转盘活动";
+//				loadUrl = loadUrl+"&DeviceID="+Config.imei+
+//						"&Authorization="+ PreferUtil.getInstance().getLoginToken()+
+//						"&type="+ Constants.OPEN_FROM_APP+"&baseUrl="+Config.dataBaseUrl+"&brand="+ Build.BRAND;
+			}
+		}
+
+		initViews();
+		loadH5(loadUrl);
+
+	}
 
 	@Override
 	protected void onDestroy() {
@@ -105,45 +105,6 @@ public class H5DetailAct extends BaseActivity implements View.OnClickListener {
 	public int getLayoutId(){
 		return R.layout.win_h5_detail;
 	}
-
-	@Override
-	public void setToolBar() {
-
-	}
-
-	@Override
-	public void initView() {
-		shareDialog=new ShareDialog();
-		title = getIntent().getStringExtra("title");
-		loadUrl=getIntent().getStringExtra("loadUrl");
-		shouldOverrideUrlLoading=getIntent().getBooleanExtra("shouldOverrideUrlLoading",false);
-		pageType=getIntent().getIntExtra("pageType", TYPE_DEFAULT);
-		if(pageType==TYPE_H5_GAME){
-			if(shareInfo.getType()==ActicityInfo.TYPE_DSD){
-				title="剁手党活动";
-				loadUrl=loadUrl+"&fromApp=true";
-			} else if(shareInfo.getType()==ActicityInfo.TYPE_DZP){
-				title="大转盘活动";
-//				loadUrl = loadUrl+"&DeviceID="+Config.imei+
-//						"&Authorization="+ PreferUtil.getInstance().getLoginToken()+
-//						"&type="+ Constants.OPEN_FROM_APP+"&baseUrl="+Config.dataBaseUrl+"&brand="+ Build.BRAND;
-			}
-		}
-
-		initViews();
-		loadH5(loadUrl);
-	}
-
-	@Override
-	protected void loadData() {
-
-	}
-
-	@Override
-	protected void initInject() {
-
-	}
-
 	public static void start(Activity curAct, String loadUrl, String title) {
 		Intent intent = new Intent(curAct, H5DetailAct.class);
 		intent.putExtra("title", title);
