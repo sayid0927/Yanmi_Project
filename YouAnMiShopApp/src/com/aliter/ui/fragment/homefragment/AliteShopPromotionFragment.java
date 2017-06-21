@@ -20,6 +20,7 @@ import com.zxly.o2o.fragment.PromotionArticleFragment;
 import com.zxly.o2o.fragment.StoreArticleFragement;
 import com.zxly.o2o.fragment.TerraceArticleFragement;
 import com.zxly.o2o.shop.R;
+import com.zxly.o2o.util.PreferUtil;
 
 import java.util.ArrayList;
 
@@ -88,18 +89,55 @@ public class AliteShopPromotionFragment extends BaseFragment implements AppBarLa
         if (mTitleList.size() != 0) {
             return;
         }
-        mTitleList.add("店铺文章");
-        mTitleList.add("本地热文");
-        mTitleList.add("网络热文");
-        mTitleList.add("自定义文章");
-        mTitleList.add("活动");
-        StoreArticleFragement storeArticleFragement = StoreArticleFragement.newInstance(1);
-        LocalArticleFragement localArticleFragement = LocalArticleFragement.newInstance(1);
-        mFragments.add(storeArticleFragement);
-        mFragments.add(localArticleFragement);
-        mFragments.add(new TerraceArticleFragement());
-        mFragments.add(PromotionArticleFragment.newInstance());
-        mFragments.add(PromotionAcitcityFragment.newInstance());
+
+
+        if(PreferUtil.getInstance().getDpwz001()) {
+            mTitleList.add("店铺文章");
+        }
+        if(PreferUtil.getInstance().getBdrw001()) {
+            mTitleList.add("本地热文");
+        }
+        if(PreferUtil.getInstance().getWlrw001()) {
+            mTitleList.add("网络热文");
+        }
+        if(PreferUtil.getInstance().getZdywz001()) {
+            mTitleList.add("自定义文章");
+        }
+        if(PreferUtil.getInstance().getHd001()) {
+            mTitleList.add("活动");
+        }
+
+        if(PreferUtil.getInstance().getDpwz001()){
+            StoreArticleFragement storeArticleFragement = StoreArticleFragement.newInstance(1);
+            mFragments.add(storeArticleFragement);
+        }
+        if(PreferUtil.getInstance().getBdrw001()){
+            LocalArticleFragement localArticleFragement = LocalArticleFragement.newInstance(1);
+            mFragments.add(localArticleFragement);
+        }
+        if(PreferUtil.getInstance().getWlrw001()) {
+            mFragments.add(new TerraceArticleFragement());
+        }
+        if(PreferUtil.getInstance().getZdywz001()) {
+            mFragments.add(PromotionArticleFragment.newInstance());
+        }
+        if(PreferUtil.getInstance().getHd001()) {
+            mFragments.add(PromotionAcitcityFragment.newInstance());
+        }
+
+
+//        mTitleList.add("店铺文章");
+//        mTitleList.add("本地热文");
+//        mTitleList.add("网络热文");
+//        mTitleList.add("自定义文章");
+//        mTitleList.add("活动");
+//        StoreArticleFragement storeArticleFragement = StoreArticleFragement.newInstance(1);
+//        LocalArticleFragement localArticleFragement = LocalArticleFragement.newInstance(1);
+//        mFragments.add(storeArticleFragement);
+//        mFragments.add(localArticleFragement);
+//        mFragments.add(new TerraceArticleFragement());
+//        mFragments.add(PromotionArticleFragment.newInstance());
+//        mFragments.add(PromotionAcitcityFragment.newInstance());
     }
 
     @Override
@@ -125,7 +163,7 @@ public class AliteShopPromotionFragment extends BaseFragment implements AppBarLa
                 toolbarTitle.setVisibility(View.GONE);
                 collapsingtool.setTitle("");
                 if( AliteStoreArticlesFragment.install!=null)
-                AliteStoreArticlesFragment.install.setmSwipeRefreshLayoutEnabled(true);
+                    AliteStoreArticlesFragment.install.setmSwipeRefreshLayoutEnabled(true);
             }
         } else if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()) {
             if (state != CollapsingToolbarLayoutState.COLLAPSED) {
@@ -136,7 +174,7 @@ public class AliteShopPromotionFragment extends BaseFragment implements AppBarLa
                 toolbar.getBackground().setAlpha(255);
                 collapsingtool.setTitle("");
                 if( AliteStoreArticlesFragment.install!=null)
-                AliteStoreArticlesFragment.install.setmSwipeRefreshLayoutEnabled(false);
+                    AliteStoreArticlesFragment.install.setmSwipeRefreshLayoutEnabled(false);
             }
         } else {
             collapsingtool.setEnabled(false);
@@ -153,7 +191,7 @@ public class AliteShopPromotionFragment extends BaseFragment implements AppBarLa
                 toolbarTitle.setTextColor(getActivity().getResources().getColor(R.color.orange_1aff));
                 toolbar.getBackground().setAlpha(100);
                 if( AliteStoreArticlesFragment.install!=null)
-                AliteStoreArticlesFragment.install.setmSwipeRefreshLayoutEnabled(false);
+                    AliteStoreArticlesFragment.install.setmSwipeRefreshLayoutEnabled(false);
             }
         }
     }

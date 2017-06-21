@@ -360,3 +360,175 @@ public static java.lang.String TABLENAME;
 -dontwarn rx.**
 
 
+
+###  butterknife
+-keep class butterknife.** { *; }
+-dontwarn butterknife.internal.**
+-keep class **$$ViewBinder { *; }
+-keepclasseswithmembernames class * {
+   @butterknife.* <fields>;
+}
+-keepclasseswithmembernames class * {
+   @butterknife.* <methods>;
+}
+
+
+# support-v4
+#https://stackoverflow.com/questions/18978706/obfuscate-android-support-v7-widget-gridlayout-issue
+-dontwarn android.support.v4.**
+-keep class android.support.v4.app.** { *; }
+-keep interface android.support.v4.app.** { *; }
+-keep class android.support.v4.** { *; }
+
+
+# support-v7
+-dontwarn android.support.v7.**
+-keep class android.support.v7.internal.** { *; }
+-keep interface android.support.v7.internal.** { *; }
+-keep class android.support.v7.** { *; }
+
+# support design
+#@link http://stackoverflow.com/a/31028536
+-dontwarn android.support.design.**
+-keep class android.support.design.** { *; }
+-keep interface android.support.design.** { *; }
+-keep public class android.support.design.R$* { *; }
+
+
+###  sharesdk
+-keep class cn.sharesdk.**{*;}
+-keep class com.sina.**{*;}
+-keep class **.R$* {*;}
+-keep class **.R{*;}
+-dontwarn cn.sharesdk.**
+-dontwarn **.R$*
+-dontwarn com.tencent.**
+-keep class com.tencent.** {*;}
+
+
+# OkHttp3
+-dontwarn com.squareup.okhttp3.**
+-keep class com.squareup.okhttp3.** { *;}
+-dontwarn okio.**
+
+# Okio
+-dontwarn com.squareup.**
+-dontwarn okio.**
+-keep public class org.codehaus.* { *; }
+-keep public class java.nio.* { *; }
+
+# OrmLite
+-keepattributes *DatabaseField*
+-keepattributes *DatabaseTable*
+-keepattributes *SerializedName*
+-keep class com.j256.**
+-keepclassmembers class com.j256.** { *; }
+-keep enum com.j256.**
+-keepclassmembers enum com.j256.** { *; }
+-keep interface com.j256.**
+-keepclassmembers interface com.j256.** { *; }
+
+# Realm
+-keep class io.realm.annotations.RealmModule
+-keep @io.realm.annotations.RealmModule class *
+-keep class io.realm.internal.Keep
+-keep @io.realm.internal.Keep class * { *; }
+-dontwarn javax.**
+-dontwarn io.realm.**
+
+# Retrofit
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+-keepattributes Signature
+-keepattributes Exceptions
+
+# Retrolambda
+-dontwarn java.lang.invoke.*
+
+# RxJava RxAndroid
+-dontwarn sun.misc.**
+-keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
+    long producerIndex;
+    long consumerIndex;
+}
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
+    rx.internal.util.atomic.LinkedQueueNode producerNode;
+}
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
+    rx.internal.util.atomic.LinkedQueueNode consumerNode;
+}
+
+
+
+
+#retrofit2.x
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+-keepattributes Signature
+-keepattributes Exceptions
+
+#Rxjava RxAndroid
+-dontwarn rx.*
+-dontwarn sun.misc.**
+
+-keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
+   long producerIndex;
+   long consumerIndex;
+}
+
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
+    rx.internal.util.atomic.LinkedQueueNode producerNode;
+}
+
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
+    rx.internal.util.atomic.LinkedQueueNode consumerNode;
+}
+
+#fastJson
+-dontwarn com.alibaba.fastjson.**
+-keep class com.alibaba.fastjson.** { *; }
+
+# Okio
+-dontwarn com.squareup.**
+-dontwarn okio.**
+-keep public class org.codehaus.* { *; }
+-keep public class java.nio.* { *; }
+# Retrolambda
+-dontwarn java.lang.invoke.*
+# 移除一些log代码:
+-assumenosideeffects class android.util.Log {
+    public static *** v(...);
+    public static *** i(...);
+    public static *** d(...);
+    public static *** w(...);
+    public static *** e(...);
+}
+# ProGuard configurations for Bugtags
+  -keepattributes LineNumberTable,SourceFile
+  -keep class com.bugtags.library.** {*;}
+  -dontwarn com.bugtags.library.**
+  -keep class io.bugtags.** {*;}
+  -dontwarn io.bugtags.**
+  -dontwarn org.apache.http.**
+  -dontwarn android.net.http.AndroidHttpClient
+
+  # End Bugtags
+  #忽略警告
+  -keep class com.juts.framework.** {*;}
+  -dontwarn com.juts.framework.**
+
+  -keep class com.android.jdbc.** {*;}
+   -dontwarn com.android.jdbc.**
+
+  -keep class com.juts.utility.** {*;}
+    -dontwarn com.juts.utility.**
+
+  -keep class exchange.android.engine.** {*;}
+ -dontwarn exchange.android.engine.**
+
+   -keep class com.** {*;}
+  -dontwarn com.**
+
+
+
+

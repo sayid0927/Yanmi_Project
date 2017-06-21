@@ -93,8 +93,9 @@ public class AppController extends Application {
     public  static  final  int ForgetPwdType=7;
 
 
-//  public  static  final   String data_base_url="http://sasp.youanmi.com/";
-    public  static  final   String data_base_url="http://192.168.1.24:28004/";
+//  public  static  final   String data_base_url="http://sasp.youanmi.com/";      //  正式
+    public  static  final   String data_base_url="http://192.168.1.24:28004/";  //  国军
+//    public  static  final   String data_base_url="http://192.168.1.212:82/sis/";  //  黄伟
     public  static  final  String auth_shop_login2="auth/shop/login2";
     public  static  final  String keduoduo_promote_articles="/keduoduo/promote/articles";
     public  static  final  String shop_get_security_code="shopApp/get_security_code";         //获取验证码

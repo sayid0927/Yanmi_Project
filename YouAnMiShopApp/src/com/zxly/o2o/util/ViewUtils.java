@@ -126,6 +126,25 @@ public class ViewUtils {
     public static void setRefreshText(PullToRefreshListView mListView) {
         setRefreshListText(mListView);
     }
+
+    public static void setAlRefreshText(PullToRefreshListView mListView) {
+        setAlRefreshListText(mListView);
+    }
+
+
+    public static void setAlRefreshListText(PullToRefreshBase mListView) {
+        mListView.setMode(Mode.BOTH);
+        mListView.getLoadingLayoutProxy(false, true).setPullLabel("上拉加载");
+        mListView.getLoadingLayoutProxy(false, true).setRefreshingLabel("加载中");
+        mListView.getLoadingLayoutProxy(false, true).setReleaseLabel("上拉加载");
+        mListView.getLoadingLayoutProxy(true, false).setPullLabel("推广文章");
+        mListView.getLoadingLayoutProxy(true, false).setRefreshingLabel("正在刷新");
+        mListView.getLoadingLayoutProxy(true, false).setReleaseLabel("推广文章");
+    }
+
+
+
+
     public static void setRefreshListText(PullToRefreshBase mListView) {
         mListView.setMode(Mode.BOTH);
         mListView.getLoadingLayoutProxy(false, true).setPullLabel("上拉加载");

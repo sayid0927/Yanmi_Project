@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.zxing.CaptureActivity;
 import com.zxly.o2o.account.Account;
 import com.zxly.o2o.activity.FragmentListAct;
 import com.zxly.o2o.activity.MainActivity;
@@ -69,10 +68,10 @@ public class MakeMoneyFragment extends BaseFragment implements View.OnClickListe
         }
 
         btnSymx = discoverHead.findViewById(R.id.btn_symx);
-        btnScanErweima = findViewById(R.id.btn_scanErweima);
+//        btnScanErweima = findViewById(R.id.btn_scanErweima);
         txtTotalYield = (TextView) discoverHead.findViewById(R.id.txt_total_yield);
         txtCurYield = (TextView) discoverHead.findViewById(R.id.txt_cur_yield);
-        txtTitle = (TextView) findViewById(R.id.txt_title);
+//        txtTitle = (TextView) findViewById(R.id.txt_title);
         btnMsg = discoverHead.findViewById(R.id.btn_msg);
         mVerticalRollingView = (VerticalRollingTextView) discoverHead.findViewById(R.id.txt_sysMsg);
 
@@ -80,7 +79,7 @@ public class MakeMoneyFragment extends BaseFragment implements View.OnClickListe
         loadingview = (LoadingView) findViewById(R.id.view_loading);
         ViewUtils.setRefreshText(mListView);
         mListView.setDivideHeight(0);
-        mListView.addH(discoverHead);
+       // mListView.addH(discoverHead);
         mListView.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
         mListView.setOnRefreshListener(this);
         mListView.setIntercept(true);
@@ -88,7 +87,7 @@ public class MakeMoneyFragment extends BaseFragment implements View.OnClickListe
 //            ViewUtils.setText(txtTitle, Account.user.getShopName());
 //        }
         //11月运维2  新需求：为保持与tab文字一致
-        ViewUtils.setText(txtTitle, "赚钱");
+//        ViewUtils.setText(txtTitle, "赚钱");
         btnZyj = discoverHead.findViewById(R.id.btn_zyj);
         btnSymx.setOnClickListener(this);
         btnZyj.setOnClickListener(this);
@@ -96,14 +95,18 @@ public class MakeMoneyFragment extends BaseFragment implements View.OnClickListe
         discoverHead.findViewById(R.id.btn_llcz).setOnClickListener(this);
         discoverHead.findViewById(R.id.btn_ybgl).setOnClickListener(this);
         txtYbglNumber = (TextView) discoverHead.findViewById(R.id.txt_yanbao_number);
-        btnScanErweima.setOnClickListener(this);
+//        btnScanErweima.setOnClickListener(this);
 
 
     }
 
     public void onResume() {
         super.onResume();
-        if (Account.user != null && 2 == ((MainActivity) getActivity()).fragmentController.getCurrentTab()) {
+//        if (Account.user != null && 2 == ((MainActivity) getActivity()).fragmentController.getCurrentTab()) {
+//            initData();
+//        }
+
+        if (Account.user != null ) {
             initData();
         }
     }
@@ -124,7 +127,7 @@ public class MakeMoneyFragment extends BaseFragment implements View.OnClickListe
                     String count= moneyInitRequest.getInsuranceOrderCount()>99 ? "99+" : (moneyInitRequest.getInsuranceOrderCount()+"");
                     ViewUtils.setText(txtYbglNumber,count);
                 }else {
-                    ((MainActivity) getActivity()).setRedPointVisible(false);
+//                    ((MainActivity) getActivity()).setRedPointVisible(false);
                     ViewUtils.setGone(txtYbglNumber);
                 }
 
@@ -297,10 +300,12 @@ public class MakeMoneyFragment extends BaseFragment implements View.OnClickListe
         } else if (v == btnZyj) {
             ViewUtils.startActivity(new Intent(getActivity(), MakeCommissionAct.class), getActivity());
             UmengUtil.onEvent(getActivity(),new UmengUtil().MONEY_COMMISSION_CLICK,null);
-        } else if (v == btnScanErweima) {
-            ViewUtils.startActivity(new Intent(getActivity(), CaptureActivity.class), getActivity());
-              UmengUtil.onEvent(getActivity(),new UmengUtil().MONEY_QRCODE_CLICK,null);
-        } else if (v == btnMsg) {
+        }
+//        else if (v == btnScanErweima) {
+//            ViewUtils.startActivity(new Intent(getActivity(), CaptureActivity.class), getActivity());
+//              UmengUtil.onEvent(getActivity(),new UmengUtil().MONEY_QRCODE_CLICK,null);
+//        }
+        else if (v == btnMsg) {
             SystemMsgAct.start(this.getActivity());
         } else if (v.getId() == R.id.btn_ybgl) {
             FragmentListAct.start("延保管理", FragmentListAct.PAGE_GUARANTEE_MANAGE);

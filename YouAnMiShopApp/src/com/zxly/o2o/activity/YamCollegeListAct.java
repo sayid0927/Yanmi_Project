@@ -3,13 +3,13 @@ package com.zxly.o2o.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.zxly.o2o.adapter.YamCourseAdapter;
+import com.zxly.o2o.fragment.BaseFragment;
 import com.zxly.o2o.model.CollegeCourse;
 import com.zxly.o2o.model.CourseType;
 import com.zxly.o2o.pullrefresh.PullToRefreshBase;
@@ -25,11 +25,13 @@ import com.zxly.o2o.view.LoadingView;
 
 import java.util.List;
 
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
+
 /**
  * @author fengrongjian 2016-8-24
  * @description 柚安米商学院
  */
-public class YamCollegeListAct extends BasicAct implements View.OnClickListener, PullToRefreshBase.OnRefreshListener {
+public class YamCollegeListAct extends BaseFragment implements View.OnClickListener, PullToRefreshBase.OnRefreshListener {
     private Context context;
     private LoadingView loadingView;
     private EditText editSearch;
@@ -38,20 +40,33 @@ public class YamCollegeListAct extends BasicAct implements View.OnClickListener,
     private View headerView, contentLayout, viewSearch;
     private YamCourseAdapter adapter;
     private List<CollegeCourse> collegeCourseList;
-    private int type;//1.全部教程；2.最新教程； 3.搜索教程
+    private int type= Constants.YAM_COURSE_NEW;//1.全部教程；2.最新教程； 3.搜索教程
     private int pageIndex = 1;
     private CourseType courseType;
     private String articleName;
     private long articleTypeId;
 
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.win_yam_college);
+//        context = this;
+//        type = getIntent().getIntExtra("type", 0);
+//        articleName = getIntent().getStringExtra("articleName");
+//        articleTypeId = getIntent().getLongExtra("articleTypeId", 0);
+//        initViews();
+//
+//        if (type == Constants.YAM_COURSE_NEW) {
+//            loadData(pageIndex);
+//        } else if (type == Constants.YAM_COURSE_ALL) {
+//            loadData(pageIndex);
+//        } else if (type == Constants.YAM_COURSE_SEARCH) {
+//            loadData(pageIndex);
+//        }
+//    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.win_yam_college);
-        context = this;
-        type = getIntent().getIntExtra("type", 0);
-        articleName = getIntent().getStringExtra("articleName");
-        articleTypeId = getIntent().getLongExtra("articleTypeId", 0);
+    protected void initView() {
         initViews();
 
         if (type == Constants.YAM_COURSE_NEW) {
@@ -64,10 +79,15 @@ public class YamCollegeListAct extends BasicAct implements View.OnClickListener,
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
+    protected int layoutId() {
+        return R.layout.win_yam_college;
     }
+
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//
+//    }
 
     public static void start(Activity curAct, int type) {
         Intent intent = new Intent(curAct, YamCollegeListAct.class);
@@ -92,7 +112,7 @@ public class YamCollegeListAct extends BasicAct implements View.OnClickListener,
                 articleName = (String) object;
             }
             loadData(pageIndex);
-            finish();
+//            finish();
         }
     };
 
@@ -115,7 +135,7 @@ public class YamCollegeListAct extends BasicAct implements View.OnClickListener,
         }
         listView.setOnRefreshListener(this);
         LayoutInflater layoutInflater =
-                (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                (LayoutInflater)getActivity(). getSystemService(LAYOUT_INFLATER_SERVICE);
         headerView = layoutInflater.inflate(R.layout.head_college_course, null);
         viewSearch =headerView.findViewById(R.id.view_search);
         viewSearch.setOnClickListener(this);
@@ -131,7 +151,7 @@ public class YamCollegeListAct extends BasicAct implements View.OnClickListener,
         btnMore.setOnClickListener(this);
         txtCourseType = (TextView) headerView.findViewById(R.id.txt_course_type);
 
-        adapter = new YamCourseAdapter(context, YamCollegeListAct.this);
+        adapter = new YamCourseAdapter(getActivity(), getActivity());
 
         if (type == Constants.YAM_COURSE_NEW) {
             ViewUtils.setText(txtCourseType, "最新教程");
@@ -205,14 +225,16 @@ public class YamCollegeListAct extends BasicAct implements View.OnClickListener,
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_back:
-                finish();
+//                finish();
                 break;
             case R.id.btn_more:
-                YamCollegeListAct.start(YamCollegeListAct.this, Constants.YAM_COURSE_ALL);
+//                YamCollegeListAct.start(YamCollegeListAct.this, Constants.YAM_COURSE_ALL);
+                YamCollegeListAct.start(getActivity(), Constants.YAM_COURSE_ALL);
                 break;
             case R.id.view_search:
             case R.id.edit_search:
-                YamCollegeSearchAct.start(YamCollegeListAct.this, callBack);
+//                YamCollegeSearchAct.start(YamCollegeListAct.this, callBack);
+                YamCollegeSearchAct.start(getActivity(), callBack);
                 break;
         }
     }

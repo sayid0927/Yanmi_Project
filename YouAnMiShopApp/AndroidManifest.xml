@@ -615,6 +615,13 @@
             android:launchMode="singleTop"/>
 
 
+        <activity
+            android:name="com.aliter.ui.activity.self.AliteMeakeMoneyActivity"
+            android:theme="@style/AliterAppTheme"
+            android:launchMode="singleTop"/>
+
+
+
         <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
         <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 

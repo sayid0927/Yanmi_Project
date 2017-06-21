@@ -279,6 +279,7 @@
 
 
             <RelativeLayout
+                android:id="@+id/rl_meake_money"
                 android:background="@drawable/ripple_one_item_bg"
                 android:layout_width="match_parent"
                 android:layout_height="45dp">

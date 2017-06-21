@@ -2,12 +2,14 @@ package com.aliter.ui.fragment;
 
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aliter.base.BaseFragment;
+import com.aliter.ui.activity.self.AliteMeakeMoneyActivity;
 import com.zxly.o2o.account.Account;
 import com.zxly.o2o.activity.FeedbackAct;
 import com.zxly.o2o.activity.FragmentListAct;
@@ -28,6 +30,7 @@ import com.zxly.o2o.view.CircleImageView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * Created by sayid on 2017/6/2.
@@ -58,6 +61,9 @@ public class SelfFragmentAlite extends BaseFragment {
     public static SelfFragmentAlite install;
     @BindView(R.id.txt_user_balance)
     TextView txtUserBalance;
+    @BindView(R.id.rl_meake_money)
+    RelativeLayout rlMeakeMoney;
+    Unbinder unbinder;
 
 
     private PersonalInitRequest personalInitRequest;
@@ -116,7 +122,7 @@ public class SelfFragmentAlite extends BaseFragment {
 
 
     @OnClick({R.id.ll_setting, R.id.rl_service_phone, R.id.img_user_head, R.id.ll_earnings_list, R.id.rl_task_index,
-            R.id.ll_my_messages, R.id.rl_user_balance, R.id.rl_feedback, R.id.ll_setting_user_name})
+            R.id.ll_my_messages, R.id.rl_user_balance, R.id.rl_feedback, R.id.ll_setting_user_name,R.id.rl_meake_money})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_setting:    //  设置
@@ -131,6 +137,11 @@ public class SelfFragmentAlite extends BaseFragment {
 
             case R.id.rl_service_phone:  //  客服电话
                 createLogoutDialog();
+                break;
+
+            case R.id.rl_meake_money:  //  赚钱攻略
+                ViewUtils.startActivity(new Intent(getActivity(), AliteMeakeMoneyActivity.class),getActivity());
+
                 break;
 
             case R.id.img_user_head:
@@ -200,5 +211,9 @@ public class SelfFragmentAlite extends BaseFragment {
     }
 
 
+
+    @OnClick(R.id.rl_meake_money)
+    public void onViewClicked() {
+    }
 }
 

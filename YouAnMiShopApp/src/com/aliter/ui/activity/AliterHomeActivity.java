@@ -19,16 +19,15 @@ import com.aliter.presenter.impl.HomeActivityPresenterImpl;
 import com.aliter.ui.fragment.MyStoreFragmentAlite;
 import com.aliter.ui.fragment.SelfFragmentAlite;
 import com.aliter.ui.fragment.homefragment.AliteShopPromotionFragment;
-import com.orhanobut.logger.Logger;
 import com.zxly.o2o.shop.R;
-import com.zxly.o2o.util.ViewUtils;
+import com.zxly.o2o.util.PreferUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 
-public class AliterHomeActivity extends BaseActivity<HomeActivityPresenterImpl>implements HomeActivityPresenter.View {
+public class AliterHomeActivity extends BaseActivity<HomeActivityPresenterImpl> implements HomeActivityPresenter.View {
 
     @BindView(R.id.vp_content)
     ViewPager vpContent;
@@ -42,7 +41,8 @@ public class AliterHomeActivity extends BaseActivity<HomeActivityPresenterImpl>i
     RadioGroup rgHomeViewpagerContorl;
 
     private BaseFragmentPageAdapter myAdapter;
-    private  Drawable myStoreIconSelected,myStoreIcon,shopPromotionIcon,shopPromotionIconSelected,mySelfIcon,mySelfIconSelected;
+    private Drawable myStoreIconSelected, myStoreIcon, shopPromotionIcon, shopPromotionIconSelected, mySelfIcon, mySelfIconSelected;
+
     @Override
     public void setState(int state) {
     }
@@ -67,20 +67,16 @@ public class AliterHomeActivity extends BaseActivity<HomeActivityPresenterImpl>i
         mySelfIcon = this.getResources().getDrawable(R.drawable.al_icon_me);
         mySelfIconSelected = this.getResources().getDrawable(R.drawable.al_icon_me_click);
 
-
-
+        ShopAppMenu shopAppMenu = new ShopAppMenu();
+        shopAppMenu.setShopId("1");
+        mPresenter.ShopAppMenu(shopAppMenu);
 
         getSwipeBackLayout().setEnableGesture(false);
         setVpContentChangeListener();
-        initFragmentList();
-//
-//        ShopAppMenu shopAppMenu = new ShopAppMenu();
-//        shopAppMenu.setShopId("1");
-//
-//
-//        mPresenter.ShopAppMenu(shopAppMenu);
-    }
 
+//        initFragmentList();
+
+    }
 
 
     @Override
@@ -132,32 +128,29 @@ public class AliterHomeActivity extends BaseActivity<HomeActivityPresenterImpl>i
         });
     }
 
-    private  void  setVpContentChangeListener(){
+    private void setVpContentChangeListener() {
         rgHomeViewpagerContorl.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
 
                 switch (i) {
                     case R.id.rb_shop_promotion:
-                       // vpContent.setCurrentItem(0);// 设置当前页面
-                        vpContent.setCurrentItem(0,false);// false去掉viewpager切换页面的动画
+                        // vpContent.setCurrentItem(0);// 设置当前页面
+                        vpContent.setCurrentItem(0, false);// false去掉viewpager切换页面的动画
                         setSelectedIcon(0);
 
                         break;
 
                     case R.id.rb_my_store:
 //                        vpContent.setCurrentItem(1);
-//                        vpContent.setCurrentItem(1,false);
-//                        setSelectedIcon(1);
+                        vpContent.setCurrentItem(1, false);
+                        setSelectedIcon(1);
 
-                        ShopAppMenu shopAppMenu = new ShopAppMenu();
-                        shopAppMenu.setShopId("1");
-                        mPresenter.ShopAppMenu(shopAppMenu);
 
                         break;
                     case R.id.rb_self:
 //                        vpContent.setCurrentItem(2);
-                        vpContent.setCurrentItem(2,false);
+                        vpContent.setCurrentItem(2, false);
                         setSelectedIcon(2);
                         break;
                 }
@@ -165,8 +158,8 @@ public class AliterHomeActivity extends BaseActivity<HomeActivityPresenterImpl>i
         });
     }
 
-    private  void  setSelectedIcon(int position){
-        switch (position){
+    private void setSelectedIcon(int position) {
+        switch (position) {
             case 0:
                 rbMyStore.setCompoundDrawablesWithIntrinsicBounds(null, myStoreIcon, null, null);
                 rbSelf.setCompoundDrawablesWithIntrinsicBounds(null, mySelfIcon, null, null);
@@ -198,10 +191,10 @@ public class AliterHomeActivity extends BaseActivity<HomeActivityPresenterImpl>i
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==1){
-            if(resultCode==1000){
-                if(SelfFragmentAlite.install!=null)
-                SelfFragmentAlite.install.setImgUserHead();
+        if (requestCode == 1) {
+            if (resultCode == 1000) {
+                if (SelfFragmentAlite.install != null)
+                    SelfFragmentAlite.install.setImgUserHead();
             }
         }
     }
@@ -209,19 +202,61 @@ public class AliterHomeActivity extends BaseActivity<HomeActivityPresenterImpl>i
 
     @Override
     public void onShopAppMenuSuccessView(List<ShopAppMenuBean> shopAppMenuBean) {
-        ViewUtils.showToast("BBBBB");
-String tmp;
-        Logger.t("TAG").d(shopAppMenuBean);
-        for(int i=0;i<shopAppMenuBean.size();i++){
-            tmp=shopAppMenuBean.get(i).getCode();
-            if(tmp.equals("dpwz001")){
-
+        String tmp;
+        ///   先简单处理 下次优化算法
+        for (int i = 0; i < shopAppMenuBean.size(); i++) {
+            tmp = shopAppMenuBean.get(i).getCode();
+            if (tmp.equals("dpwz001")) {
+                PreferUtil.getInstance().setDpwz001(true);
+            }
+            if (tmp.equals("bdrw001")) {
+                PreferUtil.getInstance().setBdrw001(true);
+            }
+            if (tmp.equals("wlrw001")) {
+                PreferUtil.getInstance().setWlrw001(true);
+            }
+            if (tmp.equals("zdywz001")) {
+                PreferUtil.getInstance().setZdywz001(true);
+            }
+            if (tmp.equals("hd001")) {
+                PreferUtil.getInstance().setHd001(true);
+            }
+            if (tmp.equals("wdwd001")) {
+                PreferUtil.getInstance().setWdwd001(true);
+            }
+            if (tmp.equals("syb001")) {
+                PreferUtil.getInstance().setSyb001(true);
+            }
+            if (tmp.equals("llcz001")) {
+                PreferUtil.getInstance().setLlcz001(true);
+            }
+            if (tmp.equals("zyj001")) {
+                PreferUtil.getInstance().setZyj001(true);
+            }
+            if (tmp.equals("dybd001")) {
+                PreferUtil.getInstance().setDybd001(true);
+            }
+            if (tmp.equals("shqd001")) {
+                PreferUtil.getInstance().setShqd001(true);
+            }
+            if (tmp.equals("yhlq001")) {
+                PreferUtil.getInstance().setYhlq001(true);
+            }
+            if (tmp.equals("yhtj001")) {
+                PreferUtil.getInstance().setYhtj001(true);
+            }
+            if (tmp.equals("ddgl001")) {
+                PreferUtil.getInstance().setDdgl001(true);
+            }
+            if (tmp.equals("zqgl001")) {
+                PreferUtil.getInstance().setZqgl001(true);
             }
         }
+        initFragmentList();
     }
 
     @Override
     public void onFailView(String errorMsg) {
-        ViewUtils.showToast("CCCCCC");
+        initFragmentList();
     }
 }

@@ -24,7 +24,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:background="@color/white">
 
 
@@ -35,15 +35,16 @@
 
 
             <RadioGroup
-                android:layout_marginTop="5dp"
+
                 android:id="@+id/rg_home_viewpager_contorl"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
                 <RadioButton
+                    android:layout_marginTop="5dp"
                     android:id="@+id/rb_shop_promotion"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:button="@null"
                     android:layout_weight="1"
@@ -55,9 +56,10 @@
                     android:text="@string/Shop_promotion" />
 
                 <RadioButton
+                    android:layout_marginTop="5dp"
                     android:textSize="11dp"
                     android:id="@+id/rb_my_store"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:button="@null"
                     android:gravity="center"
@@ -67,9 +69,10 @@
                     android:text="@string/My_store" />
 
                 <RadioButton
+                    android:layout_marginTop="5dp"
                     android:textSize="11dp"
                     android:id="@+id/rb_self"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:button="@null"
                     android:gravity="center"
