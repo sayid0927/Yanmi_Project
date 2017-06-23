@@ -8,7 +8,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aliter.base.BaseFragment;
-import com.aliter.ui.activity.myStore.AliteSettingShopInfoActivity;
+import com.aliter.ui.activity.myStore.AliteSettingMyShopInfoActivity;
 import com.aliter.ui.activity.myStore.AllCustomerActivity;
 import com.zxly.o2o.activity.FragmentListAct;
 import com.zxly.o2o.activity.GetFavorableStatisticsAct;
@@ -108,7 +108,7 @@ public class MyStoreFragmentAlite extends BaseFragment {
 
             case R.id.ll_setting_user_name:  //     设置门店名
 
-                ViewUtils.startActivity(new Intent(getActivity(),AliteSettingShopInfoActivity.class),getActivity());
+                ViewUtils.startActivity(new Intent(getActivity(),AliteSettingMyShopInfoActivity.class),getActivity());
 
                 break;
         }

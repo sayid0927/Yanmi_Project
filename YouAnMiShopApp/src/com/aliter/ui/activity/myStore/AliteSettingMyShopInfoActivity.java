@@ -38,7 +38,7 @@ import static com.umeng.socialize.utils.DeviceConfig.context;
  * Created by sayid on 2017/6/23.
  */
 
-public class AliteSettingShopInfoActivity extends BaseActivity {
+public class AliteSettingMyShopInfoActivity extends BaseActivity {
     @BindView(R.id.rl_user_head)
     RelativeLayout rlUserHead;
     @BindView(R.id.rl_shop_name)
@@ -69,10 +69,10 @@ public class AliteSettingShopInfoActivity extends BaseActivity {
 
             switch (msg.what) {
                 case Constants.GET_PIC_FROM_CELLPHONE:
-                    Crop.pickImage(AliteSettingShopInfoActivity.this);
+                    Crop.pickImage(AliteSettingMyShopInfoActivity.this);
                     break;
                 case Constants.GET_PIC_FROM_CAMERA:
-                    Crop.cameraImage(AliteSettingShopInfoActivity.this);
+                    Crop.cameraImage(AliteSettingMyShopInfoActivity.this);
                     break;
                 case Constants.MSG_SUCCEED:
                     ViewUtils.showToast("上传成功!");
@@ -156,33 +156,33 @@ public class AliteSettingShopInfoActivity extends BaseActivity {
 
                 break;
             case R.id.rl_shop_name:    ///   门店名称
-                i = new Intent(AliteSettingShopInfoActivity.this, AliteSettingShopNameActivity.class);
+                i = new Intent(AliteSettingMyShopInfoActivity.this, AliteSettingShopNameActivity.class);
                 i.putExtra("TYPE", 1);
-                ViewUtils.startActivity(i, AliteSettingShopInfoActivity.this);
+                ViewUtils.startActivity(i, AliteSettingMyShopInfoActivity.this);
                 break;
             case R.id.rl_shop_slogan:   ///  门店标语
-                i = new Intent(AliteSettingShopInfoActivity.this, AliteSettingShopNameActivity.class);
+                i = new Intent(AliteSettingMyShopInfoActivity.this, AliteSettingShopNameActivity.class);
                 i.putExtra("TYPE", 2);
-                ViewUtils.startActivity(i, AliteSettingShopInfoActivity.this);
+                ViewUtils.startActivity(i, AliteSettingMyShopInfoActivity.this);
 
                 break;
             case R.id.rl_consumer_hotline:   //  客服电话
-                i = new Intent(AliteSettingShopInfoActivity.this, AliteSettingShopNameActivity.class);
+                i = new Intent(AliteSettingMyShopInfoActivity.this, AliteSettingShopNameActivity.class);
                 i.putExtra("TYPE", 3);
-                ViewUtils.startActivity(i, AliteSettingShopInfoActivity.this);
+                ViewUtils.startActivity(i, AliteSettingMyShopInfoActivity.this);
                 break;
             case R.id.rl_region:    //   地区
-                Intent intent = new Intent(AliteSettingShopInfoActivity.this, AliteCheckProvinceActivity.class);
+                Intent intent = new Intent(AliteSettingMyShopInfoActivity.this, AliteCheckProvinceActivity.class);
 
-                AliteSettingShopInfoActivity.this.startActivityForResult(intent, 1);
+                AliteSettingMyShopInfoActivity.this.startActivityForResult(intent, 1);
                 startActivityIn();
                 break;
 
 
             case R.id.rl_details:    //   详情地址
-                i = new Intent(AliteSettingShopInfoActivity.this, AliteSettingShopNameActivity.class);
+                i = new Intent(AliteSettingMyShopInfoActivity.this, AliteSettingShopNameActivity.class);
                 i.putExtra("TYPE", 4);
-                ViewUtils.startActivity(i, AliteSettingShopInfoActivity.this);
+                ViewUtils.startActivity(i, AliteSettingMyShopInfoActivity.this);
                 break;
         }
     }

@@ -630,7 +630,7 @@
 
 
         <activity
-            android:name="com.aliter.ui.activity.myStore.AliteSettingShopInfoActivity"
+            android:name="com.aliter.ui.activity.myStore.AliteSettingMyShopInfoActivity"
             android:theme="@style/AliterAppTheme"
             android:launchMode="singleTop"/>
 
