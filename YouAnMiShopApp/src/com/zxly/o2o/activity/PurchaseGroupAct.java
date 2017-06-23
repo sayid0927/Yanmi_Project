@@ -387,7 +387,7 @@ public class PurchaseGroupAct extends BasicAct implements PullToRefreshBase.OnRe
                 Config.menberNewBehavoir = menberGroups.get(i).getNewMsgMemberCount();
             }
         }
-        MainActivity.getIncetance().showKeDDRedPoint();
+//        MainActivity.getIncetance().showKeDDRedPoint();
 
     }
 
@@ -991,7 +991,7 @@ public class PurchaseGroupAct extends BasicAct implements PullToRefreshBase.OnRe
                         next.setNewMsgMemberCount(next.getNewMsgMemberCount() - 1 < 0 ? 0 : next.getNewMsgMemberCount() - 1);
                         Config.menberNewBehavoir = Config.menberNewBehavoir - 1;
                         if (Config.menberNewBehavoir <= 0) {
-                            MainActivity.getIncetance().showKeDDRedPoint();
+//                            MainActivity.getIncetance().showKeDDRedPoint();
                         }
                     }
                 }

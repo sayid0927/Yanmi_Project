@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@android:color/background_light"
     android:clipToPadding="true"
-
     android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout

@@ -3,6 +3,7 @@
     android:id="@+id/collapsing_content"
     android:layout_width="match_parent"
     android:layout_height="165dp"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -20,49 +21,24 @@
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
-            <Button
-                android:layout_width="45.5dp"
-                android:layout_height="20.5dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="15dp"
-                android:layout_weight="1"
-                android:background="@drawable/alite_btn_home_check"
-
-                android:gravity="center"
-                android:text="今天"
-                android:textColor="#ED7426" />
-
-            <Button
-                android:layout_width="45.5dp"
-                android:layout_height="20.5dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="15dp"
-                android:layout_weight="1"
-                android:background="@drawable/alite_btn_home_default"
-                android:gravity="center"
-                android:text="昨天"
-                android:textColor="#FACCA5" />
-
-            <Button
-                android:layout_width="59.5dp"
-                android:layout_height="20.5dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="15dp"
-                android:layout_weight="1"
-                android:background="@drawable/alite_btn_home_default"
-                android:gravity="center"
-                android:text="近7天"
-                android:textColor="#FACCA5" />
-
-            <Button
-                android:layout_width="66.5dp"
-                android:layout_height="18.5dp"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="@drawable/alite_btn_home_default"
-                android:gravity="center"
-                android:text="近30天"
-                android:textColor="#FACCA5" />
+            <com.flyco.tablayout.SegmentTabLayout
+                android:id="@+id/segment_tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_gravity="center_horizontal"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                tl:tl_indicator_anim_enable="true"
+                tl:tl_indicator_bounce_enable="false"
+                tl:tl_indicator_color="#fbc99f"
+                tl:tl_bar_color="#ff7800"
+                tl:tl_textSelectColor="#FF7800"
+                android:background="#F27302"
+                tl:tl_indicator_margin_bottom="2dp"
+                tl:tl_indicator_margin_left="2dp"
+                tl:tl_indicator_margin_right="2dp"
+                tl:tl_indicator_margin_top="2dp"
+                tl:tl_tab_space_equal="true"/>
 
         </LinearLayout>
 
@@ -100,12 +76,12 @@
             </LinearLayout>
 
 
-            <View
-                android:layout_width="0.5dp"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:background="@android:color/white" />
+            <!--<View-->
+                <!--android:layout_width="0.5dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_marginBottom="10dp"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:background="@android:color/white" />-->
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -133,12 +109,12 @@
 
             </LinearLayout>
 
-            <View
-                android:layout_width="0.5dp"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:background="@android:color/white" />
+            <!--<View-->
+                <!--android:layout_width="0.5dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_marginBottom="10dp"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:background="@android:color/white" />-->
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -170,20 +146,20 @@
     </LinearLayout>
 
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="#f4f4f4" />
-
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="5dp"
         android:background="#f4f4f4"
         android:orientation="horizontal">
+
+        <View
+            android:layout_width="5dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center"
+            android:background="#FF7800" />
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -192,6 +168,7 @@
             android:layout_marginRight="10dp"
             android:gravity="center"
             android:text="推广文章"
+            android:layout_gravity="center"
             android:textColor="@android:color/black"
             android:textSize="18dp" />
 
@@ -204,8 +181,11 @@
             android:textColor="#999999"
             android:textSize="10dp" />
 
-
     </LinearLayout>
 
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="25dp"-->
+        <!--android:background="#f4f4f4" />-->
 </LinearLayout>
 

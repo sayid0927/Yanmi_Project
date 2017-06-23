@@ -144,8 +144,7 @@
                             android:id="@+id/tv_month_earnings_num"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-
-                            android:text="999"
+                            android:text=""
                             android:textColor="@android:color/white"
                             android:textSize="27dp" />
 
@@ -177,7 +176,7 @@
                             android:id="@+id/tv_accumulative_earnings_num"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="999"
+                            android:text=""
                             android:textColor="@android:color/white"
                             android:textSize="27dp" />
 
@@ -230,7 +229,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="21dp"
                     android:layout_toLeftOf="@+id/imageView3"
-                    android:text="199"
+                    android:text=""
                     android:textColor="#ACACAC"
                     android:textSize="12dp" />
 

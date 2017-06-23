@@ -50,6 +50,7 @@ public class H5DetailAct extends BasicAct implements View.OnClickListener {
 	private String loadUrl;
 	private String title;
 	static ShareInfo shareInfo;
+	private   int AriticleType;
 	private ShareDialog shareDialog;
 
 	private boolean shouldOverrideUrlLoading;
@@ -62,6 +63,7 @@ public class H5DetailAct extends BasicAct implements View.OnClickListener {
 		shareDialog=new ShareDialog();
 		title = getIntent().getStringExtra("title");
 		loadUrl=getIntent().getStringExtra("loadUrl");
+		AriticleType=getIntent().getIntExtra("AriticleType",0);
 		shouldOverrideUrlLoading=getIntent().getBooleanExtra("shouldOverrideUrlLoading",false);
 		pageType=getIntent().getIntExtra("pageType", TYPE_DEFAULT);
 		if(pageType==TYPE_H5_GAME){
@@ -132,9 +134,23 @@ public class H5DetailAct extends BasicAct implements View.OnClickListener {
 		UmengUtil.onEvent(curAct,new UmengUtil().FIND_ARTICLE_ENTER, null);
 	}
 
+	public static void start(int pageType,Activity curAct, String loadUrl, String title,ShareInfo shareInfo,boolean shouldOverrideUrlLoading,int ArticleType) {
+		Intent intent = new Intent(curAct, H5DetailAct.class);
+		intent.putExtra("title", title);
+		intent.putExtra("loadUrl",loadUrl);
+		intent.putExtra("pageType",pageType);
+		intent.putExtra("shouldOverrideUrlLoading",shouldOverrideUrlLoading);
+		intent.putExtra("ArticleType",ArticleType);
+		H5DetailAct.shareInfo=shareInfo;
+		ViewUtils.startActivity(intent, curAct);
+		UmengUtil.onEvent(curAct,new UmengUtil().FIND_ARTICLE_ENTER, null);
+	}
+
 
 	private void initViews() {
 		View btnShare=findViewById(R.id.btn_share);
+		View  bottmBtnShare=findViewById(R.id.btn_bottom_share);
+		bottmBtnShare.setOnClickListener(this);
 		btnShare.setOnClickListener(this);
 		if (shareInfo==null)
 			btnShare.setVisibility(View.GONE);
@@ -246,7 +262,6 @@ public class H5DetailAct extends BasicAct implements View.OnClickListener {
 							@Override
 							public void onComplete(Object var1) {
 								switch (pageType){
-
 									case TYPE_H5_GAME:
 										shareUrl="/makeFans/addShareAmount";
 										if(shareSuccessRequest==null)
@@ -257,22 +272,17 @@ public class H5DetailAct extends BasicAct implements View.OnClickListener {
 										shareSuccessRequest.addParams("shopId", Account.user.getShopId());
 										shareSuccessRequest.start();
 										break;
-
-									case TYPE_DEFAULT:
-										shareUrl="/localArticle/addShare";
-										if(shareSuccessRequest==null)
-											shareSuccessRequest=new ShareSuccessRequest();
-										shareSuccessRequest.addParams("id",shareInfo.getId());
-										shareSuccessRequest.addParams("shareChannel",1);
-										shareSuccessRequest.addParams("shopId", Account.user.getShopId());
-										shareSuccessRequest.start();
-										break;
-
-									default:
-										break;
-
 								}
 
+								if(AriticleType==1){
+									shareUrl="/localArticle/addShare";
+									if(shareSuccessRequest==null)
+										shareSuccessRequest=new ShareSuccessRequest();
+									shareSuccessRequest.addParams("id",shareInfo.getId());
+									shareSuccessRequest.addParams("shareChannel",1);
+									shareSuccessRequest.addParams("shopId", Account.user.getShopId());
+									shareSuccessRequest.start();
+								}
 							}
 
 							@Override
@@ -285,6 +295,65 @@ public class H5DetailAct extends BasicAct implements View.OnClickListener {
 
 				UmengUtil.onEvent(H5DetailAct.this, new UmengUtil().FIND_ARTICLE_DETAILSHARE_CLICK,null);
 				break;
+
+			case  R.id.btn_bottom_share:
+				if (shareInfo==null)
+					return;
+				String ur2 = shareInfo.getUrl();
+//				if (shareInfo.getType() == ActicityInfo.TYPE_DZP) {
+//					url = url + "&DeviceID=" + Config.imei +
+//							"&Authorization=" + PreferUtil.getInstance().getLoginToken() +
+//							"&type=" + Constants.OPEN_FROM_SHARE + "&baseUrl=" + Config.dataBaseUrl;
+//				}
+
+
+
+				int index2= isChinese(ur2);
+				if(index2!=000){
+					ur2= ur2.substring(0,index2);
+				}
+
+				shareDialog.show(shareInfo.getTitle(),
+						shareInfo.getDesc(),
+						ur2,
+						shareInfo.getIconUrl(),
+						new ShareListener() {
+							@Override
+							public void onComplete(Object var1) {
+								switch (pageType){
+									case TYPE_H5_GAME:
+										shareUrl="/makeFans/addShareAmount";
+										if(shareSuccessRequest==null)
+											shareSuccessRequest=new ShareSuccessRequest();
+										shareSuccessRequest.addParams("type",shareInfo.getType());
+										shareSuccessRequest.addParams("id",shareInfo.getId());
+										shareSuccessRequest.addParams("title",shareInfo.getTitle());
+										shareSuccessRequest.addParams("shopId", Account.user.getShopId());
+										shareSuccessRequest.start();
+										break;
+								}
+
+								if(AriticleType==1){
+									shareUrl="/localArticle/addShare";
+									if(shareSuccessRequest==null)
+										shareSuccessRequest=new ShareSuccessRequest();
+									shareSuccessRequest.addParams("id",shareInfo.getId());
+									shareSuccessRequest.addParams("shareChannel",1);
+									shareSuccessRequest.addParams("shopId", Account.user.getShopId());
+									shareSuccessRequest.start();
+								}
+							}
+
+							@Override
+							public void onFail(int errorCode) {
+
+							}
+						}
+				);
+
+				UmengUtil.onEvent(H5DetailAct.this, new UmengUtil().FIND_ARTICLE_DETAILSHARE_CLICK,null);
+				break;
+
 		}
 
 	}

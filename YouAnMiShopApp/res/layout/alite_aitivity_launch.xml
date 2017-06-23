@@ -3,17 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/al_home_bg"
+    android:background="@drawable/android_login_bg"
     android:orientation="vertical">
 
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/al_logo"
+        android:src="@drawable/logo"
         android:layout_above="@+id/linearLayout"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="75dp" />
+        android:layout_marginBottom="110dp" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -22,7 +22,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="150dp"
+        android:layout_marginBottom="100dp"
         android:orientation="vertical">
 
 
@@ -53,7 +53,7 @@
                 android:layout_marginRight="12dp"
                 android:layout_toLeftOf="@+id/tv_phone_login"
                 android:layout_toStartOf="@+id/tv_phone_login"
-                android:src="@drawable/al_icon_number_1" />
+                android:src="@drawable/login_number" />
 
 
         </RelativeLayout>
@@ -76,7 +76,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:text="微信登录"
-                android:textColor="#72D483" />
+                android:textColor="#A4A9B2" />
 
 
             <ImageView
@@ -87,7 +87,7 @@
                 android:layout_marginRight="15dp"
                 android:layout_toLeftOf="@+id/textView2"
                 android:layout_toStartOf="@+id/textView2"
-                android:src="@drawable/al_icon_wechat" />
+                android:src="@drawable/login_wechat" />
 
 
         </RelativeLayout>
@@ -104,7 +104,7 @@
         android:gravity="center"
         android:layout_marginTop="120dp"
         android:text="注册商户帐号"
-        android:textColor="@color/black" />
+        android:textColor="#FF871C" />
 
 
 </RelativeLayout>

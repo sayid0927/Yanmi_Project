@@ -22,10 +22,8 @@
         android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:cacheColorHint="#00000000"
-        android:divider="@color/grey"
         android:fadingEdge="none"
-        android:listSelector="@color/transparent"
+        android:divider="@null"
         android:scrollbars="none"
         android:scrollingCache="false" />
 

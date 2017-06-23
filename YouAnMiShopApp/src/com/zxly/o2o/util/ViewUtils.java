@@ -225,6 +225,15 @@ public class ViewUtils {
         tv.setText("￥" + StringUtil.getFormatPrice(price));
     }
 
+
+    public static void setTextPric(TextView tv, float price) {
+        if (tv == null) {
+            return;
+        }
+        tv.setText(StringUtil.getFormatPrice(price));
+    }
+
+
     /**
      * 横穿文字画线
      *

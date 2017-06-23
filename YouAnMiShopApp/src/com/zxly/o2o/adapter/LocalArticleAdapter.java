@@ -14,7 +14,7 @@ import com.zxly.o2o.dialog.ShareDialog;
 import com.zxly.o2o.model.LocalArticle;
 import com.zxly.o2o.model.LocalArticlesInfo;
 import com.zxly.o2o.model.ShareInfo;
-import com.zxly.o2o.request.PromoteCallbackConfirmRequest;
+import com.zxly.o2o.request.LocalArticleCallbackConfirmRequest;
 import com.zxly.o2o.shop.R;
 import com.zxly.o2o.util.ShareListener;
 import com.zxly.o2o.util.ViewUtils;
@@ -102,7 +102,7 @@ public class LocalArticleAdapter extends ObjectAdapter implements View.OnClickLi
                    // shareInfo.setIconUrl(new String(Base64.decode(hb.article.getHeadImage().getBytes(), Base64.DEFAULT)));
                     H5DetailAct.start(H5DetailAct.TYPE_DEFAULT,
                             AppController.getInstance().getTopAct(),
-                            hb.article.getShareUrl() + "&from=app", "文章详情", shareInfo, false);
+                            hb.article.getShareUrl() + "&from=app", "文章详情", shareInfo, false,1);
 
 
 
@@ -171,13 +171,13 @@ public class LocalArticleAdapter extends ObjectAdapter implements View.OnClickLi
             public void onComplete(Object var1) {
                 switch (type) {
                     case 1:
-                        new PromoteCallbackConfirmRequest(article.getId(), 2, 1, article.getTitle()).start();
+                        new LocalArticleCallbackConfirmRequest(article.getId(), 2, 1, article.getTitle()).start();
                         break;
                     case 2:
-                        new PromoteCallbackConfirmRequest(article.getId(), 2, 3, article.getTitle()).start();
+                        new LocalArticleCallbackConfirmRequest(article.getId(), 2, 3, article.getTitle()).start();
                         break;
                     case 3:
-                        new PromoteCallbackConfirmRequest(article.getId(), 2, 2, article.getTitle()).start();
+                        new LocalArticleCallbackConfirmRequest(article.getId(), 2, 2, article.getTitle()).start();
                         break;
                 }
             }

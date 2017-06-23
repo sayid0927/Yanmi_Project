@@ -10,6 +10,7 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 
+import com.aliter.ui.activity.login.AliteLaunchActivity;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.chatuidemo.HXApplication;
@@ -24,7 +25,6 @@ import com.easemob.easeui.request.HXNormalRequest;
 import com.easemob.easeui.ui.EaseHXMainFragment;
 import com.easemob.exceptions.EaseMobException;
 import com.easemob.util.EMLog;
-import com.orhanobut.logger.Logger;
 import com.zxly.o2o.account.Account;
 import com.zxly.o2o.application.AppController;
 import com.zxly.o2o.application.Config;
@@ -326,10 +326,9 @@ public class MainActivity extends BasicAct {
                                         PreferUtil.getInstance().setLoginToken("");
                                         conflictBuilder = null;
                                         AppController.getInstance().exitAndGoToMainPage();
-                                        LoginAct.start(AppController.getInstance().getTopAct());
-                                        Logger.t("TAG").e("显示帐号在别处登录dialog");
-//                                        Intent  intent = new Intent(AppController.getInstance().getTopAct(), AliteLaunchActivity.class);
-//                                        startActivity(i);
+//                                        LoginAct.start(AppController.getInstance().getTopAct());
+                                        Intent  intent = new Intent(AppController.getInstance().getTopAct(), AliteLaunchActivity.class);
+                                        startActivity(intent);
                                         finish();
                                     }
                                 });
@@ -339,7 +338,6 @@ public class MainActivity extends BasicAct {
             } catch (Exception e) {
                 EMLog.e("", "---------color conflictBuilder error" + e.getMessage());
             }
-
         }
 
     }

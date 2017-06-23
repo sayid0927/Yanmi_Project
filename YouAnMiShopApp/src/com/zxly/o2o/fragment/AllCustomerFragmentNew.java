@@ -15,8 +15,6 @@ import android.widget.TextView;
 import com.easemob.easeui.widget.viewpagerindicator.PagerSlidingTabStrip;
 import com.zxly.o2o.account.Account;
 import com.zxly.o2o.activity.ChooseGroupPeopleAct;
-import com.zxly.o2o.activity.MainActivity;
-import com.zxly.o2o.activity.PromotionArticleAct;
 import com.zxly.o2o.activity.SeachPeopleFilterFirstAct;
 import com.zxly.o2o.activity.YamCollegeDetailAct;
 import com.zxly.o2o.application.Config;
@@ -29,7 +27,6 @@ import com.zxly.o2o.util.Constants;
 import com.zxly.o2o.util.ParameCallBack;
 import com.zxly.o2o.util.PreferUtil;
 import com.zxly.o2o.util.UmengUtil;
-import com.zxly.o2o.util.ViewUtils;
 import com.zxly.o2o.view.CollegeCourseView;
 import com.zxly.o2o.view.FixedViewPager;
 import com.zxly.o2o.view.LoadingView;
@@ -76,8 +73,8 @@ public class AllCustomerFragmentNew extends BaseViewPageFragment implements View
         {
             initTab();
         }
-        btn_tuiguang = (TextView) findViewById(R.id.btn_tuiguang);
-        txt_title = (TextView) findViewById(R.id.txt_title);
+//        btn_tuiguang = (TextView) findViewById(R.id.btn_tuiguang);
+//        txt_title = (TextView) findViewById(R.id.txt_title);
 
         //无粉丝时且身份为店长时显示的布局
         layout_nodata_admin = (RelativeLayout) findViewById(R.id.layout_nodata_admin);
@@ -89,8 +86,8 @@ public class AllCustomerFragmentNew extends BaseViewPageFragment implements View
         btn_gonext.setEnabled(false);
 
         if(Account.user != null)
-        txt_title.setText(Account.user.getShopName());
-        btn_tuiguang.setOnClickListener(this);
+//        txt_title.setText(Account.user.getShopName());
+//        btn_tuiguang.setOnClickListener(this);
         findViewById(R.id.edit_search).setFocusable(false);
         ((EditText)findViewById(R.id.edit_search)).setHint("请输入姓名或手机号");
         findViewById(R.id.edit_search).setOnClickListener(new View.OnClickListener() {
@@ -101,11 +98,11 @@ public class AllCustomerFragmentNew extends BaseViewPageFragment implements View
             }
         });
         if(Account.user != null) {
-            if (Account.user.getRoleType() == Constants.USER_TYPE_ADMIN) {
-                ViewUtils.setVisible(btn_tuiguang);
-            } else {
-                ViewUtils.setGone(btn_tuiguang);
-            }
+//            if (Account.user.getRoleType() == Constants.USER_TYPE_ADMIN) {
+//                ViewUtils.setVisible(btn_tuiguang);
+//            } else {
+//                ViewUtils.setGone(btn_tuiguang);
+//            }
         }
     }
 
@@ -164,7 +161,8 @@ public class AllCustomerFragmentNew extends BaseViewPageFragment implements View
     @Override
     public void onResume() {
         super.onResume();
-        if ( Account.user != null && 0 == ((MainActivity) getActivity()).fragmentController.getCurrentTab()) {
+//        if ( Account.user != null && 0 == ((MainActivity) getActivity()).fragmentController.getCurrentTab()) {
+            if ( Account.user != null ) {
             //账号冲突后导致数据不刷新
             if(shouldRfrensh&&fansListFragment!=null&&menberListFragment!=null){
                 fansListFragment.setHasInit(false);
@@ -219,10 +217,10 @@ public class AllCustomerFragmentNew extends BaseViewPageFragment implements View
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.btn_tuiguang:
-                //跳转推广
-                PromotionArticleAct.start(getActivity(),1);
-                break;
+//            case R.id.btn_tuiguang:
+//                //跳转推广
+//                PromotionArticleAct.start(getActivity(),1);
+//                break;
         }
     }
 

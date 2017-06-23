@@ -20,7 +20,6 @@ import android.widget.Toast;
 import com.easemob.easeui.EaseConstant;
 import com.zxly.o2o.account.Account;
 import com.zxly.o2o.activity.ChooseGroupPeopleAct;
-import com.zxly.o2o.activity.MainActivity;
 import com.zxly.o2o.activity.ModelGroupAct;
 import com.zxly.o2o.activity.OutLineFansDetailAct;
 import com.zxly.o2o.activity.PurchaseGroupAct;
@@ -226,7 +225,7 @@ public class MenberListFragment extends BaseFragment implements PullToRefreshBas
 
     public void onResume() {
         super.onResume();
-        if (!hasInit && Account.user != null && 0 == ((MainActivity) getActivity()).fragmentController.getCurrentTab()) {
+        if (!hasInit && Account.user != null ) {
             //加载数据
             loadGroupData(false);
         }
@@ -254,14 +253,17 @@ public class MenberListFragment extends BaseFragment implements PullToRefreshBas
                 Config.memberCount = getMenberGroupRequest.getMemberCount();
 //                showNodataView(getMenberGroupRequest.getMemberCount(),Config.fansCount);
                 //筛选出 不是自定义分组并且组内人数为0的
-                expandableListView.onRefreshComplete();
-                head.setVisibility(View.VISIBLE);
+                if(expandableListView!=null) {
+                    expandableListView.onRefreshComplete();
+                    head.setVisibility(View.VISIBLE);
+                }
                 if (menberAllDatas != null) {
                     menberAllDatas.clear();
                 }
                 if (copymenberAllDatas != null) {
                     copymenberAllDatas.clear();
                 }
+                if(loadingView!=null)
                 loadingView.onLoadingComplete();
                 //筛选出 不是自定义分组并且组内人数为0的
                 Iterator<MenberGroupModel> iterator = menberGroups.iterator();
@@ -286,10 +288,12 @@ public class MenberListFragment extends BaseFragment implements PullToRefreshBas
                 Config.groupList.clear();
                 Config.groupList.addAll(notShowGroup);
                 Config.groupList.addAll(menberGroups);
-                expandableListView.getRefreshableView().setAdapter(menbersListAdapter);
-                menbersListAdapter.addContent(menberAllDatas);
-                menbersListAdapter.notifyDataSetChanged();
-                showBottomRedPoint(menberGroups);
+                if(expandableListView!=null&&menbersListAdapter!=null) {
+                    expandableListView.getRefreshableView().setAdapter(menbersListAdapter);
+                    menbersListAdapter.addContent(menberAllDatas);
+                    menbersListAdapter.notifyDataSetChanged();
+                    showBottomRedPoint(menberGroups);
+                }
                 //如果该组会员数大于0  那么就预加载最后一组
                 if (preLoadGroup.getMemberCount() > 0 && preLoadGroup.getMemberCount() < 20) {
                     loadFansData(preLoadGroup, false);
@@ -309,13 +313,16 @@ public class MenberListFragment extends BaseFragment implements PullToRefreshBas
                 UmengUtil.onEvent(getActivity(), "home_refresh_fail",map);
             }
         });
-        loadingView.setOnAgainListener(new LoadingView.OnAgainListener() {
-            @Override
-            public void onLoading() {
-                loadingView.startLoading();
-                getMenberGroupRequest.start(this);
-            }
-        });
+
+        if(loadingView!=null){
+            loadingView.setOnAgainListener(new LoadingView.OnAgainListener() {
+                @Override
+                public void onLoading() {
+                    loadingView.startLoading();
+                    getMenberGroupRequest.start(this);
+                }
+            });
+        }
     }
 
 
@@ -330,7 +337,7 @@ public class MenberListFragment extends BaseFragment implements PullToRefreshBas
                 Config.menberNewBehavoir = menberGroups.get(i).getNewMsgMemberCount();
             }
         }
-        MainActivity.getIncetance().showKeDDRedPoint();
+//        MainActivity.getIncetance().showKeDDRedPoint();
 
     }
 
@@ -369,15 +376,17 @@ public class MenberListFragment extends BaseFragment implements PullToRefreshBas
                         sortHasBehavior(fansInfoList);
                     }
                     putDatas(menberGroupModel, fansInfoList);
-                    menbersListAdapter.addContent(menberAllDatas);
-                    copymenberAllDatas.put(menberGroupModel, fansInfoList);
-                    menbersListAdapter.notifyDataSetChanged();
+                    if(menbersListAdapter!=null) {
+                        menbersListAdapter.addContent(menberAllDatas);
+                        copymenberAllDatas.put(menberGroupModel, fansInfoList);
+                        menbersListAdapter.notifyDataSetChanged();
+                    }
                 }
             }
 
             @Override
             public void onFail(int code) {
-                      Log.e("TAG","VVVVVVVVVV");
+
             }
         });
         getMenberInfoRequest.start();
@@ -500,9 +509,12 @@ public class MenberListFragment extends BaseFragment implements PullToRefreshBas
             expandableListView.getRefreshableView().collapseGroup(i);
         }
     }
-
+private  int groupCount;
     public void onDataRefresh() {
-        int groupCount = expandableListView.getRefreshableView().getExpandableListAdapter().getGroupCount();
+
+        if(expandableListView!=null) {
+             groupCount = expandableListView.getRefreshableView().getExpandableListAdapter().getGroupCount();
+        }
         //清除旧数据
         copymenberAllDatas.clear();
         menberAllDatas.clear();
@@ -1068,7 +1080,7 @@ public class MenberListFragment extends BaseFragment implements PullToRefreshBas
                         next.setNewMsgMemberCount(next.getNewMsgMemberCount() - 1 < 0 ? 0 : next.getNewMsgMemberCount() - 1);
                         Config.menberNewBehavoir = Config.menberNewBehavoir - 1;
                         if (Config.menberNewBehavoir <= 0) {
-                            MainActivity.getIncetance().showKeDDRedPoint();
+//                            MainActivity.getIncetance().showKeDDRedPoint();
                         }
                     }
                 }

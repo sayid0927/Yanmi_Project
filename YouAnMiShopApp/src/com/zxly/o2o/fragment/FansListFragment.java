@@ -19,7 +19,6 @@ import com.zxly.o2o.account.Account;
 import com.zxly.o2o.activity.ChooseGroupPeopleAct;
 import com.zxly.o2o.activity.FansAddAct;
 import com.zxly.o2o.activity.FansDetailNewAct;
-import com.zxly.o2o.activity.MainActivity;
 import com.zxly.o2o.activity.OffLineFansEnteringAct;
 import com.zxly.o2o.activity.YamCollegeDetailAct;
 import com.zxly.o2o.application.Config;
@@ -253,8 +252,7 @@ public class FansListFragment extends BaseFragment implements ExpandableListView
 
     public void onResume() {
         super.onResume();
-        if (!hasInit && Account.user != null && 0 == ((MainActivity) getActivity()).fragmentController.getCurrentTab
-                ()) {
+        if (!hasInit && Account.user != null) {
 
             loadGroupData(false);
         }
@@ -273,9 +271,12 @@ public class FansListFragment extends BaseFragment implements ExpandableListView
                 hasClickGroup.clear();
                 fansAllDatas.clear();
                 copyFansAllDatas.clear();
-                expandableListView.onRefreshComplete();
-                loadingView.onLoadingComplete();
-                fansGroups = getFansGroupRequest.getFansGroups();
+                if(expandableListView!=null&&loadingView!=null) {
+                    expandableListView.onRefreshComplete();
+                    loadingView.onLoadingComplete();
+                }
+                    fansGroups = getFansGroupRequest.getFansGroups();
+
                 //二次验证是否显示默认界面
                 Config.fansCount = getFansGroupRequest.getFansNum();
                 //单独找出“线下录入粉丝”组人数
@@ -291,9 +292,11 @@ public class FansListFragment extends BaseFragment implements ExpandableListView
                         preLoadGroup = fansGroups.get(i);
                     }
                 }
-                fansListAdapter.addContent(fansAllDatas);
-                fansListAdapter.notifyDataSetChanged();
-                showBottomRedPoint(fansGroups);
+                if(fansListAdapter!=null) {
+                    fansListAdapter.addContent(fansAllDatas);
+                    fansListAdapter.notifyDataSetChanged();
+                    showBottomRedPoint(fansGroups);
+                }
                 //单独预加载最后这组 如果该组有成员
                 if (preLoadGroup.getNum() > 0) {
                     loadFansData(preLoadGroup, false);
@@ -313,14 +316,15 @@ public class FansListFragment extends BaseFragment implements ExpandableListView
                 UmengUtil.onEvent(getActivity(), "home_refresh_fail", map);
             }
         });
-
-        loadingView.setOnAgainListener(new LoadingView.OnAgainListener() {
-            @Override
-            public void onLoading() {
-                loadingView.startLoading();
-                getFansGroupRequest.start(this);
-            }
-        });
+        if (loadingView != null) {
+            loadingView.setOnAgainListener(new LoadingView.OnAgainListener() {
+                @Override
+                public void onLoading() {
+                    loadingView.startLoading();
+                    getFansGroupRequest.start(this);
+                }
+            });
+        }
     }
 
     private void loadFansData(final FansGroupModel fansGroupModel, boolean showDialog) {
@@ -356,10 +360,12 @@ public class FansListFragment extends BaseFragment implements ExpandableListView
                         sortHasBehavior(fansInfoList);
                     }
                     putDatas(fansGroupModel, fansInfoList);
-                    fansListAdapter.addContent(fansAllDatas);
-                    //第一次加载完子数据后就将其保存在该map中
-                    copyFansAllDatas.put(fansGroupModel, fansInfoList);
-                    fansListAdapter.notifyDataSetChanged();
+                    if(fansListAdapter!=null) {
+                        fansListAdapter.addContent(fansAllDatas);
+                        //第一次加载完子数据后就将其保存在该map中
+                        copyFansAllDatas.put(fansGroupModel, fansInfoList);
+                        fansListAdapter.notifyDataSetChanged();
+                    }
                 }
             }
 
@@ -578,8 +584,11 @@ public class FansListFragment extends BaseFragment implements ExpandableListView
         }
     }
 
+    private int groupCount;
+
     public void onDataRefresh() {
-        int groupCount = expandableListView.getRefreshableView().getExpandableListAdapter().getGroupCount();
+        if (expandableListView != null)
+            groupCount = expandableListView.getRefreshableView().getExpandableListAdapter().getGroupCount();
         //清除旧数据
         copyFansAllDatas.clear();
         fansAllDatas.clear();
@@ -589,6 +598,7 @@ public class FansListFragment extends BaseFragment implements ExpandableListView
         }
         //加载数据
         loadGroupData(true);
+
     }
 
     public void setFansCoutCallBack(ParameCallBack fansCountCallBack) {
@@ -773,7 +783,7 @@ public class FansListFragment extends BaseFragment implements ExpandableListView
 
             if (groupPosition == 1) {
                 UmengUtil.onEvent(context, new UmengUtil().FANS_NEWFANS_CLICK, null);
-            }else  if(groupPosition == 2){
+            } else if (groupPosition == 2) {
                 UmengUtil.onEvent(context, new UmengUtil().FANS_STARFANS_CLICK, null);
             }
 
@@ -993,7 +1003,7 @@ public class FansListFragment extends BaseFragment implements ExpandableListView
                         next.setNewBehaviorNum(next.getNewBehaviorNum() - 1 < 0 ? 0 : next.getNewBehaviorNum() - 1);
                         Config.fansNewBehavoir = Config.fansNewBehavoir - 1;
                         if (Config.fansNewBehavoir <= 0) {
-                            MainActivity.getIncetance().showKeDDRedPoint();
+//                            MainActivity.getIncetance().showKeDDRedPoint();
                         }
                     }
                 }
@@ -1095,6 +1105,6 @@ public class FansListFragment extends BaseFragment implements ExpandableListView
             newBehavoirCount = fansGroupList.get(i).getNewBehaviorNum() + newBehavoirCount;
         }
         Config.fansNewBehavoir = newBehavoirCount;
-        MainActivity.getIncetance().showKeDDRedPoint();
+//        MainActivity.getIncetance().showKeDDRedPoint();
     }
 }

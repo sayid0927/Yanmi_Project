@@ -529,6 +529,7 @@
         <activity
             android:name="com.zxly.o2o.activity.GetFavorableStatisticsAct"
             android:label="@string/app_name"
+            android:theme="@style/AliterAppTheme"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.zxly.o2o.activity.TouchImageViewAct"
@@ -617,6 +618,25 @@
 
         <activity
             android:name="com.aliter.ui.activity.self.AliteMeakeMoneyActivity"
+            android:theme="@style/AliterAppTheme"
+            android:launchMode="singleTop"/>
+
+
+
+        <activity
+            android:name="com.aliter.ui.activity.myStore.AllCustomerActivity"
+            android:theme="@style/AliterAppTheme"
+            android:launchMode="singleTop"/>
+
+
+        <activity
+            android:name="com.aliter.ui.activity.myStore.AliteSettingShopInfoActivity"
+            android:theme="@style/AliterAppTheme"
+            android:launchMode="singleTop"/>
+
+
+        <activity
+            android:name="com.aliter.ui.activity.myStore.AliteSettingShopNameActivity"
             android:theme="@style/AliterAppTheme"
             android:launchMode="singleTop"/>
 

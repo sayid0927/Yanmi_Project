@@ -19,6 +19,7 @@ import com.zxly.o2o.activity.SettingAct;
 import com.zxly.o2o.activity.YieldDetailAct;
 import com.zxly.o2o.application.AppController;
 import com.zxly.o2o.request.BaseRequest;
+import com.zxly.o2o.request.MakeMoneyInitRequest;
 import com.zxly.o2o.request.PersonalInitRequest;
 import com.zxly.o2o.shop.R;
 import com.zxly.o2o.util.CallBack;
@@ -63,7 +64,15 @@ public class SelfFragmentAlite extends BaseFragment {
     TextView txtUserBalance;
     @BindView(R.id.rl_meake_money)
     RelativeLayout rlMeakeMoney;
+    @BindView(R.id.tv_accumulative_earnings_num)
+    TextView tvAccumulativeEarningsNum;
+    @BindView(R.id.tv_accumulative_earnings)
+    TextView tvAccumulativeEarnings;
     Unbinder unbinder;
+    @BindView(R.id.tv_month_earnings_num)
+    TextView tvMonthEarningsNum;
+
+    private MakeMoneyInitRequest moneyInitRequest;
 
 
     private PersonalInitRequest personalInitRequest;
@@ -89,7 +98,9 @@ public class SelfFragmentAlite extends BaseFragment {
         setState(AppController.STATE_SUCCESS);
     }
 
+
     @Override
+
     protected int getLayoutId() {
         return R.layout.alite_fragment_self;
     }
@@ -98,6 +109,7 @@ public class SelfFragmentAlite extends BaseFragment {
     protected void initView() {
         setImgUserHead();
         install = this;
+        MakeMoneyinit();
     }
 
     @Override
@@ -122,7 +134,7 @@ public class SelfFragmentAlite extends BaseFragment {
 
 
     @OnClick({R.id.ll_setting, R.id.rl_service_phone, R.id.img_user_head, R.id.ll_earnings_list, R.id.rl_task_index,
-            R.id.ll_my_messages, R.id.rl_user_balance, R.id.rl_feedback, R.id.ll_setting_user_name,R.id.rl_meake_money})
+            R.id.ll_my_messages, R.id.rl_user_balance, R.id.rl_feedback, R.id.ll_setting_user_name, R.id.rl_meake_money})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_setting:    //  设置
@@ -140,7 +152,7 @@ public class SelfFragmentAlite extends BaseFragment {
                 break;
 
             case R.id.rl_meake_money:  //  赚钱攻略
-                ViewUtils.startActivity(new Intent(getActivity(), AliteMeakeMoneyActivity.class),getActivity());
+                ViewUtils.startActivity(new Intent(getActivity(), AliteMeakeMoneyActivity.class), getActivity());
 
                 break;
 
@@ -211,9 +223,20 @@ public class SelfFragmentAlite extends BaseFragment {
     }
 
 
+    private void MakeMoneyinit() {
+        moneyInitRequest = new MakeMoneyInitRequest();
+        moneyInitRequest.setOnResponseStateListener(new BaseRequest.ResponseStateListener() {
+            @Override
+            public void onOK() {
+                ViewUtils.setTextPric(tvAccumulativeEarningsNum, moneyInitRequest.getAllRevenue());
+                tvMonthEarningsNum.setText(StringUtil.getFormatPrice(moneyInitRequest.getCurrentMonthRevenue()));
+            }
 
-    @OnClick(R.id.rl_meake_money)
-    public void onViewClicked() {
+            @Override
+            public void onFail(int code) {
+            }
+        });
+        moneyInitRequest.start(this);
     }
 }
 

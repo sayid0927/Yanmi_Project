@@ -117,10 +117,10 @@ public class YamCollegeListAct extends BaseFragment implements View.OnClickListe
     };
 
     private void initViews() {
-        findViewById(R.id.view_header).setFocusable(true);
-        findViewById(R.id.view_header).requestFocus();
-        findViewById(R.id.btn_back).setOnClickListener(this);
-        ViewUtils.setText(findViewById(R.id.txt_title), "柚安米商学院");
+//        findViewById(R.id.view_header).setFocusable(true);
+//        findViewById(R.id.view_header).requestFocus();
+//        findViewById(R.id.btn_back).setOnClickListener(this);
+//        ViewUtils.setText(findViewById(R.id.txt_title), "柚安米商学院");
         contentLayout = findViewById(R.id.content_layout);
 
         loadingView = (LoadingView) findViewById(R.id.view_loading);
@@ -224,9 +224,9 @@ public class YamCollegeListAct extends BaseFragment implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_back:
-//                finish();
-                break;
+//            case R.id.btn_back:
+////                finish();
+//                break;
             case R.id.btn_more:
 //                YamCollegeListAct.start(YamCollegeListAct.this, Constants.YAM_COURSE_ALL);
                 YamCollegeListAct.start(getActivity(), Constants.YAM_COURSE_ALL);

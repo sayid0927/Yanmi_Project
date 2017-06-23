@@ -4,12 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
+import com.aliter.base.BaseActivity;
 import com.zxly.o2o.adapter.ObjectAdapter;
 import com.zxly.o2o.model.TakeStatistics;
 import com.zxly.o2o.pullrefresh.PullToRefreshBase;
@@ -23,7 +24,7 @@ import com.zxly.o2o.view.LoadingView;
 /**
  * Created by dsnx on 2016/6/14.
  */
-public class GetFavorableStatisticsAct extends BasicAct implements PullToRefreshBase.OnRefreshListener{
+public class GetFavorableStatisticsAct extends BaseActivity implements PullToRefreshBase.OnRefreshListener{
 
     private PullToRefreshListView mListView;
     private View btnBack;
@@ -34,9 +35,17 @@ public class GetFavorableStatisticsAct extends BasicAct implements PullToRefresh
     private boolean showBtn;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.win_get_favorable_statistics);
+    public int getLayoutId() {
+        return R.layout.win_get_favorable_statistics;
+    }
+
+    @Override
+    public void setToolBar() {
+
+    }
+
+    @Override
+    public void initView() {
         mListView= (PullToRefreshListView) findViewById(R.id.listview);
         btnBack=findViewById(R.id.btn_back);
         loadingView= (LoadingView) findViewById(R.id.view_loading);
@@ -61,6 +70,45 @@ public class GetFavorableStatisticsAct extends BasicAct implements PullToRefresh
         });
         loadData(pageIndex);
     }
+
+    @Override
+    protected void loadData() {
+
+    }
+
+    @Override
+    protected void initInject() {
+
+    }
+
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.win_get_favorable_statistics);
+//        mListView= (PullToRefreshListView) findViewById(R.id.listview);
+//        btnBack=findViewById(R.id.btn_back);
+//        loadingView= (LoadingView) findViewById(R.id.view_loading);
+//        ViewUtils.setRefreshText(mListView);
+//        mListView.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
+//        adapter=new GetFavorableStatisticsAdapter(this);
+//        mListView.setAdapter(adapter);
+//        mListView.setOnRefreshListener(this);
+//        btnBack.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//            }
+//        });
+//        loadingView.startLoading();
+//        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                TakeStatistics ts= (TakeStatistics) adapter.getItem((int) id);
+//                MyBenefitsAct.start(GetFavorableStatisticsAct.this,ts.getId(),false);
+//            }
+//        });
+//        loadData(pageIndex);
+//    }
     public static void start(Activity curAct)
     {
         Intent it=new Intent();
@@ -120,6 +168,8 @@ public class GetFavorableStatisticsAct extends BasicAct implements PullToRefresh
         });
     }
 
+    private Handler handler= new Handler();
+
     @Override
     public void onRefresh(PullToRefreshBase refreshView) {
         if (refreshView.getCurrentMode() == PullToRefreshBase.Mode.PULL_FROM_START) {
@@ -132,7 +182,7 @@ public class GetFavorableStatisticsAct extends BasicAct implements PullToRefresh
                 pageIndex++;
                 loadData(pageIndex);
             } else {
-                mMainHandler.postDelayed(new Runnable() {
+                handler.postDelayed(new Runnable() {
 
                     @Override
                     public void run() {
