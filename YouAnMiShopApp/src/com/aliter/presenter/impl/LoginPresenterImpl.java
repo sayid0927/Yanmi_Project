@@ -28,7 +28,25 @@ public class LoginPresenterImpl extends BasePresenter<LoginPresenter.View> imple
     }
 
     @Override
-    public void AuthShopLogin2(Login login) {
+    public void AuthShopLogin2() {
+
+
+        Login login = new Login();
+        if (mView.getLoginType() == 0) {
+            //密码登录
+            login.setClientId(Config.getuiClientId);
+            login.setUserName(mView.getUsername());
+            login.setType(1);
+            login.setPassword(EncryptionUtils.md5TransferPwd(mView.getPassword()));
+        } else {
+            //  手机验证码登录
+            login.setClientId(Config.getuiClientId);
+            login.setUserName(mView.getUsername());
+            login.setType(3);
+            login.setCode(mView.getPassword());
+        }
+
+
         invoke(retrofitLoginHttpUtils.fetchLogin(login), new Callback<BaseResponse<IMUserInfoVO>>() {
             @Override
             public void onSuccess(BaseResponse<IMUserInfoVO> data) {
@@ -48,12 +66,11 @@ public class LoginPresenterImpl extends BasePresenter<LoginPresenter.View> imple
                     AppController.getInstance().initHXAccount(imUserInfoVO, true);   //登录环信
                     imUserInfoVO.setPassword(EncryptionUtils.md5TransferPwd(imUserInfoVO.getPassword()));
                     imUserInfoVO.setUserName(imUserInfoVO.getName());
-
-
                     mView.onAuthShopLogin2SuccessView(imUserInfoVO);
                 }
                 else
                     mView.onFailView("数据为空");
+
             }
 
             @Override
@@ -66,7 +83,13 @@ public class LoginPresenterImpl extends BasePresenter<LoginPresenter.View> imple
     }
 
     @Override
-    public void ShopGetSecurityCode(AuthCode authCode) {
+    public void ShopGetSecurityCode( ) {
+
+        //获取验证码
+        AuthCode authCode = new AuthCode();
+        authCode.setMobile(mView.getUsername());
+        authCode.setType(AppController.PhoneRigisterLoginType);
+
         invoke(retrofitLoginHttpUtils.ShopGetSecurityCode(authCode), new Callback<BaseResponse>() {
             @Override
             public void onSuccess(BaseResponse data) {

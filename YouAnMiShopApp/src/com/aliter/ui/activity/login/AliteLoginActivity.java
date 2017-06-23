@@ -14,8 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.aliter.base.BaseActivity;
-import com.aliter.entity.AuthCode;
-import com.aliter.entity.Login;
 import com.aliter.injector.component.LoginHttpModule;
 import com.aliter.injector.component.activity.DaggerLoginComponent;
 import com.aliter.presenter.LoginPresenter;
@@ -25,12 +23,10 @@ import com.blankj.utilcode.utils.StringUtils;
 import com.easemob.easeui.model.IMUserInfoVO;
 import com.orhanobut.logger.Logger;
 import com.zxly.o2o.account.Account;
-import com.zxly.o2o.application.AppController;
 import com.zxly.o2o.application.Config;
 import com.zxly.o2o.request.GetuiBindRequest;
 import com.zxly.o2o.shop.R;
 import com.zxly.o2o.util.Constants;
-import com.zxly.o2o.util.EncryptionUtils;
 import com.zxly.o2o.util.StringUtil;
 import com.zxly.o2o.util.ViewUtils;
 
@@ -104,12 +100,12 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
     @Override
     public void onAuthShopLogin2SuccessView(IMUserInfoVO usserInfo) {
         //  登录成功返回
-        Logger.t(TAG).d("登录成功返回信息  ==  " + usserInfo);
         Account.saveLoginUser(this, usserInfo);
         Account.user = usserInfo;
+        String tt=Config.getuiClientId;
+        Logger.t("TAG").e(tt);
         new GetuiBindRequest(Config.getuiClientId).start();
         DismissLoadingDialog();
-
         ViewUtils.startActivity(new Intent(AliteLoginActivity.this, AliterHomeActivity.class), this);
     }
 
@@ -126,6 +122,21 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
     @Override
     public void onFailView(String errorMsg) {
         DismissLoadingDialog();
+    }
+
+    @Override
+    public String getUsername() {
+        return editPhone.getText().toString();
+    }
+
+    @Override
+    public String getPassword() {
+        return editPassword.getText().toString();
+    }
+
+    @Override
+    public int getLoginType() {
+        return LoginType;
     }
 
     @Override
@@ -168,12 +179,9 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
                 editPassword.setText("");
                 break;
             case R.id.tv_forget_pwd:        //  忘记密码
-
                 Intent intent = new Intent(AliteLoginActivity.this, AliteForgetPwdActivity.class);
                 AliteLoginActivity.this.startActivityForResult(intent, 1);
                 startActivityIn();
-
-//                ViewUtils.startActivity(new Intent(AliteLoginActivity.this, AliteForgetPwdActivity.class), this);
 
                 break;
             case R.id.tv_register_shop:    // 注册商户
@@ -196,35 +204,15 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
                     ViewUtils.showToast("请输入正确的电话号码！");
                     return;
                 }
-//                if(RegexUtils.isMobileSimple(phoneNumber)) {
-//                    ViewUtils.showToast("请输入正确的正确手机号码！");
-//                    return;
-//                }
                 Pattern p = Pattern.compile(Constants.PASSWORD_PATTERN);
                 Matcher m = p.matcher(password);
                 if (!m.matches()) {
                     ViewUtils.showToast("密码只能为6-16位的数字或字母组成");
                     return;
                 }
-                if (LoginType == 0) {
-                    //密码登录
-                    Login login = new Login();
-                    login.setClientId(Config.getuiClientId);
-                    login.setUserName(phoneNumber);
-                    login.setType(1);
-                    login.setPassword(EncryptionUtils.md5TransferPwd(password));
-                    mPresenter.AuthShopLogin2(login);
-                } else {
-                    //  手机验证码登录
-                    Login login = new Login();
-                    login.setClientId(Config.getuiClientId);
-                    login.setUserName(phoneNumber);
-                    login.setType(3);
-                    login.setCode(editPassword.getText().toString());
-                    mPresenter.AuthShopLogin2(login);
-
-                }
+                mPresenter.AuthShopLogin2();
                 ShowLoadingDialog();
+
                 break;
             case R.id.btn_pwd_login:
                 if (llVerificationLogin.getVisibility() == View.VISIBLE)
@@ -266,23 +254,16 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
                 break;
 
             case R.id.ll_verification_login:        //获取验证码
-
                 if (editPhone.getText().length() < 11) {
                     ViewUtils.showToast("请输入正确的手机号");
                     break;
                 }
-
                 if (resendTime > 0) {
                     ViewUtils.showToast(resendTime + "秒后才可再次发送");
                 } else {
                     //获取验证码
-                    AuthCode authCode = new AuthCode();
-                    authCode.setMobile(editPhone.getText().toString());
-                    authCode.setType(AppController.PhoneRigisterLoginType);
-                    mPresenter.ShopGetSecurityCode(authCode);
-//                    loadingDialog.show();
-
-                      ShowLoadingDialog();
+                    mPresenter.ShopGetSecurityCode();
+                    ShowLoadingDialog();
                 }
                 break;
         }

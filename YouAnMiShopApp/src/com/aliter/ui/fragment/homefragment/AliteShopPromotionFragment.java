@@ -144,6 +144,11 @@ public class AliteShopPromotionFragment extends BaseFragment {
         if (PreferUtil.getInstance().getHd001()) {
             mFragments.add(PromotionAcitcityFragment.newInstance());
         }
+        if(mFragments.size()==0||mTitleList.size()==0){
+            mTitleList.add("店铺文章");
+            StoreArticleFragement storeArticleFragement = StoreArticleFragement.newInstance(1);
+            mFragments.add(storeArticleFragement);
+        }
 
 
 //        mTitleList.add("店铺文章");

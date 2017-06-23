@@ -2,8 +2,6 @@ package com.aliter.presenter;
 
 
 import com.aliter.base.BaseView;
-import com.aliter.entity.AuthCode;
-import com.aliter.entity.Login;
 import com.easemob.easeui.model.IMUserInfoVO;
 
 /**
@@ -16,10 +14,14 @@ public interface LoginPresenter {
          void  onShopGetSecurityCodeSuccessView();
          void  onFailView(String errorMsg);//获取数据失败调用该方法。
 
+         String getUsername();
+         String getPassword();
+         int getLoginType();
+
     }
 
     interface Presenter {
-        void AuthShopLogin2(Login login);
-        void ShopGetSecurityCode(AuthCode authCode);
+        void AuthShopLogin2();
+        void ShopGetSecurityCode();
     }
 }

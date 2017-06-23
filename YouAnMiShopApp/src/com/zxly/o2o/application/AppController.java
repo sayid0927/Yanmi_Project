@@ -93,8 +93,8 @@ public class AppController extends Application {
     public  static  final  int ForgetPwdType=7;
 
 
-//  public  static  final   String data_base_url="http://sasp.youanmi.com/";      //  正式
-    public  static  final   String data_base_url="http://192.168.1.24:28004/";  //  国军
+  public  static  final   String data_base_url="http://sasp.youanmi.com/";      //  正式
+//    public  static  final   String data_base_url="http://192.168.1.24:28004/";  //  国军
 //    public  static  final   String data_base_url="http://192.168.1.212:82/sis/";  //  黄伟
     public  static  final  String auth_shop_login2="auth/shop/login2";
     public  static  final  String keduoduo_promote_articles="/keduoduo/promote/articles";
@@ -138,21 +138,6 @@ public class AppController extends Application {
         if (!AppUtil.isDebuggable(this)) {
             CrashHandler.getInstance().init(this);
         }
-
-//        if (BuildConfig.TINKER_ENABLE) {
-//
-//            // 我们可以从这里获得Tinker加载过程的信息
-//            tinkerApplicationLike = TinkerPatchApplicationLike.getTinkerPatchApplicationLike();
-//
-//            // 初始化TinkerPatch SDK, 更多配置可参照API章节中的,初始化SDK
-//            TinkerPatch.init(tinkerApplicationLike)
-//                    .reflectPatchLibrary()
-//                    .setPatchRollbackOnScreenOff(true)
-//                    .setPatchRestartOnSrceenOff(true);
-//
-//            // 每隔3个小时去访问后台时候有更新,通过handler实现轮训的效果
-//            new FetchPatchHandler().fetchPatchWithInterval(3);
-//        }
     }
 
     /**
