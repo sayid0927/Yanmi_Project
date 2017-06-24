@@ -8,8 +8,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aliter.base.BaseFragment;
+import com.aliter.entity.ShopInfoBase;
+import com.aliter.injector.component.MyStroreHttpModule;
+import com.aliter.injector.component.fragment.DaggerMyStoreComponent;
+import com.aliter.presenter.MyStorePresenter;
+import com.aliter.presenter.impl.ShopInfoPresenterImpl;
 import com.aliter.ui.activity.myStore.AliteSettingMyShopInfoActivity;
 import com.aliter.ui.activity.myStore.AllCustomerActivity;
+import com.orhanobut.logger.Logger;
 import com.zxly.o2o.activity.FragmentListAct;
 import com.zxly.o2o.activity.GetFavorableStatisticsAct;
 import com.zxly.o2o.activity.MobileDataAct;
@@ -17,14 +23,15 @@ import com.zxly.o2o.activity.MyOrderAct;
 import com.zxly.o2o.activity.SalesmanRankingAct;
 import com.zxly.o2o.application.AppController;
 import com.zxly.o2o.shop.R;
+import com.zxly.o2o.util.StringUtil;
 import com.zxly.o2o.util.UmengUtil;
 import com.zxly.o2o.util.ViewUtils;
+import com.zxly.o2o.view.CircleImageView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
-public class MyStoreFragmentAlite extends BaseFragment {
+public class MyStoreFragmentAlite extends BaseFragment<ShopInfoPresenterImpl> implements MyStorePresenter.View {
 
 
     @BindView(R.id.tv_recharge)
@@ -39,17 +46,22 @@ public class MyStoreFragmentAlite extends BaseFragment {
     TextView btnUserCollect;
     @BindView(R.id.btn_ddyh)
     TextView btnDdyh;
-    Unbinder unbinder;
     @BindView(R.id.btn_user_topic)
     TextView btnUserTopic;
-    Unbinder unbinder1;
     @BindView(R.id.ll_setting_user_name)
     LinearLayout llSettingUserName;
-    Unbinder unbinder2;
+    @BindView(R.id.layout_my_shop)
+    RelativeLayout layoutMyShop;
+    @BindView(R.id.txt_user_name)
+    TextView txtUserName;
+    @BindView(R.id.img_user_head)
+    CircleImageView imgUserHead;
+
 
 
     @Override
     protected void loadData() {
+        mPresenter.ShopInfo();
         setState(AppController.STATE_SUCCESS);
     }
 
@@ -61,16 +73,17 @@ public class MyStoreFragmentAlite extends BaseFragment {
     @Override
     protected void initView() {
 
+
     }
 
     @Override
     protected void initInject() {
-
+        DaggerMyStoreComponent.builder().myStroreHttpModule(new MyStroreHttpModule()).build().injectData(this);
     }
 
 
     @OnClick({R.id.tv_recharge, R.id.tv_youbao, R.id.layout_my_order, R.id.tv_employee_list, R.id.btn_user_collect, R.id.btn_ddyh,
-            R.id.btn_user_topic, R.id.ll_setting_user_name})
+            R.id.btn_user_topic, R.id.ll_setting_user_name, R.id.layout_my_shop})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_recharge:  //  流量冲值
@@ -97,6 +110,7 @@ public class MyStoreFragmentAlite extends BaseFragment {
 
                 GetFavorableStatisticsAct.start(getActivity());
                 UmengUtil.onEvent(getActivity(), new UmengUtil().MANAGE_DISCOUNTRECEIVE_CLICK, null);
+                break;
 
 //                if (Account.user.getRoleType() == Constants.USER_TYPE_ADMIN) {
 //                    GetFavorableStatisticsAct.start(getActivity());
@@ -108,9 +122,44 @@ public class MyStoreFragmentAlite extends BaseFragment {
 
             case R.id.ll_setting_user_name:  //     设置门店名
 
-                ViewUtils.startActivity(new Intent(getActivity(),AliteSettingMyShopInfoActivity.class),getActivity());
+                ViewUtils.startActivity(new Intent(getActivity(), AliteSettingMyShopInfoActivity.class), getActivity());
 
                 break;
+
+            case R.id.layout_my_shop:  //  我的网店
+
+                ViewUtils.startActivity(new Intent(getActivity(), AliteSettingMyShopInfoActivity.class), getActivity());
+
+                break;
+
+
         }
     }
+
+    @Override
+    public void onShopInfoSuccessView(ShopInfoBase shopInfoBase) {
+        //  获取门店信息返回
+
+        Logger.t("YAG").d(shopInfoBase);
+        String iconUrl = shopInfoBase.getIconUrl();
+        if (StringUtil.isNull(iconUrl)) {
+            imgUserHead.setImageResource(R.drawable.default_head_small);
+        } else {
+            imgUserHead.setImageUrl(iconUrl, R.drawable.default_head_small);
+        }
+        String name = shopInfoBase.getName();
+        if (StringUtil.isNull(name)) {
+            txtUserName.setText("未设置门店名");
+        } else {
+            txtUserName.setText(name);
+        }
+
+
+    }
+
+    @Override
+    public void onFailView(String errorMsg) {
+
+    }
+    
 }

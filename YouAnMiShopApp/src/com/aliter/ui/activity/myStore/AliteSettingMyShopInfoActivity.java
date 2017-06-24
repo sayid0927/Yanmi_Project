@@ -27,6 +27,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -139,10 +141,10 @@ public class AliteSettingMyShopInfoActivity extends BaseActivity {
     }
 
     private void postFile(File file) {
-//        Map<String, Object> params = new HashMap<String, Object>();
-//        fileUploadRequest = new FileUploadRequest(file, params,
-//                "shop/photo/edit", handler);
-//        fileUploadRequest.startUpload();
+        Map<String, Object> params = new HashMap<String, Object>();
+        fileUploadRequest = new FileUploadRequest(file, params,
+                "shop/update", handler);
+        fileUploadRequest.startUpload();
     }
 
 
