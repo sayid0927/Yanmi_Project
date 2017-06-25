@@ -6,8 +6,29 @@
     android:orientation="vertical">
 
 
+    <RelativeLayout
+        android:id="@+id/layout_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:background="@color/orange_ff5f19">
 
-    <include layout="@layout/alite_connection_toolbar"/>
+        <ImageView
+            android:id = "@+id/btn_back"
+            android:layout_width = "wrap_content"
+            android:layout_height = "match_parent"
+            android:paddingLeft = "10dp"
+            android:paddingRight = "40dp"
+            android:scaleType = "center"
+            android:src = "@drawable/fanhui"/>
+        <TextView
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:layout_gravity = "center"
+            android:text="赚钱攻略"
+            android:textColor = "@color/white"
+            android:layout_centerInParent="true"
+            android:textSize = "@dimen/main_tab_title_text_size"/>
+    </RelativeLayout>
 
 
     <android.support.design.widget.TabLayout
@@ -16,7 +37,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
-        app:tabGravity="center"
         app:tabIndicatorColor="#F0811C"
         app:tabIndicatorHeight="2dp"
         app:tabMode="fixed"
@@ -26,8 +46,7 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/vp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="match_parent">
 
     </android.support.v4.view.ViewPager>
 

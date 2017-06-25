@@ -93,8 +93,8 @@ public class AppController extends Application {
     public  static  final  int ForgetPwdType=7;
 
 
-//  public  static  final   String data_base_url="http://sasp.youanmi.com/";      //  正式
-    public  static  final   String data_base_url="http://192.168.1.24:28004/";  //  国军
+  public  static  final   String data_base_url="http://sasp.youanmi.com/";      //  正式
+//    public  static  final   String data_base_url="http://192.168.1.24:28004/";  //  国军
 //    public  static  final   String data_base_url="http://192.168.1.212:82/sis/";  //  黄伟
     public  static  final  String auth_shop_login2="auth/shop/login2";
     public  static  final  String keduoduo_promote_articles="/keduoduo/promote/articles";
@@ -105,7 +105,7 @@ public class AppController extends Application {
     public  static  final  String shopApp_setpassword2="shopApp/setPassword2";                //设置新密码
     public  static  final  String shopApp_menu="shopApp/menu";                        //获取商户APP菜单权限
     public  static  final  String shop_info="shop/info";                        //获取商户门店信息
-
+    public  static  final  String common_image_upload="common/image/upload";                        //图片上传1.0
 
 
     @Override
@@ -333,7 +333,7 @@ public class AppController extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        MultiDex.install(this);
+         MultiDex.install(this);
     }
 
 }

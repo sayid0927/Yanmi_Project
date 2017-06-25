@@ -1,11 +1,9 @@
 package com.aliter.ui.activity.self;
 
-import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import com.aliter.base.BaseActivity;
 import com.aliter.base.BaseFragmentPageAdapter;
@@ -16,7 +14,7 @@ import com.zxly.o2o.shop.R;
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by sayid on 2017/6/21.
@@ -27,10 +25,8 @@ public class AliteMeakeMoneyActivity extends BaseActivity {
     TabLayout tabLayout;
     @BindView(R.id.vp)
     ViewPager vp;
-    @BindView(R.id.tv_toolbar)
-    TextView tvToolbar;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    @BindView(R.id.btn_back)
+    ImageView btnBack;
 
 
     private ArrayList<String> mTitleList = new ArrayList<>();
@@ -44,7 +40,6 @@ public class AliteMeakeMoneyActivity extends BaseActivity {
 
     @Override
     public void setToolBar() {
-            setToolBar(toolbar,"");
     }
 
     @Override
@@ -82,10 +77,10 @@ public class AliteMeakeMoneyActivity extends BaseActivity {
 
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
+
+    @OnClick(R.id.btn_back)
+    public void onViewClicked() {
+        finish();
+        finishActivity();
     }
 }

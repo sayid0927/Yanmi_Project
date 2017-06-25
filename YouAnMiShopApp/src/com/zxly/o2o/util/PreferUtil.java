@@ -341,6 +341,25 @@ public final class PreferUtil {
 
 
 
+    public  void  CleanShopAppMenu(){
+        putBoolean(SHOP_DPWZ_001, false);
+        putBoolean(SHOP_BDRW_001, false);
+        putBoolean(SHOP_WLRW_001, false);
+        putBoolean(SHOP_ZDYWZ_001, false);
+        putBoolean(SHOP_HD_001, false);
+        putBoolean(SHOP_WDWD_001, false);
+        putBoolean(SHOP_SYB_001, false);
+        putBoolean(SHOP_LLCZ_001, false);
+        putBoolean(SHOP_ZYJ_001, false);
+        putBoolean(SHOP_DYBD_001, false);
+        putBoolean(SHOP_SHQD_001, false);
+        putBoolean(SHOP_YHLQ_001, false);
+        putBoolean(SHOP_YHTJ_001, false);
+        putBoolean(SHOP_DDGL_001, false);
+        putBoolean(SHOP_DDGL_001, false);
+    }
+
+
 
 
 

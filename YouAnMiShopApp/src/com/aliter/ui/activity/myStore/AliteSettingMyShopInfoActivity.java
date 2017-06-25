@@ -5,13 +5,17 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aliter.base.BaseActivity;
+import com.aliter.injector.component.SettingShopNameHttpModule;
+import com.aliter.injector.component.activity.DaggerSettingShopNameComponent;
+import com.aliter.presenter.SettingShopNamePresenter;
+import com.aliter.presenter.impl.SettingShopNamePresenterImpl;
 import com.aliter.ui.activity.login.AliteCheckProvinceActivity;
 import com.easemob.easeui.model.IMUserInfoVO;
 import com.zxly.o2o.account.Account;
@@ -28,11 +32,12 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 import static com.umeng.socialize.utils.DeviceConfig.context;
 
@@ -40,7 +45,7 @@ import static com.umeng.socialize.utils.DeviceConfig.context;
  * Created by sayid on 2017/6/23.
  */
 
-public class AliteSettingMyShopInfoActivity extends BaseActivity {
+public class AliteSettingMyShopInfoActivity extends BaseActivity<SettingShopNamePresenterImpl> implements SettingShopNamePresenter.View {
     @BindView(R.id.rl_user_head)
     RelativeLayout rlUserHead;
     @BindView(R.id.rl_shop_name)
@@ -51,14 +56,12 @@ public class AliteSettingMyShopInfoActivity extends BaseActivity {
     RelativeLayout rlConsumerHotline;
     @BindView(R.id.rl_region)
     RelativeLayout rlRegion;
-    @BindView(R.id.tv_toolbar)
-    TextView tvToolbar;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
     @BindView(R.id.rl_details)
     RelativeLayout rlDetails;
     @BindView(R.id.tv_region)
     TextView tvRegion;
+    @BindView(R.id.btn_back)
+    ImageView btnBack;
 
 
     private FileUploadRequest fileUploadRequest;
@@ -106,8 +109,6 @@ public class AliteSettingMyShopInfoActivity extends BaseActivity {
 
     @Override
     public void setToolBar() {
-        setToolBar(toolbar, "");
-        tvToolbar.setText("门店信息");
     }
 
     @Override
@@ -122,7 +123,7 @@ public class AliteSettingMyShopInfoActivity extends BaseActivity {
 
     @Override
     protected void initInject() {
-
+        DaggerSettingShopNameComponent.builder().settingShopNameHttpModule(new SettingShopNameHttpModule()).build().injectWeChat(this);
     }
 
 
@@ -141,19 +142,41 @@ public class AliteSettingMyShopInfoActivity extends BaseActivity {
     }
 
     private void postFile(File file) {
-        Map<String, Object> params = new HashMap<String, Object>();
-        fileUploadRequest = new FileUploadRequest(file, params,
-                "shop/update", handler);
-        fileUploadRequest.startUpload();
+
+        //    file	图片	string	图片数据流
+//    isThum	是否要缩略图	number	Integer类型，1：不要，2：要，默认1
+//    thumHeight	缩略图高度	number	Integer类型，范围：0<thumHeight<500
+//    thumWidth	缩略图宽度	number	Integer类型，范围：0<thumHeight<500
+        HashMap<String, Integer> map = new HashMap<>();
+        map.put("isThum", 1);
+        map.put("thumHeight", 500);
+        map.put("thumWidth", 500);
+
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+        mPresenter.CommonImageUpload(filePart);
+
+
+//        Map<String, Object> params = new HashMap<String, Object>();
+//        fileUploadRequest = new FileUploadRequest(file, params,
+//                "shop/photo/edit", handler);
+//        fileUploadRequest.startUpload();
+
     }
 
 
     @OnClick({R.id.rl_user_head, R.id.rl_shop_name, R.id.rl_shop_slogan, R.id.rl_consumer_hotline, R.id.rl_region,
-            R.id.rl_details})
+            R.id.rl_details,R.id.btn_back})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_user_head:    //   商户头像
                 new GetPictureDialog(false).show(handler);
+
+
+                break;
+            case R.id.btn_back:    //   返回
+               finish();
+                finishActivity();
 
 
                 break;
@@ -213,7 +236,7 @@ public class AliteSettingMyShopInfoActivity extends BaseActivity {
                         provinceId = mBundle.getString("provinceId");
                         cityName = mBundle.getString("cityName");
                         cityId = mBundle.getString("cityId");
-                     tvRegion.setText(provinceName + " " + districtName);
+                        tvRegion.setText(provinceName + " " + districtName);
                         break;
                     case 1000:
                         districtName = mBundle.getString("districtName");
@@ -238,9 +261,15 @@ public class AliteSettingMyShopInfoActivity extends BaseActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
+    public void onCommonImageUploadSuccessView() {
+        //  上传图片到服务器 返回
+
+
     }
+
+    @Override
+    public void onFailView(String errorMsg) {
+
+    }
+
 }

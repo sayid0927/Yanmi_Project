@@ -207,127 +207,127 @@ public class AliterHomeActivity extends BaseActivity<HomeActivityPresenterImpl> 
         ///   先简单处理 下次优化算法
         for (int i = 0; i < shopAppMenuBean.size(); i++) {
             tmp = shopAppMenuBean.get(i).getMenuName();
-            if(tmp.equals("店铺文章")){
-                if(shopAppMenuBean.get(i).getCode().equals("dpwz001")){
+            if (tmp.equals("店铺文章")) {
+                if (shopAppMenuBean.get(i).getCode().equals("dpwz001")) {
                     PreferUtil.getInstance().setDpwz001(true);
-                }else {
+                } else {
                     PreferUtil.getInstance().setDpwz001(false);
                 }
                 continue;
             }
-            if(tmp.equals("本地热文")){
-                if(shopAppMenuBean.get(i).getCode().equals("bdrw001")){
+            if (tmp.equals("本地热文")) {
+                if (shopAppMenuBean.get(i).getCode().equals("bdrw001")) {
                     PreferUtil.getInstance().setBdrw001(true);
-                }else {
+                } else {
                     PreferUtil.getInstance().setBdrw001(false);
                 }
                 continue;
             }
-            if(tmp.equals("网络热文")){
-                if(shopAppMenuBean.get(i).getCode().equals("wlrw001")){
+            if (tmp.equals("网络热文")) {
+                if (shopAppMenuBean.get(i).getCode().equals("wlrw001")) {
                     PreferUtil.getInstance().setWlrw001(true);
-                }else {
+                } else {
                     PreferUtil.getInstance().setWlrw001(false);
                 }
                 continue;
             }
-            if(tmp.equals("自定义文章")){
-                if(shopAppMenuBean.get(i).getCode().equals("zdywz001")){
+            if (tmp.equals("自定义文章")) {
+                if (shopAppMenuBean.get(i).getCode().equals("zdywz001")) {
                     PreferUtil.getInstance().setZdywz001(true);
-                }else {
+                } else {
                     PreferUtil.getInstance().setZdywz001(false);
                 }
                 continue;
             }
-            if(tmp.equals("活动")){
-                if(shopAppMenuBean.get(i).getCode().equals("hd001")){
+            if (tmp.equals("活动")) {
+                if (shopAppMenuBean.get(i).getCode().equals("hd001")) {
                     PreferUtil.getInstance().setHd001(true);
-                }else {
+                } else {
                     PreferUtil.getInstance().setHd001(false);
                 }
                 continue;
             }
-            if(tmp.equals("我的网店")){
-                if(shopAppMenuBean.get(i).getCode().equals("wdwd001")){
+            if (tmp.equals("我的网店")) {
+                if (shopAppMenuBean.get(i).getCode().equals("wdwd001")) {
                     PreferUtil.getInstance().setWdwd001(true);
-                }else {
+                } else {
                     PreferUtil.getInstance().setWdwd001(false);
                 }
                 continue;
             }
-            if(tmp.equals("碎柚保")){
-                if(shopAppMenuBean.get(i).getCode().equals("syb001")){
+            if (tmp.equals("碎柚保")) {
+                if (shopAppMenuBean.get(i).getCode().equals("syb001")) {
                     PreferUtil.getInstance().setSyb001(true);
-                }else {
+                } else {
                     PreferUtil.getInstance().setSyb001(false);
                 }
                 continue;
             }
-            if(tmp.equals("流量充值")){
-                if(shopAppMenuBean.get(i).getCode().equals("llcz001")){
+            if (tmp.equals("流量充值")) {
+                if (shopAppMenuBean.get(i).getCode().equals("llcz001")) {
                     PreferUtil.getInstance().setLlcz001(true);
-                }else {
+                } else {
                     PreferUtil.getInstance().setLlcz001(false);
                 }
                 continue;
             }
-            if(tmp.equals("赚佣金")){
-                if(shopAppMenuBean.get(i).getCode().equals("zyj001")){
+            if (tmp.equals("赚佣金")) {
+                if (shopAppMenuBean.get(i).getCode().equals("zyj001")) {
                     PreferUtil.getInstance().setZyj001(true);
-                }else {
+                } else {
                     PreferUtil.getInstance().setZyj001(false);
                 }
                 continue;
             }
 
-            if(tmp.equals("店员榜单")){
-                if(shopAppMenuBean.get(i).getCode().equals("dybd001")){
+            if (tmp.equals("店员榜单")) {
+                if (shopAppMenuBean.get(i).getCode().equals("dybd001")) {
                     PreferUtil.getInstance().setDybd001(true);
-                }else {
+                } else {
                     PreferUtil.getInstance().setDybd001(false);
                 }
                 continue;
             }
-            if(tmp.equals("送货清单")){
-                if(shopAppMenuBean.get(i).getCode().equals("shqd001")){
+            if (tmp.equals("送货清单")) {
+                if (shopAppMenuBean.get(i).getCode().equals("shqd001")) {
                     PreferUtil.getInstance().setShqd001(true);
-                }else {
+                } else {
                     PreferUtil.getInstance().setShqd001(false);
                 }
                 continue;
             }
 
-            if(tmp.equals("优惠领取")){
-                if(shopAppMenuBean.get(i).getCode().equals("yhlq001")){
+            if (tmp.equals("优惠领取")) {
+                if (shopAppMenuBean.get(i).getCode().equals("yhlq001")) {
                     PreferUtil.getInstance().setYhlq001(true);
-                }else {
+                } else {
                     PreferUtil.getInstance().setYhlq001(false);
                 }
                 continue;
             }
 
-            if(tmp.equals("优惠统计")){
-                if(shopAppMenuBean.get(i).getCode().equals("yhtj001")){
+            if (tmp.equals("优惠统计")) {
+                if (shopAppMenuBean.get(i).getCode().equals("yhtj001")) {
                     PreferUtil.getInstance().setYhtj001(true);
-                }else {
+                } else {
                     PreferUtil.getInstance().setYhtj001(false);
                 }
                 continue;
             }
 
-            if(tmp.equals("订单管理")){
-                if(shopAppMenuBean.get(i).getCode().equals("ddgl001")){
+            if (tmp.equals("订单管理")) {
+                if (shopAppMenuBean.get(i).getCode().equals("ddgl001")) {
                     PreferUtil.getInstance().setDdgl001(true);
-                }else {
+                } else {
                     PreferUtil.getInstance().setDdgl001(false);
                 }
                 continue;
             }
 
-            if(tmp.equals("赚钱攻略")){
-                if(shopAppMenuBean.get(i).getCode().equals("zqgl001")){
+            if (tmp.equals("赚钱攻略")) {
+                if (shopAppMenuBean.get(i).getCode().equals("zqgl001")) {
                     PreferUtil.getInstance().setZqgl001(true);
-                }else {
+                } else {
                     PreferUtil.getInstance().setZqgl001(false);
                 }
                 continue;
@@ -342,7 +342,9 @@ public class AliterHomeActivity extends BaseActivity<HomeActivityPresenterImpl> 
         initFragmentList();
 
     }
+
     private long mExitTime = 0;
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -358,5 +360,8 @@ public class AliterHomeActivity extends BaseActivity<HomeActivityPresenterImpl> 
     }
 
 
-
+    @Override
+    public void finish() {PreferUtil.getInstance().CleanShopAppMenu();  // 退出首页时把所有权限设置成false 下次再进重新获取
+        super.finish();
+    }
 }

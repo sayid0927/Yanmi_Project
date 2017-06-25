@@ -1,6 +1,5 @@
 package com.aliter.ui.activity.myStore;
 
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -10,18 +9,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aliter.base.BaseActivity;
+import com.aliter.presenter.SettingShopNamePresenter;
+import com.aliter.presenter.impl.SettingShopNamePresenterImpl;
 import com.zxly.o2o.shop.R;
 import com.zxly.o2o.util.ViewUtils;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * Created by sayid on 2017/6/23.
  */
 
-public class AliteSettingShopNameActivity extends BaseActivity {
+public class AliteSettingShopNameActivity extends BaseActivity{
     @BindView(R.id.tv_toolbar)
     TextView tvToolbar;
     @BindView(R.id.toolbar)
@@ -74,6 +74,9 @@ public class AliteSettingShopNameActivity extends BaseActivity {
 
     @Override
     public void initView() {
+
+
+
 
         type = getIntent().getIntExtra("TYPE", 0);
 
@@ -144,10 +147,6 @@ public class AliteSettingShopNameActivity extends BaseActivity {
         tvNum.setText("0/30");
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
+
+
 }

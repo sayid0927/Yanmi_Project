@@ -404,6 +404,16 @@
     </style>
 
 
+    <style name="AliterShopAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/orange_ff5f19</item>
+        <item name="colorAccent">@color/barcolors</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
+
+
 
     <style name="AliterAppWhiteBarTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/white</item>

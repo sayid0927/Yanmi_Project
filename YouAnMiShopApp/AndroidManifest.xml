@@ -226,7 +226,7 @@
         <activity
             android:name="com.zxly.o2o.activity.PayMyAccountAct"
             android:label="@string/app_name"
-            android:theme="@style/AliterAppTheme"
+            android:theme="@style/AliterShopAppTheme"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.zxly.o2o.activity.PayAccountRecordAct"
@@ -244,7 +244,7 @@
         <activity
             android:name="com.zxly.o2o.activity.PersonalHomepageAct"
             android:label="@string/app_name"
-            android:theme="@style/AliterAppTheme"
+            android:theme="@style/AliterShopAppTheme"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.zxly.o2o.cropView.CropImageActivity"
@@ -257,6 +257,7 @@
         <activity
             android:name="com.zxly.o2o.activity.YieldDetailAct"
             android:label="@string/app_name"
+            android:theme="@style/AliterShopAppTheme"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.zxly.o2o.activity.ProductManageAct"
@@ -266,7 +267,7 @@
             android:name="com.zxly.o2o.activity.SettingAct"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AliterAppTheme" />
+            android:theme="@style/AliterShopAppTheme" />
         <activity
             android:name="com.zxly.o2o.activity.SecurityCenterAct"
             android:label="@string/app_name"
@@ -315,7 +316,7 @@
         <activity
             android:name="com.zxly.o2o.activity.FeedbackAct"
             android:label="@string/app_name"
-            android:theme="@style/AliterAppTheme"
+            android:theme="@style/AliterShopAppTheme"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"></activity>
         <activity
@@ -363,7 +364,7 @@
             android:name="com.zxly.o2o.activity.MyOrderAct"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/AliterAppTheme"
+            android:theme="@style/AliterShopAppTheme"
             android:windowSoftInputMode="adjustPan"></activity>
         <activity
             android:name="com.zxly.o2o.activity.ShippingListAct"
@@ -374,7 +375,7 @@
         <activity
             android:name="com.zxly.o2o.activity.FragmentListAct"
             android:label="@string/app_name"
-            android:theme="@style/AliterAppTheme"
+            android:theme="@style/AliterShopAppTheme"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.zxly.o2o.shop.action.ACTION_FRAGMENTLIST_ACTIVITY" />
@@ -399,7 +400,7 @@
         <activity
             android:name="com.zxly.o2o.activity.SalesmanRankingAct"
             android:label="@string/app_name"
-             android:theme="@style/AliterAppTheme"
+             android:theme="@style/AliterShopAppTheme"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.zxly.o2o.activity.CommissionRecordAct"
@@ -529,7 +530,7 @@
         <activity
             android:name="com.zxly.o2o.activity.GetFavorableStatisticsAct"
             android:label="@string/app_name"
-            android:theme="@style/AliterAppTheme"
+            android:theme="@style/AliterShopAppTheme"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.zxly.o2o.activity.TouchImageViewAct"
@@ -618,20 +619,20 @@
 
         <activity
             android:name="com.aliter.ui.activity.self.AliteMeakeMoneyActivity"
-            android:theme="@style/AliterAppTheme"
+            android:theme="@style/AliterShopAppTheme"
             android:launchMode="singleTop"/>
 
 
 
         <activity
             android:name="com.aliter.ui.activity.myStore.AllCustomerActivity"
-            android:theme="@style/AliterAppTheme"
+            android:theme="@style/AliterShopAppTheme"
             android:launchMode="singleTop"/>
 
 
         <activity
             android:name="com.aliter.ui.activity.myStore.AliteSettingMyShopInfoActivity"
-            android:theme="@style/AliterAppTheme"
+            android:theme="@style/AliterShopAppTheme"
             android:launchMode="singleTop"/>
 
 

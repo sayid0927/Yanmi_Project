@@ -77,7 +77,6 @@ public class AliteShopPromotionFragment extends BaseFragment {
     @Override
     protected void initView() {
         initFragmentList();
-        collapseToolbar();
         myAdapter = new BaseFragmentPageAdapter(getChildFragmentManager(), mFragments, mTitleList);
         vp.setAdapter(myAdapter);
         myAdapter.notifyDataSetChanged();
@@ -106,10 +105,6 @@ public class AliteShopPromotionFragment extends BaseFragment {
     }
 
     private void initFragmentList() {
-        if (mTitleList.size() != 0) {
-            return;
-        }
-
 
         if (PreferUtil.getInstance().getDpwz001()) {
             mTitleList.add("店铺文章");
@@ -149,84 +144,15 @@ public class AliteShopPromotionFragment extends BaseFragment {
             StoreArticleFragement storeArticleFragement = StoreArticleFragement.newInstance(1);
             mFragments.add(storeArticleFragement);
         }
-
-
-//        mTitleList.add("店铺文章");
-//        mTitleList.add("本地热文");
-//        mTitleList.add("网络热文");
-//        mTitleList.add("自定义文章");
-//        mTitleList.add("活动");
-//        StoreArticleFragement storeArticleFragement = StoreArticleFragement.newInstance(1);
-//        LocalArticleFragement localArticleFragement = LocalArticleFragement.newInstance(1);
-//        mFragments.add(storeArticleFragement);
-//        mFragments.add(localArticleFragement);
-//        mFragments.add(new TerraceArticleFragement());
-//        mFragments.add(PromotionArticleFragment.newInstance());
-//        mFragments.add(PromotionAcitcityFragment.newInstance());
     }
 
     @Override
     public void onPause() {
         super.onPause();
-//        appbarLayout.removeOnOffsetChangedListener(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-//        appbarLayout.addOnOffsetChangedListener(this);
-    }
-
-//    @Override
-//    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-//        if (verticalOffset == 0) {
-//
-//            appbarLayout.setEnabled(false);
-//            if (state != CollapsingToolbarLayoutState.EXPANDED) {
-//                state = CollapsingToolbarLayoutState.EXPANDED;//展开
-//                ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
-//                toolbarTitle.setVisibility(View.GONE);
-//                collapsingtool.setTitle("");
-//                if( AliteStoreArticlesFragment.install!=null)
-//                    AliteStoreArticlesFragment.install.setmSwipeRefreshLayoutEnabled(true);
-//            }
-//        } else if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()) {
-//            if (state != CollapsingToolbarLayoutState.COLLAPSED) {
-//                state = CollapsingToolbarLayoutState.COLLAPSED;//折叠
-//                ((AppCompatActivity) getActivity()).getSupportActionBar().show();
-//                toolbarTitle.setVisibility(View.VISIBLE);
-//                toolbarTitle.setTextColor(getActivity().getResources().getColor(R.color.white));
-//                toolbar.getBackground().setAlpha(255);
-//                collapsingtool.setTitle("");
-//                if( AliteStoreArticlesFragment.install!=null)
-//                    AliteStoreArticlesFragment.install.setmSwipeRefreshLayoutEnabled(false);
-//            }
-//        } else {
-//            collapsingtool.setEnabled(false);
-//            if (state != CollapsingToolbarLayoutState.INTERNEDIATE) {
-//                if (state == CollapsingToolbarLayoutState.COLLAPSED) {
-////                    if (toolbarTitle.getVisibility() == View.VISIBLE)
-////                        toolbarTitle.setVisibility(View.GONE);
-////                    else
-//                    toolbarTitle.setVisibility(View.VISIBLE);
-//                }
-//                state = CollapsingToolbarLayoutState.INTERNEDIATE;//中间
-//                ((AppCompatActivity) getActivity()).getSupportActionBar().show();
-//                toolbarTitle.setVisibility(View.VISIBLE);
-//                toolbarTitle.setTextColor(getActivity().getResources().getColor(R.color.orange_1aff));
-//                toolbar.getBackground().setAlpha(100);
-//                if( AliteStoreArticlesFragment.install!=null)
-//                    AliteStoreArticlesFragment.install.setmSwipeRefreshLayoutEnabled(false);
-//            }
-//        }
-//    }
-
-
-    public void collapseToolbar() {
-        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) appbarLayout.getLayoutParams();
-        behavior = (AppBarLayout.Behavior) params.getBehavior();
-        if (behavior != null) {
-            behavior.onNestedFling(coordinator, appbarLayout, null, 0, 10000, true);
-        }
     }
 }
