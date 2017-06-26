@@ -80,6 +80,7 @@ public class AliteForgetPwdActivity extends BaseActivity<AliteForgetPwdPresenter
     @Override
     public void setToolBar() {
         setToolBar(toolbar, "");
+        toolbar.setNavigationIcon(this.getResources().getDrawable(R.drawable.al_login_return));
         tvToolbar.setTextColor(this.getResources().getColor(R.color.black));
         tvToolbar.setText("找回密码");
     }

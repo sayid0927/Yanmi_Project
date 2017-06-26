@@ -11,6 +11,7 @@ package com.zxly.o2o.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.aliter.entity.ShopInfoBase;
 import com.aliter.entity.WeixinUserInfoBean;
 
 import java.util.Map;
@@ -59,6 +60,29 @@ public final class PreferUtil {
     private static final String NOTIFY_SYSTEM = "notification_system";
     private static final String NOTIFY_FEEDBACK = "notification_feedback";
     private static final String CONTACT_UPDATE = "contact_update";
+
+
+
+    private static final String SHOP_INFO_AREAID = "shop_info_areaid";
+    private static final String SHOP_INFO_CITYID = "shop_info_cityid";
+    public static final String SHOP_INFO_DETAILEDADDRESS = "shop_info_detailedaddress";
+    private static final String SHOP_INFO_HEADURL = "shop_info_headurl";
+    private static final String SHOP_INFO_ICONURL = "shop_info_iconurl";
+    private static final String SHOP_INFO_IMAGEURLS = "shop_info_imageurls";
+    private static final String SHOP_INFO_LABELNAMES = "shop_info_labelnames";
+    private static final String SHOP_INFO_NAME = "shop_info_name";
+    private static final String SHOP_INFO_PROVINCEID = "shop_info_provinceid";
+    public static final String SHOP_INFO_SERVERPHONE = "shop_info_serverphone";
+    public static final String SHOP_INFO_SLOGAN = "shop_info_slogan";
+    private static final String SHOP_INFO_VILLAGEID = "shop_info_villageid";
+
+    public static final String SHOP_INFO_CITYNAME = "shop_info_cityname";
+    public static final String SHOP_INFO_PROVINCENAME = "shop_info_provincename";
+    public static final String SHOP_INFO_AREANAME = "shop_info_areaname";
+
+
+
+
 
     private PreferUtil() {
     }
@@ -362,23 +386,73 @@ public final class PreferUtil {
 
 
 
+    //保存门店信息
+    public  void setShopInfo(ShopInfoBase shopInfoBase) {
+
+        //    areaId	地区id	number
+        //    cityId	城市id	number
+        //    detailedAddress	详细地址	string
+        //    headUrl	封面图	string
+        //    iconUrl	门店图标地址	string
+        //    imageUrls	店铺图片列表	string
+        //    labelNames	门店标签	string
+        //    name	门店名称	string
+        //    provinceId	省份id	number
+        //    serverPhone	客服电话	string
+        //    slogan	门店标语	string
+        //    villageId	乡村id	string
+//           cityName;
+//           areaName;
+//           provinceName;
 
 
+        putInt(SHOP_INFO_AREAID,shopInfoBase.getAreaId());
+        putInt(SHOP_INFO_CITYID,shopInfoBase.getCityId());
+        putString(SHOP_INFO_DETAILEDADDRESS,shopInfoBase.getDetailedAddress());
+        putString(SHOP_INFO_HEADURL,shopInfoBase.getHeadUrl());
+        putString(SHOP_INFO_ICONURL,shopInfoBase.getIconUrl());
+        putString(SHOP_INFO_IMAGEURLS,shopInfoBase.getImageUrls());
+        putString(SHOP_INFO_LABELNAMES,shopInfoBase.getLabelNames());
+        putString(SHOP_INFO_NAME,shopInfoBase.getName());
+        putInt(SHOP_INFO_PROVINCEID,shopInfoBase.getProvinceId());
+        putString(SHOP_INFO_SERVERPHONE,shopInfoBase.getServerPhone());
+        putString(SHOP_INFO_SLOGAN,shopInfoBase.getSlogan());
+        putString(SHOP_INFO_VILLAGEID,shopInfoBase.getVillageId());
+
+        putString(SHOP_INFO_CITYNAME,shopInfoBase.getCityName());
+        putString(SHOP_INFO_AREANAME,shopInfoBase.getAreaName());
+        putString(SHOP_INFO_PROVINCENAME,shopInfoBase.getProvinceName());
+    }
 
 
+    public  ShopInfoBase getShopInfo(){
+        ShopInfoBase shopInfoBase = new ShopInfoBase();
+        shopInfoBase.setAreaId(getInt(SHOP_INFO_AREAID, 0));
+        shopInfoBase.setCityId(getInt(SHOP_INFO_CITYID,0));
+        shopInfoBase.setDetailedAddress(getString(SHOP_INFO_DETAILEDADDRESS,""));
+        shopInfoBase.setHeadUrl(getString(SHOP_INFO_HEADURL,""));
+        shopInfoBase.setIconUrl(getString(SHOP_INFO_ICONURL,""));
+        shopInfoBase.setImageUrls(getString(SHOP_INFO_IMAGEURLS,""));
+        shopInfoBase.setLabelNames(getString(SHOP_INFO_LABELNAMES,""));
+        shopInfoBase.setName(getString(SHOP_INFO_NAME,""));
+        shopInfoBase.setProvinceId(getInt(SHOP_INFO_PROVINCEID,0));
+        shopInfoBase.setServerPhone(getString(SHOP_INFO_SERVERPHONE,""));
+        shopInfoBase.setSlogan(getString(SHOP_INFO_SLOGAN,""));
+        shopInfoBase.setVillageId(getString(SHOP_INFO_VILLAGEID,""));
 
-
-
-
+        shopInfoBase.setCityName(getString(SHOP_INFO_CITYNAME,""));
+        shopInfoBase.setAreaName(getString(SHOP_INFO_AREANAME,""));
+        shopInfoBase.setProvinceName(getString(SHOP_INFO_PROVINCENAME,""));
+        return  shopInfoBase;
+    }
     //保存微信个人信息
     public  void setWeixinUserInfo(Map<String, String> data) {
-        String temp = "";
         for (String key : data.keySet()) {
-            temp = temp + key + " : " + data.get(key) + "\n";
             putString(key, data.get(key));
         }
     }
     public void CleanWeixinUserInfo(WeixinUserInfoBean user){
+
         user.setUnionid("");
         user.setScreen_name("");
         user.setCity("");

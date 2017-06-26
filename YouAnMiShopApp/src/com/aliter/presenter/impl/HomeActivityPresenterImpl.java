@@ -9,8 +9,6 @@ import com.aliter.http.Callback;
 import com.aliter.http.utils.RetrofitHomeActivityHttpUtils;
 import com.aliter.presenter.HomeActivityPresenter;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 public class HomeActivityPresenterImpl extends BasePresenter<HomeActivityPresenter.View> implements HomeActivityPresenter.Presenter {
@@ -24,12 +22,12 @@ public class HomeActivityPresenterImpl extends BasePresenter<HomeActivityPresent
     @Override
     public void ShopAppMenu(final ShopAppMenu shopAppMenu) {
 
-        invoke(retrofitHomeActivityHttpUtils.fetch(shopAppMenu), new Callback<BaseResponse<List<ShopAppMenuBean>>>() {
+        invoke(retrofitHomeActivityHttpUtils.fetch(shopAppMenu), new Callback<BaseResponse<ShopAppMenuBean>>() {
             @Override
-            public void onSuccess(BaseResponse<List<ShopAppMenuBean>> data) {
-                List<ShopAppMenuBean> shopAppMenuBean =data.getData();
+            public void onSuccess(BaseResponse<ShopAppMenuBean> data) {
+                ShopAppMenuBean shopAppMenuBean =data.getData();
 
-                if(shopAppMenuBean.size()!=0){
+                if(shopAppMenuBean!=null){
                     mView.onShopAppMenuSuccessView(shopAppMenuBean);
                 }else {
                     mView.onFailView("数据为空");

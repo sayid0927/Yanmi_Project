@@ -54,6 +54,7 @@ public class AliteChangePwdActivity extends BaseActivity<AliteChangePwdPresenter
     @Override
     public void setToolBar() {
         setToolBar(toolbar, "");
+        toolbar.setNavigationIcon(this.getResources().getDrawable(R.drawable.al_login_return));
         tvToolbar.setTextColor(this.getResources().getColor(R.color.black));
         tvToolbar.setText("设置新密码");
     }

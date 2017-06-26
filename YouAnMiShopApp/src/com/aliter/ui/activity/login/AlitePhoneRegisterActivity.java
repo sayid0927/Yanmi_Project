@@ -45,7 +45,9 @@ public class AlitePhoneRegisterActivity extends BaseActivity<AlitePhoneRegisterP
 
     @Override
     public void setToolBar() {
+
         setToolBar(toolbar, "");
+        toolbar.setNavigationIcon(this.getResources().getDrawable(R.drawable.al_login_return));
     }
 
     @Override

@@ -20,7 +20,6 @@ import com.aliter.presenter.impl.ShopInfoPresenterImpl;
 import com.aliter.ui.activity.myStore.AliteSettingMyShopInfoActivity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.easemob.easeui.EaseConstant;
-import com.orhanobut.logger.Logger;
 import com.zxly.o2o.account.Account;
 import com.zxly.o2o.activity.FragmentListAct;
 import com.zxly.o2o.activity.GetFavorableStatisticsAct;
@@ -73,6 +72,7 @@ public class MyStoreFragmentAlite extends BaseFragment<ShopInfoPresenterImpl> im
     RecyclerView recyclerView;
     @Inject
     protected BaseQuickAdapter mAdapter;
+    private ShopInfoBase shopInfoBase;
 
 
     @Override
@@ -89,16 +89,13 @@ public class MyStoreFragmentAlite extends BaseFragment<ShopInfoPresenterImpl> im
 
     @Override
     protected void initView() {
-        final List<MySroreAuthority> list = new ArrayList<>();
-//     * {"id":10,"menuName":"碎柚保","parentId":2,"type":2,"orders":2,"code":"syb001"},
-//     * {"id":11,"menuName":"流量充值","parentId":2,"type":2,"orders":3,"code":"llcz001"},
-//     * {"id":12,"menuName":"赚佣金","parentId":2,"type":2,"orders":4,"code":"zyj001"},
-//     * {"id":13,"menuName":"店员榜单","parentId":2,"type":2,"orders":5,"code":"dybd001"},
-//     * {"id":14,"menuName":"送货清单","parentId":2,"type":2,"orders":6,"code":"shqd001"},
-//     * {"id":15,"menuName":"优惠领取","parentId":2,"type":2,"orders":7,"code":"yhlq001"},
-//     * {"id":16,"menuName":"优惠统计","parentId":2,"type":2,"orders":8,"code":"yhtj001"},
-//     * {"id":17,"menuName":"订单管理","parentId":2,"type":2,"orders":9,"code":"ddgl001"},
 
+        shopInfoBase = PreferUtil.getInstance().getShopInfo();
+        if (StringUtil.isNull(shopInfoBase.getName()))
+            txtUserName.setText("未设置门店名");
+        else
+            txtUserName.setText(shopInfoBase.getName());
+        final List<MySroreAuthority> list = new ArrayList<>();
         if (PreferUtil.getInstance().getSyb001()) {
             MySroreAuthority mySroreAuthority = new MySroreAuthority();
             mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.al_icon_screensaver));
@@ -275,7 +272,9 @@ public class MyStoreFragmentAlite extends BaseFragment<ShopInfoPresenterImpl> im
     public void onShopInfoSuccessView(ShopInfoBase shopInfoBase) {
         //  获取门店信息返回
 
-        Logger.t("YAG").d(shopInfoBase);
+
+
+
         String iconUrl = shopInfoBase.getIconUrl();
         if (StringUtil.isNull(iconUrl)) {
             imgUserHead.setImageResource(R.drawable.default_head_small);
@@ -289,7 +288,7 @@ public class MyStoreFragmentAlite extends BaseFragment<ShopInfoPresenterImpl> im
             txtUserName.setText(name);
         }
 
-
+        PreferUtil.getInstance().setShopInfo(shopInfoBase);
     }
 
     @Override

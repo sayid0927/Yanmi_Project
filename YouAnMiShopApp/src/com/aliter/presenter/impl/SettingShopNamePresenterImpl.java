@@ -2,6 +2,7 @@ package com.aliter.presenter.impl;
 
 
 import com.aliter.base.BasePresenter;
+import com.aliter.entity.ShopUpdate;
 import com.aliter.http.BaseResponse;
 import com.aliter.http.Callback;
 import com.aliter.http.utils.SettingShopNameHttpUtils;
@@ -20,12 +21,31 @@ public class SettingShopNamePresenterImpl extends BasePresenter<SettingShopNameP
     }
 
     @Override
-    public void CommonImageUpload( MultipartBody.Part file) {
+    public void CommonImageUpload(MultipartBody.Part file) {
         invoke(settingShopNameHttpUtils.CommonImageUpload(file), new Callback<BaseResponse>() {
             @Override
             public void onSuccess(BaseResponse data) {
                 if (data != null) {
                     mView.onCommonImageUploadSuccessView();
+                } else {
+                    mView.onFailView("数据为空");
+                }
+            }
+
+            @Override
+            public void onFail(String msg) {
+                mView.onFailView(msg);
+            }
+        });
+    }
+
+    @Override
+    public void ShopUpdate(ShopUpdate shopUpdate) {
+        invoke(settingShopNameHttpUtils.ShopUpdate(shopUpdate), new Callback<BaseResponse>() {
+            @Override
+            public void onSuccess(BaseResponse data) {
+                if (data != null) {
+                    mView.onShopUpdateSuccessView();
                 } else {
                     mView.onFailView("数据为空");
                 }

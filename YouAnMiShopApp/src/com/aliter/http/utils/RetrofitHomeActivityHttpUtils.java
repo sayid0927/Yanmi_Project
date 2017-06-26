@@ -7,8 +7,6 @@ import com.aliter.http.BaseResponse;
 import com.aliter.http.HttpUtils;
 import com.aliter.http.service.HomeActivityService;
 
-import java.util.List;
-
 import rx.Observable;
 
 
@@ -20,7 +18,7 @@ public class RetrofitHomeActivityHttpUtils extends HttpUtils {
         this.homeActivityService = homeActivityService;
     }
 
-    public Observable<BaseResponse<List<ShopAppMenuBean>>> fetch(ShopAppMenu shopAppMenu) {
+    public Observable<BaseResponse<ShopAppMenuBean>> fetch(ShopAppMenu shopAppMenu) {
        return homeActivityService.shopAppMenu(shopAppMenu);
     }
 

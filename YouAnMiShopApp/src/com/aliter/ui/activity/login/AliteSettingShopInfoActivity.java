@@ -1,5 +1,6 @@
 package com.aliter.ui.activity.login;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -83,6 +84,7 @@ public class AliteSettingShopInfoActivity extends BaseActivity<AliteSettingShopI
     @Override
     public void setToolBar() {
         setToolBar(toolbar, "");
+        toolbar.setNavigationIcon(this.getResources().getDrawable(R.drawable.al_login_return));
     }
 
     @Override
@@ -141,26 +143,10 @@ public class AliteSettingShopInfoActivity extends BaseActivity<AliteSettingShopI
                     GeneralizeCode = "";
                 }
 
-                ShopRegister shopRegister = new ShopRegister();
-                shopRegister.setCode(PreferUtil.getInstance().getRegisterCode());  //验证码
-                shopRegister.setGeneralizeCode(GeneralizeCode);                      // 推广码
-                shopRegister.setShopName(editShopName.getText().toString());         // 门店名称
-                shopRegister.setUserName(PreferUtil.getInstance().getRegisterPhonenum()); //  用户帐号 注册的手机号
-                shopRegister.setPassword(PreferUtil.getInstance().getRegisterPwd());       //  密码
-                shopRegister.setNickName(editShopTelephone.getText().toString());           // 昵称
-                if (provinceId != null)
-                    shopRegister.setProvinceId(Integer.valueOf(provinceId));              //省份id
-                if (cityId != null)
-                    shopRegister.setCityId(Integer.valueOf(cityId));                     //城市id
-                if (districtId != null)
-                    shopRegister.setAreaId(Integer.valueOf(districtId));                 //地区id
-                if (weixinUserInfo != null) {
-                    shopRegister.setWxOpenId(weixinUserInfo.getOpenid());               //微信用户openId
-                    shopRegister.setWxUnionId(weixinUserInfo.getUid());                 //微信用户统一id
-                    shopRegister.setWxHeadUrl(weixinUserInfo.getIconurl());             // 微信头像地址
-                }
-                mPresenter.fetchShopRegister(shopRegister);
-                ShowLoadingDialog();
+
+                createLogoutDialog();
+
+
                 break;
         }
     }
@@ -201,6 +187,61 @@ public class AliteSettingShopInfoActivity extends BaseActivity<AliteSettingShopI
                 }
             }
         }
+    }
+
+    private Dialog dialog;
+    private void createLogoutDialog() {
+        if (dialog == null) {
+            dialog = new Dialog(AliteSettingShopInfoActivity.this, R.style.dialog);
+        }
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
+        dialog.show();
+        dialog.setContentView(R.layout.dialog_logout);
+        dialog.findViewById(R.id.tv_phone_num).setVisibility(View.VISIBLE);
+        TextView tvTop = (TextView) dialog.findViewById(R.id.tv_phone_num);
+        TextView textView = (TextView) dialog.findViewById(R.id.txt_title);
+        tvTop.setText("门店名称只能设置一次,请确认");
+        textView.setText(editShopName.getText().toString());
+        dialog.findViewById(R.id.btn_done)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ShopRegister shopRegister = new ShopRegister();
+                        shopRegister.setCode(PreferUtil.getInstance().getRegisterCode());  //验证码
+                        shopRegister.setGeneralizeCode(GeneralizeCode);                      // 推广码
+                        shopRegister.setShopName(editShopName.getText().toString());         // 门店名称
+                        shopRegister.setUserName(PreferUtil.getInstance().getRegisterPhonenum()); //  用户帐号 注册的手机号
+                        shopRegister.setPassword(PreferUtil.getInstance().getRegisterPwd());       //  密码
+                        shopRegister.setNickName(editShopTelephone.getText().toString());           // 昵称
+                        if (provinceId != null)
+                            shopRegister.setProvinceId(Integer.valueOf(provinceId));              //省份id
+                        if (cityId != null)
+                            shopRegister.setCityId(Integer.valueOf(cityId));                     //城市id
+                        if (districtId != null)
+                            shopRegister.setAreaId(Integer.valueOf(districtId));                 //地区id
+                        if (weixinUserInfo != null) {
+                            shopRegister.setWxOpenId(weixinUserInfo.getOpenid());               //微信用户openId
+                            shopRegister.setWxUnionId(weixinUserInfo.getUid());                 //微信用户统一id
+                            shopRegister.setWxHeadUrl(weixinUserInfo.getIconurl());             // 微信头像地址
+                        }
+                        mPresenter.fetchShopRegister(shopRegister);
+                        if (dialog.isShowing())
+                            dialog.dismiss();
+                        ShowLoadingDialog();
+
+                    }
+                });
+        dialog.findViewById(R.id.btn_cancel)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (dialog.isShowing()) {
+                            dialog.dismiss();
+                        }
+                    }
+                });
     }
 
     @Override

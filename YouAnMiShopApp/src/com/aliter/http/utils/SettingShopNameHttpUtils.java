@@ -1,6 +1,7 @@
 package com.aliter.http.utils;
 
 
+import com.aliter.entity.ShopUpdate;
 import com.aliter.http.BaseResponse;
 import com.aliter.http.HttpUtils;
 import com.aliter.http.service.SettingShopNameService;
@@ -19,6 +20,11 @@ public class SettingShopNameHttpUtils extends HttpUtils {
 
     public Observable<BaseResponse> CommonImageUpload( MultipartBody.Part file) {
        return settingShopNameService.CommonImageUpload(file);
+    }
+
+
+    public Observable<BaseResponse> ShopUpdate( ShopUpdate shopUpdate) {
+        return settingShopNameService.ShopUpdate(shopUpdate);
     }
 
 }

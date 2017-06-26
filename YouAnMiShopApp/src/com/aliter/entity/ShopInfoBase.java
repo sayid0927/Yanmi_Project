@@ -20,6 +20,11 @@ public class ShopInfoBase {
 //    slogan	门店标语	string
 //    villageId	乡村id	string
 
+//            "cityName": "白城市",
+//            "areaName": "镇赉县",
+//            "provinceName": "吉林省",
+
+
 
     private  int areaId;
     private  int cityId;
@@ -34,6 +39,33 @@ public class ShopInfoBase {
     private  String slogan;
     private  String villageId;
 
+    private  String cityName;
+    private  String areaName;
+    private  String provinceName;
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public String getAreaName() {
+        return areaName;
+    }
+
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
+    }
+
+    public String getProvinceName() {
+        return provinceName;
+    }
+
+    public void setProvinceName(String provinceName) {
+        this.provinceName = provinceName;
+    }
 
     public int getAreaId() {
         return areaId;

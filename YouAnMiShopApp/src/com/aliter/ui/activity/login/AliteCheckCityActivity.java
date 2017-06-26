@@ -60,6 +60,7 @@ public class AliteCheckCityActivity extends BaseActivity implements AdapterView.
     @Override
     public void setToolBar() {
         setToolBar(toolbar, "");
+        toolbar.setNavigationIcon(this.getResources().getDrawable(R.drawable.al_login_return));
         tvToolbar.setText("地区");
     }
 

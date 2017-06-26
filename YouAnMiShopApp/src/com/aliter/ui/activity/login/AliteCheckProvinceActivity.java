@@ -76,6 +76,7 @@ public class AliteCheckProvinceActivity extends BaseActivity implements AdapterV
     @Override
     public void setToolBar() {
         setToolBar(toolbar, "");
+        toolbar.setNavigationIcon(this.getResources().getDrawable(R.drawable.al_login_return));
         tvToolbar.setText("地区");
     }
 

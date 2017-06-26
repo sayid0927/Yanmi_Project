@@ -9,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.support.multidex.MultiDex;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
@@ -93,8 +92,8 @@ public class AppController extends Application {
     public  static  final  int ForgetPwdType=7;
 
 
-  public  static  final   String data_base_url="http://sasp.youanmi.com/";      //  正式
-//    public  static  final   String data_base_url="http://192.168.1.24:28004/";  //  国军
+//  public  static  final   String data_base_url="http://sasp.youanmi.com/";      //  正式
+    public  static  final   String data_base_url="http://192.168.1.24:28004/";  //  国军
 //    public  static  final   String data_base_url="http://192.168.1.212:82/sis/";  //  黄伟
     public  static  final  String auth_shop_login2="auth/shop/login2";
     public  static  final  String keduoduo_promote_articles="/keduoduo/promote/articles";
@@ -106,6 +105,9 @@ public class AppController extends Application {
     public  static  final  String shopApp_menu="shopApp/menu";                        //获取商户APP菜单权限
     public  static  final  String shop_info="shop/info";                        //获取商户门店信息
     public  static  final  String common_image_upload="common/image/upload";                        //图片上传1.0
+    public  static  final  String shop_update="shop/update";                        //修改门店信息1.0
+
+
 
 
     @Override
@@ -333,7 +335,7 @@ public class AppController extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-         MultiDex.install(this);
+//         MultiDex.install(this);
     }
 
 }
