@@ -45,6 +45,7 @@ public class AliterHomeActivity extends BaseActivity<HomeActivityPresenterImpl> 
     private BaseFragmentPageAdapter myAdapter;
     private Drawable myStoreIconSelected, myStoreIcon, shopPromotionIcon, shopPromotionIconSelected, mySelfIcon, mySelfIconSelected;
 
+
     @Override
     public void setState(int state) {
     }
@@ -73,9 +74,11 @@ public class AliterHomeActivity extends BaseActivity<HomeActivityPresenterImpl> 
         shopAppMenu.setShopId("1");
         mPresenter.ShopAppMenu(shopAppMenu);
 
+
         getSwipeBackLayout().setEnableGesture(false);
         setVpContentChangeListener();
-        initFragmentList();
+        ShowLoadingDialog();
+//        initFragmentList();
 
     }
 
@@ -197,6 +200,10 @@ public class AliterHomeActivity extends BaseActivity<HomeActivityPresenterImpl> 
                 if (SelfFragmentAlite.install != null)
                     SelfFragmentAlite.install.setImgUserHead();
             }
+            if (resultCode == 1001) {
+                if (MyStoreFragmentAlite.install != null)
+                    MyStoreFragmentAlite.install.setImgUserHead();
+            }
         }
     }
 
@@ -206,6 +213,9 @@ public class AliterHomeActivity extends BaseActivity<HomeActivityPresenterImpl> 
         String tmp;
         String code;
         ///   先简单处理 下次优化算法
+
+       int packType=shopAppMenuBean.getPackType();
+
 
         for (int i = 0; i < shopAppMenuBean.getMenuData().size(); i++) {
             tmp = shopAppMenuBean.getMenuData().get(i).getMenuName();
@@ -336,12 +346,24 @@ public class AliterHomeActivity extends BaseActivity<HomeActivityPresenterImpl> 
                 continue;
             }
 
+            if (tmp.equals("客多多")) {
+                if (code.equals("kdd001")) {
+                    PreferUtil.getInstance().setKdd001(true);
+                } else {
+                    PreferUtil.getInstance().setKdd001(false);
+                }
+                continue;
+            }
+
         }
+        DismissLoadingDialog();
         initFragmentList();
     }
 
+
     @Override
     public void onFailView(String errorMsg) {
+        DismissLoadingDialog();
         initFragmentList();
 
     }

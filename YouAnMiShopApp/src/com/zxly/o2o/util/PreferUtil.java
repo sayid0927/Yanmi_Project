@@ -52,6 +52,9 @@ public final class PreferUtil {
     private static final String SHOP_DDGL_001 = "shop_DDGL_001";
     private static final String SHOP_ZQGL_001 = "shop_zqgl_001";
     private static final String SHOP_DYBD_001 = "shop_dybd_001";
+    private static final String SHOP_KDD_001 = "shop_kdd_001";
+
+
     private static final String NOTIFY_ALL = "notification_all";
     private static final String NOTIFY_LOGOUT = "notification_logout";
     private static final String NOTIFY_SLEEP = "notification_sleep";
@@ -67,7 +70,7 @@ public final class PreferUtil {
     private static final String SHOP_INFO_CITYID = "shop_info_cityid";
     public static final String SHOP_INFO_DETAILEDADDRESS = "shop_info_detailedaddress";
     private static final String SHOP_INFO_HEADURL = "shop_info_headurl";
-    private static final String SHOP_INFO_ICONURL = "shop_info_iconurl";
+    public static final String SHOP_INFO_ICONURL = "shop_info_iconurl";
     private static final String SHOP_INFO_IMAGEURLS = "shop_info_imageurls";
     private static final String SHOP_INFO_LABELNAMES = "shop_info_labelnames";
     private static final String SHOP_INFO_NAME = "shop_info_name";
@@ -363,6 +366,14 @@ public final class PreferUtil {
         putBoolean(SHOP_DDGL_001, flag);
     }
 
+    /**获取客多多是否显示 */
+    public boolean getKdd001() {
+        return getBoolean(SHOP_KDD_001, false);
+    }
+    /**设置客多多是否显示 */
+    public void setKdd001(boolean flag) {
+        putBoolean(SHOP_KDD_001, flag);
+    }
 
 
     public  void  CleanShopAppMenu(){

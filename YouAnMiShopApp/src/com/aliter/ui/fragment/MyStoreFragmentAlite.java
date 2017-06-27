@@ -18,6 +18,10 @@ import com.aliter.injector.component.module.fragment.MyStroreAdapterModule;
 import com.aliter.presenter.MyStorePresenter;
 import com.aliter.presenter.impl.ShopInfoPresenterImpl;
 import com.aliter.ui.activity.myStore.AliteSettingMyShopInfoActivity;
+import com.aliter.ui.activity.myStore.AllCustomerActivity;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DecodeFormat;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.easemob.easeui.EaseConstant;
 import com.zxly.o2o.account.Account;
@@ -42,6 +46,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 public class MyStoreFragmentAlite extends BaseFragment<ShopInfoPresenterImpl> implements MyStorePresenter.View {
 
@@ -72,12 +77,14 @@ public class MyStoreFragmentAlite extends BaseFragment<ShopInfoPresenterImpl> im
     RecyclerView recyclerView;
     @Inject
     protected BaseQuickAdapter mAdapter;
+    @BindView(R.id.txt_shop_name)
+    TextView txtShopName;
     private ShopInfoBase shopInfoBase;
+    public static MyStoreFragmentAlite install;
 
 
     @Override
     protected void loadData() {
-
         mPresenter.ShopInfo();
         setState(AppController.STATE_SUCCESS);
     }
@@ -89,44 +96,41 @@ public class MyStoreFragmentAlite extends BaseFragment<ShopInfoPresenterImpl> im
 
     @Override
     protected void initView() {
+        install = this;
 
-        shopInfoBase = PreferUtil.getInstance().getShopInfo();
-        if (StringUtil.isNull(shopInfoBase.getName()))
-            txtUserName.setText("未设置门店名");
-        else
-            txtUserName.setText(shopInfoBase.getName());
+
         final List<MySroreAuthority> list = new ArrayList<>();
         if (PreferUtil.getInstance().getSyb001()) {
             MySroreAuthority mySroreAuthority = new MySroreAuthority();
-            mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.al_icon_screensaver));
+            mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.suipinbao));
             mySroreAuthority.setTitle("碎柚宝");
             mySroreAuthority.setType(1);
             list.add(mySroreAuthority);
         }
         if (PreferUtil.getInstance().getLlczb001()) {
             MySroreAuthority mySroreAuthority = new MySroreAuthority();
-            mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.al_icon_recharge));
+            mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.liuliang));
             mySroreAuthority.setTitle("流量充值");
             mySroreAuthority.setType(2);
             list.add(mySroreAuthority);
         }
         if (PreferUtil.getInstance().getZyj001()) {
             MySroreAuthority mySroreAuthority = new MySroreAuthority();
-            mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.al_icon_recharge));
+            mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.yongjin));
             mySroreAuthority.setTitle("赚佣金");
             mySroreAuthority.setType(3);
             list.add(mySroreAuthority);
         }
         if (PreferUtil.getInstance().getDybd001()) {
             MySroreAuthority mySroreAuthority = new MySroreAuthority();
-            mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.al_icon_list));
+            mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.bangdan));
             mySroreAuthority.setTitle("店员榜单");
             mySroreAuthority.setType(4);
             list.add(mySroreAuthority);
         }
         if (PreferUtil.getInstance().getShqd001()) {
             MySroreAuthority mySroreAuthority = new MySroreAuthority();
-            mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.al_icon_order));
+            mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.qingdan));
             mySroreAuthority.setTitle("送货清单");
             mySroreAuthority.setType(5);
             list.add(mySroreAuthority);
@@ -134,29 +138,37 @@ public class MyStoreFragmentAlite extends BaseFragment<ShopInfoPresenterImpl> im
 
         if (PreferUtil.getInstance().getYhlq001()) {
             MySroreAuthority mySroreAuthority = new MySroreAuthority();
-            mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.al_icon_commission));
+            mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.youhui));
             mySroreAuthority.setTitle("优惠领取");
             mySroreAuthority.setType(6);
             list.add(mySroreAuthority);
         }
         if (PreferUtil.getInstance().getYhtj001()) {
             MySroreAuthority mySroreAuthority = new MySroreAuthority();
-            mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.al_icon_commission));
+            mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.tongji));
             mySroreAuthority.setTitle("优惠统计");
             mySroreAuthority.setType(7);
             list.add(mySroreAuthority);
         }
         if (PreferUtil.getInstance().getDdgl001()) {
             MySroreAuthority mySroreAuthority = new MySroreAuthority();
-            mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.al_icon_order));
+            mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.dingdan));
             mySroreAuthority.setTitle("订单管理");
             mySroreAuthority.setType(8);
             list.add(mySroreAuthority);
         }
 
+        if (PreferUtil.getInstance().getKdd001()) {
+            MySroreAuthority mySroreAuthority = new MySroreAuthority();
+            mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.kehu));
+            mySroreAuthority.setTitle("客多多");
+            mySroreAuthority.setType(9);
+            list.add(mySroreAuthority);
+        }
+
         if (list.size() == 0) {
             MySroreAuthority mySroreAuthority = new MySroreAuthority();
-            mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.al_icon_recharge));
+            mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.liuliang));
             mySroreAuthority.setTitle("流量充值");
             mySroreAuthority.setType(2);
             list.add(mySroreAuthority);
@@ -186,7 +198,6 @@ public class MyStoreFragmentAlite extends BaseFragment<ShopInfoPresenterImpl> im
                         MyOrderAct.startMyorderAct(getActivity(), MyOrderAct.ORDER_REQUEST_ALL);
                         break;
                     case 6:
-
                         if (Account.user.getRoleType() == Constants.USER_TYPE_ADMIN) {
                             GetFavorableStatisticsAct.start(getActivity());
                         } else {
@@ -201,6 +212,9 @@ public class MyStoreFragmentAlite extends BaseFragment<ShopInfoPresenterImpl> im
                         break;
                     case 8:
                         MyOrderAct.startMyorderAct(getActivity(), MyOrderAct.ORDER_REQUEST_ALL);
+                        break;
+                    case 9:
+                        ViewUtils.startActivity(new Intent(getActivity(), AllCustomerActivity.class), getActivity());
                         break;
 
                 }
@@ -253,8 +267,8 @@ public class MyStoreFragmentAlite extends BaseFragment<ShopInfoPresenterImpl> im
 
 
             case R.id.ll_setting_user_name:  //     设置门店名
-
-                ViewUtils.startActivity(new Intent(getActivity(), AliteSettingMyShopInfoActivity.class), getActivity());
+                AliteSettingMyShopInfoActivity.start(getActivity());
+//                ViewUtils.startActivity(new Intent(getActivity(), AliteSettingMyShopInfoActivity.class), getActivity());
 
                 break;
 
@@ -272,20 +286,25 @@ public class MyStoreFragmentAlite extends BaseFragment<ShopInfoPresenterImpl> im
     public void onShopInfoSuccessView(ShopInfoBase shopInfoBase) {
         //  获取门店信息返回
 
-
-
-
-        String iconUrl = shopInfoBase.getIconUrl();
-        if (StringUtil.isNull(iconUrl)) {
-            imgUserHead.setImageResource(R.drawable.default_head_small);
-        } else {
-            imgUserHead.setImageUrl(iconUrl, R.drawable.default_head_small);
-        }
-        String name = shopInfoBase.getName();
-        if (StringUtil.isNull(name)) {
+        if (StringUtil.isNull(shopInfoBase.getName()))
             txtUserName.setText("未设置门店名");
-        } else {
-            txtUserName.setText(name);
+        else
+            txtUserName.setText(shopInfoBase.getName());
+        if(StringUtil.isNull(shopInfoBase.getSlogan()))
+            txtShopName.setText(shopInfoBase.getSlogan());
+        else
+            txtShopName.setText("未设置标语");
+
+        if (StringUtil.isNull(shopInfoBase.getIconUrl()))
+            imgUserHead.setImageResource(R.drawable.default_head_small);
+        else {
+            // imgUserHead.setImageUrl(shopInfoBase.getIconUrl(), R.drawable.default_head_small);
+            Glide.with(getActivity()).load(shopInfoBase.getIconUrl()).asBitmap()
+                    .placeholder(R.drawable.default_head_small)
+                    .format(DecodeFormat.PREFER_ARGB_8888)
+                    .error(R.drawable.default_head_small)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(imgUserHead);
         }
 
         PreferUtil.getInstance().setShopInfo(shopInfoBase);
@@ -295,4 +314,19 @@ public class MyStoreFragmentAlite extends BaseFragment<ShopInfoPresenterImpl> im
     public void onFailView(String errorMsg) {
 
     }
+
+    public void setImgUserHead() {
+        String iconUrl = PreferUtil.getInstance().getShopInfo().getIconUrl();
+        if (StringUtil.isNull(iconUrl)) {
+            imgUserHead.setImageResource(R.drawable.default_head_small);
+        } else {
+            Glide.with(getActivity()).load(iconUrl).asBitmap()
+                    .placeholder(R.drawable.default_head_small)
+                    .format(DecodeFormat.PREFER_ARGB_8888)
+                    .error(R.drawable.default_head_small)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(imgUserHead);
+        }
+    }
+
 }

@@ -3,6 +3,7 @@ package com.aliter.http.utils;
 
 import com.aliter.entity.ShopAppMenu;
 import com.aliter.entity.ShopAppMenuBean;
+import com.aliter.entity.Statistics;
 import com.aliter.http.BaseResponse;
 import com.aliter.http.HttpUtils;
 import com.aliter.http.service.HomeActivityService;
@@ -21,5 +22,9 @@ public class RetrofitHomeActivityHttpUtils extends HttpUtils {
     public Observable<BaseResponse<ShopAppMenuBean>> fetch(ShopAppMenu shopAppMenu) {
        return homeActivityService.shopAppMenu(shopAppMenu);
     }
+
+
+
+
 
 }

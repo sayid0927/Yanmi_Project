@@ -2,9 +2,6 @@ package com.aliter.base;
 
 import com.zxly.o2o.application.AppController;
 
-/**
- * Created by sayid on 2017/5/30.
- */
 
 public class App extends AppController {
 

@@ -61,7 +61,7 @@
                     android:id="@+id/tv_article_forwarded_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="999"
+                    android:text=""
                     android:textColor="@android:color/white"
                     android:textSize="24dp" />
 
@@ -95,14 +95,14 @@
                     android:id="@+id/tv_article_browse_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="999"
+                    android:text=""
                     android:textColor="@android:color/white"
                     android:textSize="24dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="文章转发数"
+                    android:text="文章浏览数"
                     android:textColor="@android:color/white"
                     android:textSize="12dp" />
 
@@ -128,14 +128,14 @@
                     android:id="@+id/tv_shop_forwarded_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="999"
+                    android:text=""
                     android:textColor="@android:color/white"
                     android:textSize="24dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="文章转发数"
+                    android:text="网店浏览量"
                     android:textColor="@android:color/white"
                     android:textSize="12dp" />
 

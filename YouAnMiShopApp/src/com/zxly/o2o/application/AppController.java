@@ -106,7 +106,7 @@ public class AppController extends Application {
     public  static  final  String shop_info="shop/info";                        //获取商户门店信息
     public  static  final  String common_image_upload="common/image/upload";                        //图片上传1.0
     public  static  final  String shop_update="shop/update";                        //修改门店信息1.0
-
+    public  static  final  String aitrle_homepage_statistics="aitrle/homePage/statistics";         //文章首页统计接口
 
 
 

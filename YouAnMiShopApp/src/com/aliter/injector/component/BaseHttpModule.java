@@ -19,14 +19,7 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
  */
 @Module
 public class BaseHttpModule {
-    /**
-     * 提供http的帮助类 以下部分现在都放在子类。
-     * 更换链接的请求，需要添加如AppModule的provideRetrofitZhiHuUtils()方法 命名规则provideRetrofitXXXUtils()
-     * HttpModule的provideZhiHuRetrofit()和provideZhihuService() 命名规则provideXXXService
-     * 还有以下方法 命名规则retrofitXXXUtils  命名规则怎么开心怎么来。
-     *
-     * @return
-     */
+
     @Singleton
     @Provides
     Retrofit.Builder provideRetrofitBuilder() {

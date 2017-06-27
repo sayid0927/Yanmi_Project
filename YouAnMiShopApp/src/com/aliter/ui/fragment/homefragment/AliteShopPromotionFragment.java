@@ -12,6 +12,12 @@ import android.widget.TextView;
 
 import com.aliter.base.BaseFragment;
 import com.aliter.base.BaseFragmentPageAdapter;
+import com.aliter.entity.Statistics;
+import com.aliter.entity.StatisticsBase;
+import com.aliter.injector.component.ShopPromotionModule;
+import com.aliter.injector.component.fragment.DaggerShopPromotionComponent;
+import com.aliter.presenter.ShopPromotionPresenter;
+import com.aliter.presenter.impl.ShopPromotionPresenterImpl;
 import com.flyco.tablayout.SegmentTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.zxly.o2o.application.AppController;
@@ -28,7 +34,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 
 
-public class AliteShopPromotionFragment extends BaseFragment {
+public class AliteShopPromotionFragment extends BaseFragment<ShopPromotionPresenterImpl> implements ShopPromotionPresenter.View {
 
     @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
@@ -46,10 +52,34 @@ public class AliteShopPromotionFragment extends BaseFragment {
     CoordinatorLayout coordinator;
     @BindView(R.id.segment_tab_layout)
     SegmentTabLayout segmentTabLayout;
+    @BindView(R.id.tv_article_forwarded_number)
+    TextView tvArticleForwardedNumber;
+    @BindView(R.id.tv_article_browse_number)
+    TextView tvArticleBrowseNumber;
+    @BindView(R.id.tv_shop_forwarded_number)
+    TextView tvShopForwardedNumber;
 
-    private AppBarLayout.Behavior behavior;
 
     private String[] mTitles = {"今天", "昨天", "近7天", "近30天"};
+
+    @Override
+    public void onAitrleHomepageStatisticsSuccessView(StatisticsBase statisticsBase) {
+        int airtleBrowseCount = statisticsBase.getAirtleBrowseCount();
+        int airtleShareCount = statisticsBase.getAirtleShareCount();
+        int shopBrowseCount = statisticsBase.getShopBrowseCount();
+        tvShopForwardedNumber.setText(String.valueOf(shopBrowseCount));
+        tvArticleBrowseNumber.setText(String.valueOf(airtleBrowseCount));
+        tvArticleForwardedNumber.setText(String.valueOf(airtleShareCount));
+
+    }
+
+    @Override
+    public void onFailView(String errorMsg) {
+
+    }
+
+
+
 
 
     private enum CollapsingToolbarLayoutState {
@@ -63,6 +93,7 @@ public class AliteShopPromotionFragment extends BaseFragment {
     private ArrayList<String> mTitleList = new ArrayList<>();
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private BaseFragmentPageAdapter myAdapter;
+    private Statistics statistics;
 
     @Override
     protected void loadData() {
@@ -76,6 +107,13 @@ public class AliteShopPromotionFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+
+
+        statistics = new Statistics();
+        statistics.setDays(0);
+        mPresenter.AitrleHomepageStatistics(statistics);
+
+
         initFragmentList();
         myAdapter = new BaseFragmentPageAdapter(getChildFragmentManager(), mFragments, mTitleList);
         vp.setAdapter(myAdapter);
@@ -91,6 +129,28 @@ public class AliteShopPromotionFragment extends BaseFragment {
             @Override
             public void onTabSelect(int position) {
 
+                switch (position) {
+                    case 0:
+                        statistics = new Statistics();
+                        statistics.setDays(0);
+                        mPresenter.AitrleHomepageStatistics(statistics);
+                        break;
+                    case 1:
+                        statistics = new Statistics();
+                        statistics.setDays(-1);
+                        mPresenter.AitrleHomepageStatistics(statistics);
+                        break;
+                    case 2:
+                        statistics = new Statistics();
+                        statistics.setDays(-7);
+                        mPresenter.AitrleHomepageStatistics(statistics);
+                        break;
+                    case 3:
+                        statistics = new Statistics();
+                        statistics.setDays(-30);
+                        mPresenter.AitrleHomepageStatistics(statistics);
+                        break;
+                }
             }
 
             @Override
@@ -102,6 +162,7 @@ public class AliteShopPromotionFragment extends BaseFragment {
 
     @Override
     protected void initInject() {
+        DaggerShopPromotionComponent.builder().shopPromotionModule(new ShopPromotionModule()).build().injectData(this);
     }
 
     private void initFragmentList() {
@@ -139,7 +200,7 @@ public class AliteShopPromotionFragment extends BaseFragment {
         if (PreferUtil.getInstance().getHd001()) {
             mFragments.add(PromotionAcitcityFragment.newInstance());
         }
-        if(mFragments.size()==0||mTitleList.size()==0){
+        if (mFragments.size() == 0 || mTitleList.size() == 0) {
             mTitleList.add("店铺文章");
             StoreArticleFragement storeArticleFragement = StoreArticleFragement.newInstance(1);
             mFragments.add(storeArticleFragement);

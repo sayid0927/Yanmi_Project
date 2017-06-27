@@ -16,7 +16,7 @@ import rx.Observable;
 
 public class BasePresenter<T extends BaseView> {
 
-    protected T mView;//指的是界面，也就是BaseFragment或者BaseActivity
+    protected T mView;
 
     private Callback callback;
 
@@ -29,12 +29,7 @@ public class BasePresenter<T extends BaseView> {
         HttpUtils.invoke((LifeSubscription) mView, observable, callback);
     }
 
-    /**
-     * 给子类检查返回集合是否为空
-     * 这样子做虽然耦合度高，
-     *
-     * @param list
-     */
+
     public void checkState(List list) {
         if (list.size() == 0) {
             if (mView instanceof Stateful)
