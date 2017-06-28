@@ -82,8 +82,9 @@ public final class PreferUtil {
     public static final String SHOP_INFO_CITYNAME = "shop_info_cityname";
     public static final String SHOP_INFO_PROVINCENAME = "shop_info_provincename";
     public static final String SHOP_INFO_AREANAME = "shop_info_areaname";
+    public static final String SHOP_INFO_H5URL = "shop_info_h5url";
 
-
+    public static final String SHOP_PACK_TYPE = "shop_pack_type";
 
 
 
@@ -376,6 +377,18 @@ public final class PreferUtil {
     }
 
 
+
+
+    /**获取套餐类型 */
+    public int getPackType() {
+        return getInt(SHOP_PACK_TYPE, 1);
+    }
+    /**设置套餐类型 */
+    public void setShopPackType(int flag) {
+        putInt(SHOP_PACK_TYPE, flag);
+    }
+
+
     public  void  CleanShopAppMenu(){
         putBoolean(SHOP_DPWZ_001, false);
         putBoolean(SHOP_BDRW_001, false);
@@ -433,6 +446,8 @@ public final class PreferUtil {
         putString(SHOP_INFO_CITYNAME,shopInfoBase.getCityName());
         putString(SHOP_INFO_AREANAME,shopInfoBase.getAreaName());
         putString(SHOP_INFO_PROVINCENAME,shopInfoBase.getProvinceName());
+
+        putString(SHOP_INFO_H5URL,shopInfoBase.getH5url());
     }
 
 
@@ -454,6 +469,7 @@ public final class PreferUtil {
         shopInfoBase.setCityName(getString(SHOP_INFO_CITYNAME,""));
         shopInfoBase.setAreaName(getString(SHOP_INFO_AREANAME,""));
         shopInfoBase.setProvinceName(getString(SHOP_INFO_PROVINCENAME,""));
+        shopInfoBase.setH5url(getString(SHOP_INFO_H5URL,""));
         return  shopInfoBase;
     }
     //保存微信个人信息

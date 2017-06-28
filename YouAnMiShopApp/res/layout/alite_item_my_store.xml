@@ -2,30 +2,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
     android:background="@drawable/ripple_one_item_bg"
     android:orientation="vertical">
 
     <RelativeLayout
+
         android:id="@+id/layout_my_order"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp">
+        android:layout_gravity="center"
+        android:gravity="center">
 
         <ImageView
             android:id="@+id/icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
             android:src="@drawable/suipinbao" />
 
         <TextView
-            android:layout_marginTop="3dp"
             android:id="@+id/tv_my_order"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/icon"
-            android:gravity="center"
+            android:layout_marginTop="25dp"
             android:text="我的订单"
             android:textColor="@color/gray_333333"
             android:textSize="13sp" />
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/tv_my_order"
-            android:layout_marginTop="-26dp"
+            android:layout_marginTop="-46dp"
             android:layout_toRightOf="@+id/tv_my_order"
             android:background="@drawable/circle"
             android:gravity="center"
@@ -45,7 +45,6 @@
             android:paddingRight="4.5dp"
             android:text=""
             android:visibility="gone" />
-
 
     </RelativeLayout>
 

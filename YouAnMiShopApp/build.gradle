@@ -17,9 +17,7 @@ bugtags {
 dependencies {
     compile fileTree(include: '*.jar', dir: 'libs')
     compile project(':ChatProject')
-//    compile project(':imageviewseleck')
-    //    compile project(':PhotoPicker')
-//    compile 'com.android.support:multidex:1.0.1'
+    compile 'com.android.support:multidex:1.0.1'
     compile 'com.bugtags.library:bugtags-lib:latest.integration'
     compile 'com.umeng.analytics:analytics:latest.integration'
     provided 'com.tencent.tinker:tinker-android-anno:1.7.7'
@@ -28,6 +26,7 @@ dependencies {
     compile 'com.bugtags.library:bugtags-lib:2.2.3'
     compile 'org.greenrobot:greendao:3.1.1'
 
+    compile 'com.android.support:support-v4:22.+'
     compile 'com.android.support:cardview-v7:22.+'
     compile 'com.android.support:appcompat-v7:22.+'
     compile 'com.android.support:design:22.+'
@@ -50,8 +49,6 @@ dependencies {
     compile 'com.orhanobut:logger:1.15'
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
     compile 'jp.wasabeef:glide-transformations:2.0.1'
-
-    compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.0.2@aar'  
 
 }
 

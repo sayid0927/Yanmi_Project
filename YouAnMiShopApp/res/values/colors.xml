@@ -89,6 +89,9 @@
     <color name="yellow_ffa200">#ffa200</color>
     <color name="yellow_ffea59">#ffea59</color>
 
+    <color name="tabTextColor">#fbc99f</color>
+    <color name="textSelectColor">#ff7800</color>
+    <color name="bar_color">#1a000000</color>
 
 
     <color name="tint_grey">#F8F8F8</color>

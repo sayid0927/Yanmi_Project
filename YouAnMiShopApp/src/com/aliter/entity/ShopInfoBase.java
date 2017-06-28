@@ -43,6 +43,17 @@ public class ShopInfoBase {
     private  String areaName;
     private  String provinceName;
 
+   private String h5url;
+
+
+    public String getH5url() {
+        return h5url;
+    }
+
+    public void setH5url(String h5url) {
+        this.h5url = h5url;
+    }
+
     public String getCityName() {
         return cityName;
     }

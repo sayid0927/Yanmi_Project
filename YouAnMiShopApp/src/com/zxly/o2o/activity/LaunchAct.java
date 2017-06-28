@@ -15,6 +15,7 @@ import com.zxly.o2o.account.Account;
 import com.zxly.o2o.application.AppController;
 import com.zxly.o2o.request.AdQueryRequest;
 import com.zxly.o2o.request.BaseRequest;
+import com.zxly.o2o.request.GeShopAppMenuRequest;
 import com.zxly.o2o.request.VersionCheckRequest;
 import com.zxly.o2o.shop.R;
 import com.zxly.o2o.util.ParameCallBack;
@@ -28,11 +29,12 @@ import com.zxly.o2o.util.ViewUtils;
  */
 public class LaunchAct extends BasicAct {
     private Bundle extra_bundle;
-    private TextView txtUpdatePercent,btnSkip;
-    private View llAdView,llLaunchView;
+    private TextView txtUpdatePercent, btnSkip;
+    private View llAdView, llLaunchView;
     private ImageView imgAd;
-    private  int exhibitionTime;//倒计时
+    private int exhibitionTime;//倒计时
     private String linkUrl;//广告连接地址;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,10 +43,10 @@ public class LaunchAct extends BasicAct {
 //        PushManager.getInstance().initialize(LaunchAct.this.getApplicationContext());
         txtUpdatePercent = (TextView) findViewById(R.id.txt_update_percent);
         extra_bundle = getIntent().getBundleExtra("extra_bundle");
-        llAdView=findViewById(R.id.ll_ad);
-        llLaunchView=findViewById(R.id.ll_launch);
-        btnSkip= (TextView) llAdView.findViewById(R.id.btn_skip);
-        imgAd= (ImageView) llAdView.findViewById(R.id.img_ad);
+        llAdView = findViewById(R.id.ll_ad);
+        llLaunchView = findViewById(R.id.ll_launch);
+        btnSkip = (TextView) llAdView.findViewById(R.id.btn_skip);
+        imgAd = (ImageView) llAdView.findViewById(R.id.img_ad);
         Account.user = Account.readLoginUser(this);
 
 //        MobclickAgent.updateOnlineConfig(this);
@@ -67,53 +69,47 @@ public class LaunchAct extends BasicAct {
         });
         versionCheckRequest.setOnResponseStateListener(new BaseRequest.ResponseStateListener() {
 
-                    @Override
-                    public void onOK() {
+            @Override
+            public void onOK() {
 
 //                        toLoginOrHome();
-                        if(versionCheckRequest.isInstallApp)
-                        {
-                            finish();
-                        }else
-                        {
-                            initAdInfo();
-                        }
+                if (versionCheckRequest.isInstallApp) {
+                    finish();
+                } else {
+                    initAdInfo();
+                }
 
 
-                    }
+            }
 
-                    @Override
-                    public void onFail(int code) {
+            @Override
+            public void onFail(int code) {
 
 //                        toLoginOrHome();
 
-                        initAdInfo();
+                initAdInfo();
 
-                    }
-                });
+            }
+        });
         versionCheckRequest.start(this);
 //        AppController.getInstance().initHXAccount(Account.user,false);
 //        Intent intent = new Intent(LaunchAct.this, MainActivity.class);
 //        startActivity(intent);
     }
-    private void initAdInfo()
-    {
-        if(!PreferUtil.getInstance().getIsFirstOpen())
-        {
-            final AdQueryRequest adQueryRequest=new AdQueryRequest();
+
+    private void initAdInfo() {
+        if (!PreferUtil.getInstance().getIsFirstOpen()) {
+            final AdQueryRequest adQueryRequest = new AdQueryRequest();
             adQueryRequest.setOnResponseStateListener(new BaseRequest.ResponseStateListener() {
                 @Override
                 public void onOK() {
 
-                    if(TextUtils.isEmpty(adQueryRequest.getImage()))
-                    {
+                    if (TextUtils.isEmpty(adQueryRequest.getImage())) {
                         toLoginOrHome();
-                    }else
-                    {
-                        if(adQueryRequest.getBitmap()!=null)
-                        {
+                    } else {
+                        if (adQueryRequest.getBitmap() != null) {
                             imgAd.setImageBitmap(adQueryRequest.getBitmap());
-                            AlphaAnimation alphaInAnOut= new AlphaAnimation(1.0f,0.0f);
+                            AlphaAnimation alphaInAnOut = new AlphaAnimation(1.0f, 0.0f);
                             alphaInAnOut.setDuration(900);
                             alphaInAnOut.setAnimationListener(new Animation.AnimationListener() {
 
@@ -135,16 +131,15 @@ public class LaunchAct extends BasicAct {
                             });
 
                             llLaunchView.startAnimation(alphaInAnOut);
-                            exhibitionTime=adQueryRequest.getExhibitionTime();
-                            linkUrl=adQueryRequest.getLinkUrl();
+                            exhibitionTime = adQueryRequest.getExhibitionTime();
+                            linkUrl = adQueryRequest.getLinkUrl();
                             skipCountDown();
                             llAdView.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    if(!StringUtil.isNull(linkUrl))
-                                    {
-                                        exhibitionTime=-1;
-                                        H5CommonAct.start(LaunchAct.this,linkUrl,"柚安米",1);
+                                    if (!StringUtil.isNull(linkUrl)) {
+                                        exhibitionTime = -1;
+                                        H5CommonAct.start(LaunchAct.this, linkUrl, "柚安米", 1);
 
                                     }
 
@@ -154,13 +149,12 @@ public class LaunchAct extends BasicAct {
                             btnSkip.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    exhibitionTime=-1;
+                                    exhibitionTime = -1;
                                     toLoginOrHome();
                                 }
                             });
 
-                        }else
-                        {
+                        } else {
                             toLoginOrHome();
                         }
 
@@ -173,8 +167,7 @@ public class LaunchAct extends BasicAct {
                 }
             });
             adQueryRequest.start();
-        }else
-        {
+        } else {
             toLoginOrHome();
         }
 
@@ -186,39 +179,37 @@ public class LaunchAct extends BasicAct {
 //        finish();
     }
 
-    private void skipCountDown()
-    {
-        if(exhibitionTime>0)
-        {
+    private void skipCountDown() {
+        if (exhibitionTime > 0) {
             btnSkip.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     exhibitionTime--;
                     skipCountDown();
                 }
-            },1000);
-            ViewUtils.setText(btnSkip,"跳过"+exhibitionTime);
-        }else if(exhibitionTime==0)//倒计时为零的时候自动跳转
+            }, 1000);
+            ViewUtils.setText(btnSkip, "跳过" + exhibitionTime);
+        } else if (exhibitionTime == 0)//倒计时为零的时候自动跳转
         {
             toLoginOrHome();
-        //    Toast.makeText(this,"。。。。",Toast.LENGTH_SHORT);
+            //    Toast.makeText(this,"。。。。",Toast.LENGTH_SHORT);
         }
 
     }
+
     private void toLoginOrHome() {
 
-        if(PreferUtil.getInstance().getIsFirstOpenApp()){
+        if (PreferUtil.getInstance().getIsFirstOpenApp()) {
             Intent intent = new Intent(LaunchAct.this, ShopGuideAct.class);
             ViewUtils.startActivity(intent, LaunchAct.this);
             finish();
-        }else {
+        } else {
             if (Account.user != null) {
-                AppController.getInstance().initHXAccount(Account.user,false);
+                AppController.getInstance().initHXAccount(Account.user, false);
 //                Intent intent = new Intent(LaunchAct.this, MainActivity.class);
 //                intent.putExtra("extra_bundle",extra_bundle);
-                Intent intent = new Intent(LaunchAct.this, AliterHomeActivity.class);
-                ViewUtils.startActivity(intent, this);
-                finish();
+                 getShopAppMenu();
+//
             } else {
 //                LoginAct.start(LaunchAct.this);
                 Intent intent = new Intent(LaunchAct.this, AliteLaunchActivity.class);
@@ -227,12 +218,29 @@ public class LaunchAct extends BasicAct {
             }
         }
         // 事件埋点
-        UmengUtil.onEvent(LaunchAct.this, "overall_open",null);
+        UmengUtil.onEvent(LaunchAct.this, "overall_open", null);
     }
 
     @Override
     public void onBackPressed() {
-        exhibitionTime=-1;
+        exhibitionTime = -1;
         finish();
+    }
+
+
+    private void getShopAppMenu() {
+        final GeShopAppMenuRequest geShopAppMenuRequest = new GeShopAppMenuRequest();
+        geShopAppMenuRequest.setOnResponseStateListener(new BaseRequest.ResponseStateListener() {
+            @Override
+            public void onOK() {
+                Intent intent = new Intent(LaunchAct.this, AliterHomeActivity.class);
+                ViewUtils.startActivity(intent, LaunchAct.this);
+                finish();
+            }
+            @Override
+            public void onFail(int code) {
+            }
+        });
+        geShopAppMenuRequest.start();
     }
 }

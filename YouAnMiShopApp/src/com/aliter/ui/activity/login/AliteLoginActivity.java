@@ -24,6 +24,8 @@ import com.easemob.easeui.model.IMUserInfoVO;
 import com.orhanobut.logger.Logger;
 import com.zxly.o2o.account.Account;
 import com.zxly.o2o.application.Config;
+import com.zxly.o2o.request.BaseRequest;
+import com.zxly.o2o.request.GeShopAppMenuRequest;
 import com.zxly.o2o.request.GetuiBindRequest;
 import com.zxly.o2o.shop.R;
 import com.zxly.o2o.util.Constants;
@@ -105,8 +107,8 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
         String tt=Config.getuiClientId;
         Logger.t("TAG").e(tt);
         new GetuiBindRequest(Config.getuiClientId).start();
-        DismissLoadingDialog();
-        ViewUtils.startActivity(new Intent(AliteLoginActivity.this, AliterHomeActivity.class), this);
+        getShopAppMenu();
+
     }
 
     @Override
@@ -381,5 +383,22 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
                 }
             }
         }
+    }
+
+
+
+    private void getShopAppMenu() {
+        final GeShopAppMenuRequest geShopAppMenuRequest = new GeShopAppMenuRequest();
+        geShopAppMenuRequest.setOnResponseStateListener(new BaseRequest.ResponseStateListener() {
+            @Override
+            public void onOK() {
+                DismissLoadingDialog();
+                ViewUtils.startActivity(new Intent(AliteLoginActivity.this, AliterHomeActivity.class), AliteLoginActivity.this);
+            }
+            @Override
+            public void onFail(int code) {
+            }
+        });
+        geShopAppMenuRequest.start();
     }
 }

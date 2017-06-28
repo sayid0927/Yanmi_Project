@@ -27,6 +27,7 @@ import com.easemob.easeui.EaseConstant;
 import com.zxly.o2o.account.Account;
 import com.zxly.o2o.activity.FragmentListAct;
 import com.zxly.o2o.activity.GetFavorableStatisticsAct;
+import com.zxly.o2o.activity.H5DetailAct;
 import com.zxly.o2o.activity.MobileDataAct;
 import com.zxly.o2o.activity.MyOrderAct;
 import com.zxly.o2o.activity.SalesmanRankingAct;
@@ -46,7 +47,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 public class MyStoreFragmentAlite extends BaseFragment<ShopInfoPresenterImpl> implements MyStorePresenter.View {
 
@@ -274,7 +274,13 @@ public class MyStoreFragmentAlite extends BaseFragment<ShopInfoPresenterImpl> im
 
             case R.id.layout_my_shop:  //  我的网店
 
-                ViewUtils.startActivity(new Intent(getActivity(), AliteSettingMyShopInfoActivity.class), getActivity());
+                if(!StringUtil.isNull(PreferUtil.getInstance().getShopInfo().getH5url())){
+
+
+                    H5DetailAct.start(getActivity(), "网店预览", null);
+                }
+
+//                ViewUtils.startActivity(new Intent(getActivity(), AliteSettingMyShopInfoActivity.class), getActivity());
 
                 break;
 
@@ -290,10 +296,10 @@ public class MyStoreFragmentAlite extends BaseFragment<ShopInfoPresenterImpl> im
             txtUserName.setText("未设置门店名");
         else
             txtUserName.setText(shopInfoBase.getName());
-        if(StringUtil.isNull(shopInfoBase.getSlogan()))
-            txtShopName.setText(shopInfoBase.getSlogan());
-        else
+        if (StringUtil.isNull(shopInfoBase.getSlogan()))
             txtShopName.setText("未设置标语");
+        else
+            txtShopName.setText(shopInfoBase.getSlogan());
 
         if (StringUtil.isNull(shopInfoBase.getIconUrl()))
             imgUserHead.setImageResource(R.drawable.default_head_small);
@@ -306,7 +312,6 @@ public class MyStoreFragmentAlite extends BaseFragment<ShopInfoPresenterImpl> im
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(imgUserHead);
         }
-
         PreferUtil.getInstance().setShopInfo(shopInfoBase);
     }
 

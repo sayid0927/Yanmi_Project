@@ -530,5 +530,5 @@ public static java.lang.String TABLENAME;
   -dontwarn com.**
 
 
-
-
+  -keep class com.flyco.tablayout.** {*;}
+   -dontwarn com.flyco.tablayout.**

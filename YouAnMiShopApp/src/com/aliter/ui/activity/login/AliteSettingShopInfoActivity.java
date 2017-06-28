@@ -28,6 +28,8 @@ import com.easemob.easeui.model.IMUserInfoVO;
 import com.zxly.o2o.account.Account;
 import com.zxly.o2o.application.AppController;
 import com.zxly.o2o.application.Config;
+import com.zxly.o2o.request.BaseRequest;
+import com.zxly.o2o.request.GeShopAppMenuRequest;
 import com.zxly.o2o.shop.R;
 import com.zxly.o2o.util.DESUtils;
 import com.zxly.o2o.util.EncryptionUtils;
@@ -264,9 +266,8 @@ public class AliteSettingShopInfoActivity extends BaseActivity<AliteSettingShopI
         Account.saveLoginUser(this, usserInfo);
         Account.user = usserInfo;
         PreferUtil.getInstance().CleanWeixinUserInfo(weixinUserInfo);
-        DismissLoadingDialog();
-        ViewUtils.startActivity(new Intent(AliteSettingShopInfoActivity.this, AliterHomeActivity.class), this);
 
+         getShopAppMenu();
     }
 
     @Override
@@ -362,5 +363,22 @@ public class AliteSettingShopInfoActivity extends BaseActivity<AliteSettingShopI
                 }
             }
         });
+    }
+
+
+
+    private void getShopAppMenu() {
+        final GeShopAppMenuRequest geShopAppMenuRequest = new GeShopAppMenuRequest();
+        geShopAppMenuRequest.setOnResponseStateListener(new BaseRequest.ResponseStateListener() {
+            @Override
+            public void onOK() {
+                DismissLoadingDialog();
+                ViewUtils.startActivity(new Intent(AliteSettingShopInfoActivity.this, AliterHomeActivity.class), AliteSettingShopInfoActivity.this);
+            }
+            @Override
+            public void onFail(int code) {
+            }
+        });
+        geShopAppMenuRequest.start();
     }
 }
