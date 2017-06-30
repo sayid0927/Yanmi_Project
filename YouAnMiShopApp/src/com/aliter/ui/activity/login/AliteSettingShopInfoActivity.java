@@ -215,7 +215,7 @@ public class AliteSettingShopInfoActivity extends BaseActivity<AliteSettingShopI
                         shopRegister.setGeneralizeCode(GeneralizeCode);                      // 推广码
                         shopRegister.setShopName(editShopName.getText().toString());         // 门店名称
                         shopRegister.setUserName(PreferUtil.getInstance().getRegisterPhonenum()); //  用户帐号 注册的手机号
-                        shopRegister.setPassword(PreferUtil.getInstance().getRegisterPwd());       //  密码
+                        shopRegister.setPassword(EncryptionUtils.md5TransferPwd(PreferUtil.getInstance().getRegisterPwd()));       //  密码
                         shopRegister.setNickName(editShopTelephone.getText().toString());           // 昵称
                         if (provinceId != null)
                             shopRegister.setProvinceId(Integer.valueOf(provinceId));              //省份id

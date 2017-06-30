@@ -3,7 +3,7 @@
     xmlns:tl="http://schemas.android.com/apk/res-auto"
     android:id="@+id/collapsing_content"
     android:layout_width="match_parent"
-    android:layout_height="165dp"
+    android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -21,24 +21,27 @@
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
-            <com.flyco.tablayout.SegmentTabLayout
+
+            <com.flyco.tablayout.CommonTabLayout
                 android:id="@+id/segment_tab_layout"
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
-                android:layout_gravity="center_horizontal"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                tl:tl_indicator_anim_enable="true"
-                tl:tl_indicator_bounce_enable="false"
-                tl:tl_indicator_color="#fbc99f"
-                tl:tl_bar_color="#ff7800"
-                tl:tl_textSelectColor="#FF7800"
-                android:background="#F27302"
-                tl:tl_indicator_margin_bottom="2dp"
-                tl:tl_indicator_margin_left="2dp"
+                tl:tl_iconVisible="false"
+                tl:tl_indicator_color="#ffdfd1"
                 tl:tl_indicator_margin_right="2dp"
+                tl:tl_indicator_margin_left="2dp"
+
+                tl:tl_indicator_margin_bottom="2dp"
                 tl:tl_indicator_margin_top="2dp"
-                tl:tl_tab_space_equal="true"/>
+
+
+                android:background="#1a000000"
+                tl:tl_indicator_style="BLOCK"
+                tl:tl_textSelectColor="#ff7800"
+                tl:tl_textUnselectColor="#fbc99f"/>
+
+
+
 
         </LinearLayout>
 
@@ -176,7 +179,7 @@
             android:gravity="center"
             android:text="推广文章"
             android:textColor="@android:color/black"
-            android:textSize="18dp" />
+            android:textSize="16dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -185,7 +188,7 @@
             android:gravity="center"
             android:text="每日更新推广文章助你推广"
             android:textColor="#999999"
-            android:textSize="10dp" />
+            android:textSize="12dp" />
 
 
     </LinearLayout>

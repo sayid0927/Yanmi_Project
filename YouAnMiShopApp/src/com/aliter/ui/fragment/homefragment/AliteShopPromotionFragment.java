@@ -18,8 +18,10 @@ import com.aliter.injector.component.ShopPromotionModule;
 import com.aliter.injector.component.fragment.DaggerShopPromotionComponent;
 import com.aliter.presenter.ShopPromotionPresenter;
 import com.aliter.presenter.impl.ShopPromotionPresenterImpl;
-import com.flyco.tablayout.SegmentTabLayout;
+import com.flyco.tablayout.CommonTabLayout;
+import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
+import com.flyco.tablayout.utils.TabEntity;
 import com.zxly.o2o.application.AppController;
 import com.zxly.o2o.fragment.LocalArticleFragement;
 import com.zxly.o2o.fragment.PromotionAcitcityFragment;
@@ -51,7 +53,7 @@ public class AliteShopPromotionFragment extends BaseFragment<ShopPromotionPresen
     @BindView(R.id.coordinator)
     CoordinatorLayout coordinator;
     @BindView(R.id.segment_tab_layout)
-    SegmentTabLayout segmentTabLayout;
+    CommonTabLayout segmentTabLayout;
     @BindView(R.id.tv_article_forwarded_number)
     TextView tvArticleForwardedNumber;
     @BindView(R.id.tv_article_browse_number)
@@ -61,7 +63,7 @@ public class AliteShopPromotionFragment extends BaseFragment<ShopPromotionPresen
 
 
     private String[] mTitles = {"今天", "昨天", "近7天", "近30天"};
-
+    private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
     @Override
     public void onAitrleHomepageStatisticsSuccessView(StatisticsBase statisticsBase) {
         int airtleBrowseCount = statisticsBase.getAirtleBrowseCount();
@@ -77,9 +79,6 @@ public class AliteShopPromotionFragment extends BaseFragment<ShopPromotionPresen
     public void onFailView(String errorMsg) {
 
     }
-
-
-
 
 
     private enum CollapsingToolbarLayoutState {
@@ -124,11 +123,13 @@ public class AliteShopPromotionFragment extends BaseFragment<ShopPromotionPresen
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
 
-        segmentTabLayout.setTabData(mTitles);
+        for (int i = 0; i < mTitles.length; i++) {
+            mTabEntities.add(new TabEntity(mTitles[i], 0, 0));
+        }
+        segmentTabLayout.setTabData(mTabEntities);
         segmentTabLayout.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelect(int position) {
-
                 switch (position) {
                     case 0:
                         statistics = new Statistics();

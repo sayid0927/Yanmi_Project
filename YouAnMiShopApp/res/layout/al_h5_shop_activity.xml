@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    xmlns:ptr="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:id="@+id/rl_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/orange_ff5f19"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:drawableLeft="@drawable/icon_back"
+            android:paddingLeft="12dp"
+            android:paddingRight="25dp" />
+
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:maxLength="15"
+            android:text="网店管理"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/btn_title_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/btn_top_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:drawableLeft="@drawable/setting_selector"
+            android:padding="5dp"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+
+
+
+
+    <com.zxly.o2o.pullrefresh.PullToRefreshListView
+        android:id="@+id/listview"
+        android:layout_below="@+id/rl_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray_eeeeee"
+        android:cacheColorHint="#00000000"
+        android:divider="@color/transparent"
+        android:dividerHeight="0.5dp"
+        android:fadingEdge="none"
+        android:fastScrollEnabled="false"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
+        android:listSelector="#00000000"
+        android:scrollbars="none"
+        android:paddingBottom="2dp"
+        android:smoothScrollbar="true"
+        ptr:ptrAnimationStyle="flip" />
+
+
+
+    <com.zxly.o2o.view.LoadingView
+        android:id="@+id/view_loading11"
+        android:layout_width="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_height="match_parent" />
+
+</RelativeLayout>

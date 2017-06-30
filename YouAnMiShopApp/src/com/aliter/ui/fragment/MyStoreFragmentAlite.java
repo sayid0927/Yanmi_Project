@@ -17,6 +17,7 @@ import com.aliter.injector.component.fragment.DaggerMyStoreComponent;
 import com.aliter.injector.component.module.fragment.MyStroreAdapterModule;
 import com.aliter.presenter.MyStorePresenter;
 import com.aliter.presenter.impl.ShopInfoPresenterImpl;
+import com.aliter.ui.activity.H5Activity;
 import com.aliter.ui.activity.myStore.AliteSettingMyShopInfoActivity;
 import com.aliter.ui.activity.myStore.AllCustomerActivity;
 import com.bumptech.glide.Glide;
@@ -27,7 +28,7 @@ import com.easemob.easeui.EaseConstant;
 import com.zxly.o2o.account.Account;
 import com.zxly.o2o.activity.FragmentListAct;
 import com.zxly.o2o.activity.GetFavorableStatisticsAct;
-import com.zxly.o2o.activity.H5DetailAct;
+import com.zxly.o2o.activity.MakeCommissionAct;
 import com.zxly.o2o.activity.MobileDataAct;
 import com.zxly.o2o.activity.MyOrderAct;
 import com.zxly.o2o.activity.SalesmanRankingAct;
@@ -122,40 +123,58 @@ public class MyStoreFragmentAlite extends BaseFragment<ShopInfoPresenterImpl> im
             list.add(mySroreAuthority);
         }
         if (PreferUtil.getInstance().getDybd001()) {
-            MySroreAuthority mySroreAuthority = new MySroreAuthority();
-            mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.bangdan));
-            mySroreAuthority.setTitle("店员榜单");
-            mySroreAuthority.setType(4);
-            list.add(mySroreAuthority);
+            // 店员榜单: isBoss = 1 || roleType = 1 (老板或管理员)
+
+            if(Account.user.getIsBoss()==1||Account.user.getRoleType()==1) {
+                MySroreAuthority mySroreAuthority = new MySroreAuthority();
+                mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.bangdan));
+                mySroreAuthority.setTitle("店员榜单");
+                mySroreAuthority.setType(4);
+                list.add(mySroreAuthority);
+            }
         }
         if (PreferUtil.getInstance().getShqd001()) {
-            MySroreAuthority mySroreAuthority = new MySroreAuthority();
-            mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.qingdan));
-            mySroreAuthority.setTitle("送货清单");
-            mySroreAuthority.setType(5);
-            list.add(mySroreAuthority);
+            // 送货清单: isBoss = 1 || roleType = 1 (老板或管理员)
+            if (Account.user.getIsBoss() == 1 || Account.user.getRoleType() == 1) {
+                MySroreAuthority mySroreAuthority = new MySroreAuthority();
+                mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.qingdan));
+                mySroreAuthority.setTitle("送货清单");
+                mySroreAuthority.setType(5);
+                list.add(mySroreAuthority);
+            }
         }
 
         if (PreferUtil.getInstance().getYhlq001()) {
-            MySroreAuthority mySroreAuthority = new MySroreAuthority();
-            mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.youhui));
-            mySroreAuthority.setTitle("优惠领取");
-            mySroreAuthority.setType(6);
-            list.add(mySroreAuthority);
+            //优惠领取: isBoss!= 1 -->(非老板都可以领取)
+            if (Account.user.getIsBoss()!=1) {
+                MySroreAuthority mySroreAuthority = new MySroreAuthority();
+                mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.youhui));
+                mySroreAuthority.setTitle("优惠领取");
+                mySroreAuthority.setType(6);
+                list.add(mySroreAuthority);
+            }
         }
         if (PreferUtil.getInstance().getYhtj001()) {
-            MySroreAuthority mySroreAuthority = new MySroreAuthority();
-            mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.tongji));
-            mySroreAuthority.setTitle("优惠统计");
-            mySroreAuthority.setType(7);
-            list.add(mySroreAuthority);
+
+            if(Account.user.getIsBoss()==1) {
+                // 优惠统计: isBoss = 1 -->(只有老板才可看到统计)
+                MySroreAuthority mySroreAuthority = new MySroreAuthority();
+                mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.tongji));
+                mySroreAuthority.setTitle("优惠统计");
+                mySroreAuthority.setType(7);
+                list.add(mySroreAuthority);
+            }
         }
         if (PreferUtil.getInstance().getDdgl001()) {
-            MySroreAuthority mySroreAuthority = new MySroreAuthority();
-            mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.dingdan));
-            mySroreAuthority.setTitle("订单管理");
-            mySroreAuthority.setType(8);
-            list.add(mySroreAuthority);
+            //订单管理: isBoss = 1 || roleType = 1 (老板或管理员)
+            if (Account.user.getIsBoss()==1||Account.user.getRoleType()==1) {
+
+                MySroreAuthority mySroreAuthority = new MySroreAuthority();
+                mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.dingdan));
+                mySroreAuthority.setTitle("订单管理");
+                mySroreAuthority.setType(8);
+                list.add(mySroreAuthority);
+            }
         }
 
         if (PreferUtil.getInstance().getKdd001()) {
@@ -190,6 +209,7 @@ public class MyStoreFragmentAlite extends BaseFragment<ShopInfoPresenterImpl> im
                         MobileDataAct.start(getActivity());
                         break;
                     case 3:
+                        ViewUtils.startActivity(new Intent(getActivity(), MakeCommissionAct.class), getActivity());
                         break;
                     case 4:
                         SalesmanRankingAct.start(getActivity());
@@ -275,12 +295,12 @@ public class MyStoreFragmentAlite extends BaseFragment<ShopInfoPresenterImpl> im
             case R.id.layout_my_shop:  //  我的网店
 
                 if(!StringUtil.isNull(PreferUtil.getInstance().getShopInfo().getH5url())){
+//                    H5DetailAct.start(getActivity(), PreferUtil.getInstance().getShopInfo().getH5url(),"网店预览");
+                    H5Activity.start(getActivity(),PreferUtil.getInstance().getShopInfo().getH5url(),"网店预览");
+//                  String  loadUrl = "http://192.168.1.135//friendsWebApp/src/dist/index.html?shopId=1";
+//                    H5DetailAct.start(getActivity(),loadUrl,"网店预览");
 
-
-                    H5DetailAct.start(getActivity(), "网店预览", null);
                 }
-
-//                ViewUtils.startActivity(new Intent(getActivity(), AliteSettingMyShopInfoActivity.class), getActivity());
 
                 break;
 
@@ -333,5 +353,4 @@ public class MyStoreFragmentAlite extends BaseFragment<ShopInfoPresenterImpl> im
                     .into(imgUserHead);
         }
     }
-
 }

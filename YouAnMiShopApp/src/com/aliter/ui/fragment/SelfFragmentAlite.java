@@ -110,6 +110,13 @@ public class SelfFragmentAlite extends BaseFragment {
         setImgUserHead();
         install = this;
         MakeMoneyinit();
+
+//     我的任务指标:isBoss != 1 && roleType != 1 (普通店员)
+        if (Account.user.getIsBoss() != 1 || Account.user.getRoleType() != 1) {
+            rlTaskIndex.setVisibility(View.GONE);
+        }else {
+            rlTaskIndex.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

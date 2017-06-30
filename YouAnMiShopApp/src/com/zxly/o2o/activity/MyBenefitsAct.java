@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.aliter.base.BaseActivity;
 import com.easemob.easeui.controller.EaseUI;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
@@ -36,7 +38,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/6/12.
  */
-public class MyBenefitsAct extends BasicAct {
+public class MyBenefitsAct extends BaseActivity {
     private String[] titles;
 
     private ArrayList<CustomTabEntity> tabs = new ArrayList<CustomTabEntity>();
@@ -50,12 +52,20 @@ public class MyBenefitsAct extends BasicAct {
     private BenefitDialogAdapter adPresent, adDeduction;
     private ExpandView expandView;
     private int curTab;
+    private Handler handler;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public int getLayoutId() {
+        return R.layout.benefits_activity;
+    }
 
-        setContentView(R.layout.benefits_activity);
+    @Override
+    public void setToolBar() {
 
+    }
+
+    @Override
+    public void initView() {
         expandView = (ExpandView) findViewById(R.id.view_expand);
 
         addBackBtn();
@@ -107,15 +117,91 @@ public class MyBenefitsAct extends BasicAct {
         });
         if(curTab==1)
         {
-            mMainHandler.postDelayed(new Runnable() {
+            handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     tls.setCurrentTab(curTab);
                 }
             },1000);
         }
+    }
+
+    @Override
+    protected void loadData() {
 
     }
+
+    @Override
+    protected void initInject() {
+
+    }
+
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//
+//        setContentView(R.layout.benefits_activity);
+//
+//        expandView = (ExpandView) findViewById(R.id.view_expand);
+//
+//        addBackBtn();
+//        if(getIntent().getBooleanExtra("showRightBtn", true)){
+//            addRightBtn();
+//        }
+//
+//        myValidBenefitsFragment = new MyBenefitsFragment();
+//        myInvalidBenefitsFragment = new MyBenefitsFragment();
+//
+//        long discountId = getIntent().getLongExtra("discountId", 0);
+//        curTab=getIntent().getIntExtra("curTab",0);
+//        myValidBenefitsFragment.setDiscountId(discountId);
+//        myInvalidBenefitsFragment.setDiscountId(discountId);
+//        //Byte 1.领取记录 2.使用记录
+//        Bundle bundle1 = new Bundle();
+//        bundle1.putByte("type", (byte) 1);
+//        myValidBenefitsFragment.setArguments(bundle1);
+//        fragments.add(myValidBenefitsFragment);
+//
+//        Bundle bundle2 = new Bundle();
+//        bundle2.putByte("type", (byte) 2);
+//        myInvalidBenefitsFragment.setArguments(bundle2);
+//        fragments.add(myInvalidBenefitsFragment);
+//
+//        titles = new String[]{"未使用", "已使用"};
+//
+//        for (String title : titles) {
+//            tabs.add(new TabEntity(title, 0, 0));
+//        }
+//
+//        decorView = getWindow().getDecorView();
+//        /** indicator圆角色块 */
+//        tls = ViewFindUtils.find(decorView, R.id.ease_tl_tabs);
+//        tls.setTabData(tabs, this, R.id.fl_change, fragments);
+//        tls.setOnTabSelectListener(new OnTabSelectListener() {
+//            @Override
+//            public void onTabSelect(int position) {
+//                if (expandView.isExpand()) {
+//                    //关闭并清空缓存数据
+//                    expandView.collapse();
+//                }
+//            }
+//
+//            @Override
+//            public void onTabReselect(int position) {
+//
+//            }
+//        });
+//        if(curTab==1)
+//        {
+//            mMainHandler.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    tls.setCurrentTab(curTab);
+//                }
+//            },1000);
+//        }
+//
+//    }
 
 
     /*添加筛选按钮*/

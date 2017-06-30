@@ -28,7 +28,7 @@
             android:layout_marginTop="25dp"
             android:text="我的订单"
             android:textColor="@color/gray_333333"
-            android:textSize="13sp" />
+            android:textSize="12dp" />
 
 
         <TextView

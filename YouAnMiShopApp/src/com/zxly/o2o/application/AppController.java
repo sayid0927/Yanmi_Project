@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.support.multidex.MultiDex;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
@@ -107,7 +108,7 @@ public class AppController extends Application {
     public  static  final  String common_image_upload="common/image/upload";                        //图片上传1.0
     public  static  final  String shop_update="shop/update";                        //修改门店信息1.0
     public  static  final  String aitrle_homepage_statistics="aitrle/homePage/statistics";         //文章首页统计接口
-
+    public  static  final  String commend_product_list="commend/product/list";         //推荐商品分页列表1.0
 
 
     @Override
@@ -335,7 +336,7 @@ public class AppController extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-//         MultiDex.install(this);
+         MultiDex.install(this);
     }
 
 }

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/layout_title"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@color/orange_ff5f19"
+        android:paddingRight="10dp">
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_gravity="center_vertical"
+            android:layout_width="@dimen/title_height"
+            android:layout_height="@dimen/title_height"
+            android:background="@color/transparent"
+            android:contentDescription="@null"
+            android:scaleType="center"
+            android:src="@drawable/back"/>
+
+
+        <TextView
+            android:id="@+id/tv_back"
+            android:text="返回"
+            style="@style/text_18_white"
+            android:layout_gravity="center|left"
+            android:layout_marginLeft="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:id="@+id/tv_colo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="关闭"
+            style="@style/text_18_white"
+            android:layout_gravity="center|left"
+            android:layout_marginLeft="75dp"
+            android:visibility="gone" />
+
+
+
+        <TextView
+            android:id="@+id/txt_title"
+            style="@style/text_18_white"
+            android:text="网店预览"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+    </FrameLayout>
+
+    <WebView
+        android:id="@+id/web_view"
+        android:layout_below="@+id/layout_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:fadingEdge="none"
+        android:scrollbars="none"
+        android:scrollingCache="false"
+        android:visibility="visible" />
+
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/alite_btn_h5_default"
+        android:layout_height="60dp">
+
+
+
+        <Button
+            android:id="@+id/btn_bottom_share"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:textSize="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:background="@drawable/alite_btn_h5_bg"
+            android:text="管理我的网店"/>
+
+
+
+    </FrameLayout>
+
+
+
+</RelativeLayout>
