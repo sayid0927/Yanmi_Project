@@ -26,16 +26,15 @@
                 android:id="@+id/segment_tab_layout"
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
-                android:background="@drawable/alite_btn_self_normal"
+                android:background="@drawable/alite_btn_content_normal"
                 tl:tl_iconVisible="false"
                 tl:tl_indicator_color="#ffdfd1"
-                tl:tl_indicator_margin_bottom="2dp"
 
+                tl:tl_indicator_margin_bottom="2dp"
                 tl:tl_indicator_margin_left="2dp"
                 tl:tl_indicator_margin_right="2dp"
-
-
                 tl:tl_indicator_margin_top="2dp"
+
                 tl:tl_indicator_style="BLOCK"
                 tl:tl_textSelectColor="#ff7800"
                 tl:tl_textUnselectColor="#fbc99f" />
