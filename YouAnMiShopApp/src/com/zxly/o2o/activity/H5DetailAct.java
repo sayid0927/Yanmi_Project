@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
@@ -14,6 +15,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
+import com.aliter.ui.activity.H5ShopActivity;
 import com.zxly.o2o.account.Account;
 import com.zxly.o2o.dialog.ShareDialog;
 import com.zxly.o2o.model.ActicityInfo;
@@ -25,6 +27,9 @@ import com.zxly.o2o.util.ShareListener;
 import com.zxly.o2o.util.UmengUtil;
 import com.zxly.o2o.util.ViewUtils;
 import com.zxly.o2o.view.LoadingView;
+
+import static com.zxly.o2o.shop.R.id.tv_back;
+import static com.zxly.o2o.shop.R.id.tv_finish;
 
 /**
  * todo:
@@ -50,10 +55,12 @@ public class H5DetailAct extends BasicAct implements View.OnClickListener {
 	private String loadUrl;
 	private String title;
 	static ShareInfo shareInfo;
-	private   int AriticleType;
+	private int AriticleType;
 	private ShareDialog shareDialog;
 
 	private boolean shouldOverrideUrlLoading;
+	private View tvfinish;
+	private View tvback;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -140,7 +147,7 @@ public class H5DetailAct extends BasicAct implements View.OnClickListener {
 		intent.putExtra("loadUrl",loadUrl);
 		intent.putExtra("pageType",pageType);
 		intent.putExtra("shouldOverrideUrlLoading",shouldOverrideUrlLoading);
-		intent.putExtra("ArticleType",ArticleType);
+		intent.putExtra("AriticleType",ArticleType);
 		H5DetailAct.shareInfo=shareInfo;
 		ViewUtils.startActivity(intent, curAct);
 		UmengUtil.onEvent(curAct,new UmengUtil().FIND_ARTICLE_ENTER, null);
@@ -148,10 +155,18 @@ public class H5DetailAct extends BasicAct implements View.OnClickListener {
 
 
 	private void initViews() {
+
+		View bootmShare=findViewById(R.id.fl_bottom_share);
+		View btnbootmShare=findViewById(R.id.btn_bottom_share);
+
+        tvfinish=findViewById(tv_finish);
+		tvback=findViewById(tv_back);
+
 		View btnShare=findViewById(R.id.btn_share);
-		View  bottmBtnShare=findViewById(R.id.btn_bottom_share);
-		bottmBtnShare.setOnClickListener(this);
 		btnShare.setOnClickListener(this);
+		btnbootmShare.setOnClickListener(this);
+		tvfinish.setOnClickListener(this);
+		tvback.setOnClickListener(this);
 		if (shareInfo==null)
 			btnShare.setVisibility(View.GONE);
 
@@ -162,9 +177,18 @@ public class H5DetailAct extends BasicAct implements View.OnClickListener {
 
 		loadingview = (LoadingView) findViewById(R.id.view_loading);
 		webView = ((WebView) findViewById(R.id.web_view));
+
+		if(AriticleType==2){
+			tvback.setVisibility(View.VISIBLE);
+			bootmShare.setVisibility(View.VISIBLE);
+			btnShare.setVisibility(View.GONE);
+		}else {
+			bootmShare.setVisibility(View.GONE);
+			tvback.setVisibility(View.GONE);
+		}
 	}
 
-	private void loadH5(String loadUrl) {
+	private void loadH5(final String loadUrl) {
 		webView.getSettings().setBuiltInZoomControls(false);
 		webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
 		webView.getSettings().setJavaScriptEnabled(true);
@@ -209,6 +233,13 @@ public class H5DetailAct extends BasicAct implements View.OnClickListener {
 			@Override
 			public void onPageStarted(WebView view, String url, Bitmap favicon) {
 				super.onPageStarted(view, url, favicon);
+				if(AriticleType==2) {
+					if (url.equals(loadUrl)) {
+						tvfinish.setVisibility(View.GONE);
+					} else {
+						tvfinish.setVisibility(View.VISIBLE);
+					}
+				}
 				loadingview.startLoading();
 			}
 
@@ -234,8 +265,22 @@ public class H5DetailAct extends BasicAct implements View.OnClickListener {
 	public void onClick(View view) {
 		switch (view.getId()) {
 			case R.id.btn_back:
-				finish();
+				if (webView.canGoBack()) {
+					webView.goBack();
+				} else {
+					finish();
+				}
 				break;
+
+			case  R.id.tv_back:
+				if (webView.canGoBack()) {
+					webView.goBack();
+				} else {
+					finish();
+				}
+				break;
+
+
 
 			case R.id.btn_share:
 				if (shareInfo==null)
@@ -297,62 +342,15 @@ public class H5DetailAct extends BasicAct implements View.OnClickListener {
 				break;
 
 			case  R.id.btn_bottom_share:
-				if (shareInfo==null)
-					return;
-				String ur2 = shareInfo.getUrl();
-//				if (shareInfo.getType() == ActicityInfo.TYPE_DZP) {
-//					url = url + "&DeviceID=" + Config.imei +
-//							"&Authorization=" + PreferUtil.getInstance().getLoginToken() +
-//							"&type=" + Constants.OPEN_FROM_SHARE + "&baseUrl=" + Config.dataBaseUrl;
-//				}
-
-
-
-				int index2= isChinese(ur2);
-				if(index2!=000){
-					ur2= ur2.substring(0,index2);
-				}
-
-				shareDialog.show(shareInfo.getTitle(),
-						shareInfo.getDesc(),
-						ur2,
-						shareInfo.getIconUrl(),
-						new ShareListener() {
-							@Override
-							public void onComplete(Object var1) {
-								switch (pageType){
-									case TYPE_H5_GAME:
-										shareUrl="/makeFans/addShareAmount";
-										if(shareSuccessRequest==null)
-											shareSuccessRequest=new ShareSuccessRequest();
-										shareSuccessRequest.addParams("type",shareInfo.getType());
-										shareSuccessRequest.addParams("id",shareInfo.getId());
-										shareSuccessRequest.addParams("title",shareInfo.getTitle());
-										shareSuccessRequest.addParams("shopId", Account.user.getShopId());
-										shareSuccessRequest.start();
-										break;
-								}
-
-								if(AriticleType==1){
-									shareUrl="/localArticle/addShare";
-									if(shareSuccessRequest==null)
-										shareSuccessRequest=new ShareSuccessRequest();
-									shareSuccessRequest.addParams("id",shareInfo.getId());
-									shareSuccessRequest.addParams("shareChannel",1);
-									shareSuccessRequest.addParams("shopId", Account.user.getShopId());
-									shareSuccessRequest.start();
-								}
-							}
-
-							@Override
-							public void onFail(int errorCode) {
-
-							}
-						}
-				);
-
-				UmengUtil.onEvent(H5DetailAct.this, new UmengUtil().FIND_ARTICLE_DETAILSHARE_CLICK,null);
+				Intent intent = new Intent(this,H5ShopActivity.class);
+				startActivity(intent);
 				break;
+
+
+			case  R.id.tv_finish:
+				finish();
+				break;
+
 
 		}
 
@@ -390,6 +388,22 @@ public class H5DetailAct extends BasicAct implements View.OnClickListener {
 	// 判断一个字符是否是中文
 	public boolean isChinese(char c) {
 		return c >= 0x4E00 && c <= 0x9FA5;// 根据字节码判断
+	}
+
+
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if (webView.canGoBack()) {
+				webView.goBack();
+			} else {
+				finish();
+			}
+
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 
 

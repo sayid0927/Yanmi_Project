@@ -78,7 +78,7 @@
                         android:layout_height="57.5dp"
                         android:layout_marginLeft="11dp"
 
-                        android:src="@drawable/default_head_big"
+                        android:src="@drawable/al_shopicon_empty"
                         app:border_color="@color/white"
                         app:border_width="1dp" />
 

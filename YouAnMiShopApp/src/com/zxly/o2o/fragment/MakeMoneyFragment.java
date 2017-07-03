@@ -12,7 +12,6 @@ import com.zxly.o2o.activity.MainActivity;
 import com.zxly.o2o.activity.MakeCommissionAct;
 import com.zxly.o2o.activity.MobileDataAct;
 import com.zxly.o2o.activity.SystemMsgAct;
-import com.zxly.o2o.activity.YamCollegeListAct;
 import com.zxly.o2o.activity.YieldDetailAct;
 import com.zxly.o2o.adapter.DataSetAdapter;
 import com.zxly.o2o.adapter.MakeMoneyAdapter;
@@ -25,7 +24,6 @@ import com.zxly.o2o.request.DisCountSystemMsgDeTailRequest;
 import com.zxly.o2o.request.MakeMoneyInitRequest;
 import com.zxly.o2o.request.MakeMoneyListRequest;
 import com.zxly.o2o.shop.R;
-import com.zxly.o2o.util.Constants;
 import com.zxly.o2o.util.StringUtil;
 import com.zxly.o2o.util.UmengUtil;
 import com.zxly.o2o.util.ViewUtils;
@@ -268,18 +266,18 @@ public class MakeMoneyFragment extends BaseFragment implements View.OnClickListe
 
         }
         footerView.onDataEmpty(msg,b,img);
-        footerView.setBtnText("去逛逛商学院");
-        footerView.setOnAgainListener(new LoadingView.OnAgainListener() {
-            @Override
-            public void onLoading() {
-                if(listIsEmpty){
-                    YamCollegeListAct.start(getActivity(), Constants.YAM_COURSE_NEW);
-                }else {
-//                    footerView.startLoading();
-                    moneyInitRequest.start();
-                }
-            }
-        });
+        footerView.setBtnGone();
+//        footerView.setOnAgainListener(new LoadingView.OnAgainListener() {
+//            @Override
+//            public void onLoading() {
+//                if(listIsEmpty){
+//                    YamCollegeListAct.start(getActivity(), Constants.YAM_COURSE_NEW);
+//                }else {
+////                    footerView.startLoading();
+//                    moneyInitRequest.start();
+//                }
+//            }
+//        });
     }
 
     @Override

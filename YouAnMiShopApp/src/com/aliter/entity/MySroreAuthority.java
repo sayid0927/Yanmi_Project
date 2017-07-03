@@ -12,8 +12,18 @@ public class MySroreAuthority {
     private  String title;
     private Drawable bitmap;
     private  int orderNum;
+    private int  kehuIconShow;
 
     private  int Type;
+
+
+    public int getKehuIconShow() {
+        return kehuIconShow;
+    }
+
+    public void setKehuIconShow(int kehuIconShow) {
+        this.kehuIconShow = kehuIconShow;
+    }
 
     public int getType() {
 

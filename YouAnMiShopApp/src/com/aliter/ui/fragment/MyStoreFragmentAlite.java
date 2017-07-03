@@ -17,7 +17,6 @@ import com.aliter.injector.component.fragment.DaggerMyStoreComponent;
 import com.aliter.injector.component.module.fragment.MyStroreAdapterModule;
 import com.aliter.presenter.MyStorePresenter;
 import com.aliter.presenter.impl.ShopInfoPresenterImpl;
-import com.aliter.ui.activity.H5Activity;
 import com.aliter.ui.activity.myStore.AliteSettingMyShopInfoActivity;
 import com.aliter.ui.activity.myStore.AllCustomerActivity;
 import com.bumptech.glide.Glide;
@@ -28,10 +27,12 @@ import com.easemob.easeui.EaseConstant;
 import com.zxly.o2o.account.Account;
 import com.zxly.o2o.activity.FragmentListAct;
 import com.zxly.o2o.activity.GetFavorableStatisticsAct;
+import com.zxly.o2o.activity.H5DetailAct;
 import com.zxly.o2o.activity.MakeCommissionAct;
 import com.zxly.o2o.activity.MobileDataAct;
 import com.zxly.o2o.activity.MyOrderAct;
 import com.zxly.o2o.activity.SalesmanRankingAct;
+import com.zxly.o2o.activity.ShippingListAct;
 import com.zxly.o2o.application.AppController;
 import com.zxly.o2o.shop.R;
 import com.zxly.o2o.util.Constants;
@@ -100,28 +101,46 @@ public class MyStoreFragmentAlite extends BaseFragment<ShopInfoPresenterImpl> im
         install = this;
 
 
-        final List<MySroreAuthority> list = new ArrayList<>();
-        if (PreferUtil.getInstance().getSyb001()) {
-            MySroreAuthority mySroreAuthority = new MySroreAuthority();
-            mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.suipinbao));
-            mySroreAuthority.setTitle("碎柚宝");
-            mySroreAuthority.setType(1);
-            list.add(mySroreAuthority);
+        if(PreferUtil.getInstance().getWdwd001()){
+            layoutMyShop.setVisibility(View.VISIBLE);
+        }else {
+            layoutMyShop.setVisibility(View.GONE);
         }
+
+
+        final List<MySroreAuthority> list = new ArrayList<>();
+
         if (PreferUtil.getInstance().getLlczb001()) {
             MySroreAuthority mySroreAuthority = new MySroreAuthority();
             mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.liuliang));
             mySroreAuthority.setTitle("流量充值");
             mySroreAuthority.setType(2);
+            mySroreAuthority.setKehuIconShow(1);
             list.add(mySroreAuthority);
         }
-        if (PreferUtil.getInstance().getZyj001()) {
+
+        if (PreferUtil.getInstance().getSyb001()) {
             MySroreAuthority mySroreAuthority = new MySroreAuthority();
-            mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.yongjin));
-            mySroreAuthority.setTitle("赚佣金");
-            mySroreAuthority.setType(3);
+            mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.suipinbao));
+            mySroreAuthority.setTitle("碎柚宝");
+            mySroreAuthority.setType(1);
+            mySroreAuthority.setKehuIconShow(1);
             list.add(mySroreAuthority);
         }
+
+        if (PreferUtil.getInstance().getDdgl001()) {
+            //订单管理: isBoss = 1 || roleType = 1 (老板或管理员)
+            if (Account.user.getIsBoss()==1||Account.user.getRoleType()==1) {
+                MySroreAuthority mySroreAuthority = new MySroreAuthority();
+                mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.dingdan));
+                mySroreAuthority.setTitle("订单管理");
+                mySroreAuthority.setType(8);
+                mySroreAuthority.setKehuIconShow(1);
+                list.add(mySroreAuthority);
+            }
+        }
+
+
         if (PreferUtil.getInstance().getDybd001()) {
             // 店员榜单: isBoss = 1 || roleType = 1 (老板或管理员)
 
@@ -130,9 +149,12 @@ public class MyStoreFragmentAlite extends BaseFragment<ShopInfoPresenterImpl> im
                 mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.bangdan));
                 mySroreAuthority.setTitle("店员榜单");
                 mySroreAuthority.setType(4);
+                mySroreAuthority.setKehuIconShow(1);
                 list.add(mySroreAuthority);
             }
         }
+
+
         if (PreferUtil.getInstance().getShqd001()) {
             // 送货清单: isBoss = 1 || roleType = 1 (老板或管理员)
             if (Account.user.getIsBoss() == 1 || Account.user.getRoleType() == 1) {
@@ -140,9 +162,21 @@ public class MyStoreFragmentAlite extends BaseFragment<ShopInfoPresenterImpl> im
                 mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.qingdan));
                 mySroreAuthority.setTitle("送货清单");
                 mySroreAuthority.setType(5);
+                mySroreAuthority.setKehuIconShow(1);
                 list.add(mySroreAuthority);
             }
         }
+
+
+        if (PreferUtil.getInstance().getZyj001()) {
+            MySroreAuthority mySroreAuthority = new MySroreAuthority();
+            mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.yongjin));
+            mySroreAuthority.setTitle("赚佣金");
+            mySroreAuthority.setType(3);
+            mySroreAuthority.setKehuIconShow(1);
+            list.add(mySroreAuthority);
+        }
+
 
         if (PreferUtil.getInstance().getYhlq001()) {
             //优惠领取: isBoss!= 1 -->(非老板都可以领取)
@@ -151,6 +185,7 @@ public class MyStoreFragmentAlite extends BaseFragment<ShopInfoPresenterImpl> im
                 mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.youhui));
                 mySroreAuthority.setTitle("优惠领取");
                 mySroreAuthority.setType(6);
+                mySroreAuthority.setKehuIconShow(1);
                 list.add(mySroreAuthority);
             }
         }
@@ -162,34 +197,36 @@ public class MyStoreFragmentAlite extends BaseFragment<ShopInfoPresenterImpl> im
                 mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.tongji));
                 mySroreAuthority.setTitle("优惠统计");
                 mySroreAuthority.setType(7);
+                mySroreAuthority.setKehuIconShow(1);
                 list.add(mySroreAuthority);
             }
         }
-        if (PreferUtil.getInstance().getDdgl001()) {
-            //订单管理: isBoss = 1 || roleType = 1 (老板或管理员)
-            if (Account.user.getIsBoss()==1||Account.user.getRoleType()==1) {
 
-                MySroreAuthority mySroreAuthority = new MySroreAuthority();
-                mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.dingdan));
-                mySroreAuthority.setTitle("订单管理");
-                mySroreAuthority.setType(8);
-                list.add(mySroreAuthority);
-            }
-        }
 
         if (PreferUtil.getInstance().getKdd001()) {
             MySroreAuthority mySroreAuthority = new MySroreAuthority();
             mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.kehu));
             mySroreAuthority.setTitle("客多多");
             mySroreAuthority.setType(9);
+
+//            三.  packType:1免费,2普通,3高级
+//            客多多:packType = 3   (显示之前粉丝会员界面)
+//                    packType = 1,2 (显示H5介绍页面)
+
+            if(PreferUtil.getInstance().getPackType()==3){
+                mySroreAuthority.setKehuIconShow(1);   //显示粉丝会员
+            }else {
+                mySroreAuthority.setKehuIconShow(0);   //  显示H5介绍页面
+            }
             list.add(mySroreAuthority);
         }
 
         if (list.size() == 0) {
             MySroreAuthority mySroreAuthority = new MySroreAuthority();
-            mySroreAuthority.setBitmap(getActivity().getResources().getDrawable(R.drawable.liuliang));
-            mySroreAuthority.setTitle("流量充值");
-            mySroreAuthority.setType(2);
+            mySroreAuthority.setBitmap(null);
+            mySroreAuthority.setTitle("");
+            mySroreAuthority.setKehuIconShow(1);
+            mySroreAuthority.setType(22);
             list.add(mySroreAuthority);
         }
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
@@ -215,7 +252,7 @@ public class MyStoreFragmentAlite extends BaseFragment<ShopInfoPresenterImpl> im
                         SalesmanRankingAct.start(getActivity());
                         break;
                     case 5:
-                        MyOrderAct.startMyorderAct(getActivity(), MyOrderAct.ORDER_REQUEST_ALL);
+                        ShippingListAct.start(getActivity());
                         break;
                     case 6:
                         if (Account.user.getRoleType() == Constants.USER_TYPE_ADMIN) {
@@ -234,7 +271,16 @@ public class MyStoreFragmentAlite extends BaseFragment<ShopInfoPresenterImpl> im
                         MyOrderAct.startMyorderAct(getActivity(), MyOrderAct.ORDER_REQUEST_ALL);
                         break;
                     case 9:
+                        if(list.get(position).getKehuIconShow()==1)
                         ViewUtils.startActivity(new Intent(getActivity(), AllCustomerActivity.class), getActivity());
+                        else {
+                           String H5keduoduoUrl= PreferUtil.getInstance().getShopInfo().getH5keduoduo();
+                            if(StringUtil.isNull(H5keduoduoUrl)) {
+                                H5DetailAct.start(H5DetailAct.TYPE_DEFAULT,
+                                        AppController.getInstance().getTopAct(),
+                                        H5keduoduoUrl, "客多多功能介绍", null, false, 1);
+                            }
+                        }
                         break;
 
                 }
@@ -295,10 +341,9 @@ public class MyStoreFragmentAlite extends BaseFragment<ShopInfoPresenterImpl> im
             case R.id.layout_my_shop:  //  我的网店
 
                 if(!StringUtil.isNull(PreferUtil.getInstance().getShopInfo().getH5url())){
-//                    H5DetailAct.start(getActivity(), PreferUtil.getInstance().getShopInfo().getH5url(),"网店预览");
-                    H5Activity.start(getActivity(),PreferUtil.getInstance().getShopInfo().getH5url(),"网店预览");
-//                  String  loadUrl = "http://192.168.1.135//friendsWebApp/src/dist/index.html?shopId=1";
-//                    H5DetailAct.start(getActivity(),loadUrl,"网店预览");
+                    H5DetailAct.start(H5DetailAct.TYPE_DEFAULT,
+                            AppController.getInstance().getTopAct(),
+                            PreferUtil.getInstance().getShopInfo().getH5url()+ "&from=app", "网店预览", null, false,2);
 
                 }
 
@@ -322,13 +367,13 @@ public class MyStoreFragmentAlite extends BaseFragment<ShopInfoPresenterImpl> im
             txtShopName.setText(shopInfoBase.getSlogan());
 
         if (StringUtil.isNull(shopInfoBase.getIconUrl()))
-            imgUserHead.setImageResource(R.drawable.default_head_small);
+            imgUserHead.setImageResource(R.drawable.al_shopicon_empty);
         else {
             // imgUserHead.setImageUrl(shopInfoBase.getIconUrl(), R.drawable.default_head_small);
             Glide.with(getActivity()).load(shopInfoBase.getIconUrl()).asBitmap()
-                    .placeholder(R.drawable.default_head_small)
+                    .placeholder(R.drawable.al_shopicon_empty)
                     .format(DecodeFormat.PREFER_ARGB_8888)
-                    .error(R.drawable.default_head_small)
+                    .error(R.drawable.al_shopicon_empty)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(imgUserHead);
         }

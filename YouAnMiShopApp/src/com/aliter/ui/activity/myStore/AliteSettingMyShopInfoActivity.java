@@ -148,8 +148,6 @@ public class AliteSettingMyShopInfoActivity extends BaseActivity<SettingShopName
 
     @Override
     public void initView() {
-
-
     }
 
 
@@ -159,12 +157,12 @@ public class AliteSettingMyShopInfoActivity extends BaseActivity<SettingShopName
         isSetUserHead = false;
         shopInfoBase = PreferUtil.getInstance().getShopInfo();
         if (StringUtil.isNull(shopInfoBase.getIconUrl())) {
-            imgUserHead.setImageResource(R.drawable.default_head_small);
+            imgUserHead.setImageResource(R.drawable.al_shopicon_empty);
         } else {
             Glide.with(AliteSettingMyShopInfoActivity.this).load(shopInfoBase.getIconUrl()).asBitmap()
-                    .placeholder(R.drawable.default_head_small)
+                    .placeholder(R.drawable.al_shopicon_empty)
                     .format(DecodeFormat.PREFER_ARGB_8888)
-                    .error(R.drawable.default_head_small)
+                    .error(R.drawable.al_shopicon_empty)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(imgUserHead);
         }
@@ -216,7 +214,7 @@ public class AliteSettingMyShopInfoActivity extends BaseActivity<SettingShopName
 
     private void handleCrop(int resultCode, Intent result) {
         if (resultCode == RESULT_OK) {
-             tmpFile = PicTools.getOutputPhotoFile();
+            tmpFile = PicTools.getOutputPhotoFile();
             postFile(tmpFile);
 
             ShowLoadingDialog();
@@ -232,8 +230,8 @@ public class AliteSettingMyShopInfoActivity extends BaseActivity<SettingShopName
         params.put("isThum", 2);
         params.put("thumHeight", 100);
         params.put("thumWidth", 100);
-        Retrofit retrofit = new Retrofit.Builder() .baseUrl(AppController.data_base_url).addConverterFactory(GsonConverterFactory.create())
-                 .build();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(AppController.data_base_url).addConverterFactory(GsonConverterFactory.create())
+                .build();
         UpIconService uploadService = retrofit.create(UpIconService.class);
         Call<ImageUpload> call = uploadService.uploadOne(params, body);
         call.enqueue(new Callback<ImageUpload>() {
@@ -261,7 +259,16 @@ public class AliteSettingMyShopInfoActivity extends BaseActivity<SettingShopName
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_user_head:    //   商户头像
-                new GetPictureDialog(false).show(handler);
+
+
+
+
+                if (getIsroleType()) {
+                    new GetPictureDialog(false).show(handler);
+                } else {
+                    ViewUtils.showToast("没有修改权限");
+                }
+
 
                 break;
             case R.id.btn_back:    //   返回
@@ -271,36 +278,62 @@ public class AliteSettingMyShopInfoActivity extends BaseActivity<SettingShopName
 
                 break;
             case R.id.rl_shop_name:    ///   门店名称
-                i = new Intent(AliteSettingMyShopInfoActivity.this, AliteSettingShopNameActivity.class);
-                i.putExtra("TYPE", 1);
-                i.putExtra("Name", shopInfoBase.getName());
-                ViewUtils.startActivity(i, AliteSettingMyShopInfoActivity.this);
+//                if(getIsroleType()){
+//                    i = new Intent(AliteSettingMyShopInfoActivity.this, AliteSettingShopNameActivity.class);
+//                    i.putExtra("TYPE", 1);
+//                    i.putExtra("Name", shopInfoBase.getName());
+//                    ViewUtils.startActivity(i, AliteSettingMyShopInfoActivity.this);
+//
+//                }else {
+                    ViewUtils.showToast("门店名称不可修改，仅在注册时可设置一次");
+//                }
+
                 break;
             case R.id.rl_shop_slogan:   ///  门店标语
-                i = new Intent(AliteSettingMyShopInfoActivity.this, AliteSettingShopNameActivity.class);
-                i.putExtra("TYPE", 2);
-                i.putExtra("Name", shopInfoBase.getSlogan());
-                ViewUtils.startActivity(i, AliteSettingMyShopInfoActivity.this);
+                if(getIsroleType()){
+                    i = new Intent(AliteSettingMyShopInfoActivity.this, AliteSettingShopNameActivity.class);
+                    i.putExtra("TYPE", 2);
+                    i.putExtra("Name", shopInfoBase.getSlogan());
+                    ViewUtils.startActivity(i, AliteSettingMyShopInfoActivity.this);
+                }else {
+                    ViewUtils.showToast("没有修改权限");
+                }
+
 
                 break;
             case R.id.rl_consumer_hotline:   //  客服电话
-                i = new Intent(AliteSettingMyShopInfoActivity.this, AliteSettingShopNameActivity.class);
-                i.putExtra("TYPE", 3);
-                i.putExtra("Name", shopInfoBase.getServerPhone());
-                ViewUtils.startActivity(i, AliteSettingMyShopInfoActivity.this);
+                if(getIsroleType()){
+                    i = new Intent(AliteSettingMyShopInfoActivity.this, AliteSettingShopNameActivity.class);
+                    i.putExtra("TYPE", 3);
+                    i.putExtra("Name", shopInfoBase.getServerPhone());
+                    ViewUtils.startActivity(i, AliteSettingMyShopInfoActivity.this);
+                }else {
+                    ViewUtils.showToast("没有修改权限");
+                }
+
                 break;
             case R.id.rl_region:    //   地区
-                Intent intent = new Intent(AliteSettingMyShopInfoActivity.this, AliteCheckProvinceActivity.class);
-                AliteSettingMyShopInfoActivity.this.startActivityForResult(intent, 1);
-                startActivityIn();
+                if(getIsroleType()){
+                    Intent intent = new Intent(AliteSettingMyShopInfoActivity.this, AliteCheckProvinceActivity.class);
+                    AliteSettingMyShopInfoActivity.this.startActivityForResult(intent, 1);
+                    startActivityIn();
+                }else {
+                    ViewUtils.showToast("没有修改权限");
+                }
+
                 break;
 
 
             case R.id.rl_details:    //   详情地址
-                i = new Intent(AliteSettingMyShopInfoActivity.this, AliteSettingShopNameActivity.class);
-                i.putExtra("TYPE", 4);
-                i.putExtra("Name", shopInfoBase.getDetailedAddress());
-                ViewUtils.startActivity(i, AliteSettingMyShopInfoActivity.this);
+                if(getIsroleType()){
+                    i = new Intent(AliteSettingMyShopInfoActivity.this, AliteSettingShopNameActivity.class);
+                    i.putExtra("TYPE", 4);
+                    i.putExtra("Name", shopInfoBase.getDetailedAddress());
+                    ViewUtils.startActivity(i, AliteSettingMyShopInfoActivity.this);
+                }else {
+                    ViewUtils.showToast("没有修改权限");
+                }
+
                 break;
         }
     }
@@ -376,9 +409,9 @@ public class AliteSettingMyShopInfoActivity extends BaseActivity<SettingShopName
     public void onShopUpdateSuccessView() {
         if (type == 1) {
             if (StringUtil.isNull(thumHeadUrl)) {
-                imgUserHead.setImageResource(R.drawable.default_head_small);
+                imgUserHead.setImageResource(R.drawable.al_shopicon_empty);
             } else {
-                imgUserHead.setImageUrl(thumHeadUrl, R.drawable.default_head_small);
+                imgUserHead.setImageUrl(thumHeadUrl, R.drawable.al_shopicon_empty);
             }
             DismissLoadingDialog();
             ViewUtils.showToast("上传头像成功");
@@ -413,6 +446,16 @@ public class AliteSettingMyShopInfoActivity extends BaseActivity<SettingShopName
 
     public static void start(Activity curAct) {
         Intent intent = new Intent(curAct, AliteSettingMyShopInfoActivity.class);
-        ViewUtils.startActivityForResult(intent,curAct,1);
+        ViewUtils.startActivityForResult(intent, curAct, 1);
+    }
+
+    private  boolean getIsroleType(){
+
+        //三.我的门店:1.门店名称不可修改(在注册时已设置,且只能设置一次)
+//            2.其他只有(roleType = 1,3 老板或管理员)才拥有修改权限---(即普通店员只能预览)
+        if(Account.user.getRoleType() == 1 || Account.user.getRoleType() == 3)
+            return  true;
+        else
+            return false;
     }
 }

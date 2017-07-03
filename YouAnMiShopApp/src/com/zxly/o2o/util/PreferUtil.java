@@ -83,6 +83,11 @@ public final class PreferUtil {
     public static final String SHOP_INFO_PROVINCENAME = "shop_info_provincename";
     public static final String SHOP_INFO_AREANAME = "shop_info_areaname";
     public static final String SHOP_INFO_H5URL = "shop_info_h5url";
+    public static final String SHOP_INFO_H5GAOJI = "shop_info_h5gaoji";
+    public static final String SHOP_INFO_H5KEDUODUO = "shop_info_h5keduoduo";
+
+    public static final String LOGIN_PHONE_NUM = "login_phone_num";
+
 
     public static final String SHOP_PACK_TYPE = "shop_pack_type";
 
@@ -360,11 +365,11 @@ public final class PreferUtil {
 
     /**获取赚钱攻略是否`显示 */
     public boolean getZqgl001() {
-        return getBoolean(SHOP_DDGL_001, false);
+        return getBoolean(SHOP_ZQGL_001, false);
     }
     /**设置赚钱攻略是否显示 */
     public void setZqgl001(boolean flag) {
-        putBoolean(SHOP_DDGL_001, flag);
+        putBoolean(SHOP_ZQGL_001, flag);
     }
 
     /**获取客多多是否显示 */
@@ -404,8 +409,22 @@ public final class PreferUtil {
         putBoolean(SHOP_YHLQ_001, false);
         putBoolean(SHOP_YHTJ_001, false);
         putBoolean(SHOP_DDGL_001, false);
-        putBoolean(SHOP_DDGL_001, false);
+        putBoolean(SHOP_KDD_001, false);
+        putBoolean(SHOP_ZQGL_001, false);
     }
+
+
+
+public  void   setLoginPhoneNum(String phoneNum){
+
+    putString(LOGIN_PHONE_NUM,phoneNum);
+}
+
+    public  String   getLoginPhoneNum( ){
+
+     return    getString(LOGIN_PHONE_NUM,"");
+    }
+
 
 
 
@@ -448,6 +467,8 @@ public final class PreferUtil {
         putString(SHOP_INFO_PROVINCENAME,shopInfoBase.getProvinceName());
 
         putString(SHOP_INFO_H5URL,shopInfoBase.getH5url());
+        putString(SHOP_INFO_H5GAOJI,shopInfoBase.getH5gaoji());
+        putString(SHOP_INFO_H5KEDUODUO,shopInfoBase.getH5keduoduo());
     }
 
 
@@ -470,6 +491,8 @@ public final class PreferUtil {
         shopInfoBase.setAreaName(getString(SHOP_INFO_AREANAME,""));
         shopInfoBase.setProvinceName(getString(SHOP_INFO_PROVINCENAME,""));
         shopInfoBase.setH5url(getString(SHOP_INFO_H5URL,""));
+        shopInfoBase.setH5gaoji(getString(SHOP_INFO_H5GAOJI,""));
+        shopInfoBase.setH5keduoduo(getString(SHOP_INFO_H5KEDUODUO,""));
         return  shopInfoBase;
     }
     //保存微信个人信息

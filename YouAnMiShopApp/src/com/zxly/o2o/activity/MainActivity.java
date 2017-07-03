@@ -67,7 +67,7 @@ public class MainActivity extends BasicAct {
 
 	
     private RadioButton btnManageOrPromotion;
-    private ImageView imgFans, imgMakeMoney, imgMine;//底部小红点
+    private ImageView imgFans,  imgMakeMoney, imgMine;//底部小红点
     private static MainActivity instance;
     private PersonalCenterFragment personalCenterFragment;
     private AllCustomerFragment allCustomerFragment;

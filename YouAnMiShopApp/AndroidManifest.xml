@@ -142,7 +142,7 @@
         <activity
             android:name="com.zxly.o2o.activity.H5DetailAct"
             android:label="@string/app_name"
-            android:theme="@style/AliterAppTheme"
+            android:theme="@style/AliterShopAppTheme"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"></activity>
         <!--<activity-->
@@ -371,7 +371,7 @@
             android:name="com.zxly.o2o.activity.ShippingListAct"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo"
+            android:theme="@style/AliterShopAppTheme"
             android:windowSoftInputMode="adjustPan"></activity>
         <activity
             android:name="com.zxly.o2o.activity.FragmentListAct"
@@ -571,10 +571,6 @@
         <activity
             android:name="com.aliter.ui.activity.login.AliteLaunchActivity"
             android:theme="@style/AliterAppTheme" />
-
-        <activity
-            android:name="com.aliter.ui.activity.H5Activity"
-            android:theme="@style/AliterShopAppTheme" />
 
         <activity
             android:name="com.aliter.ui.activity.H5ShopActivity"

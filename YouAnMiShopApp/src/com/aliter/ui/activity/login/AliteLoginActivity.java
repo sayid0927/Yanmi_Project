@@ -21,7 +21,6 @@ import com.aliter.presenter.impl.LoginPresenterImpl;
 import com.aliter.ui.activity.AliterHomeActivity;
 import com.blankj.utilcode.utils.StringUtils;
 import com.easemob.easeui.model.IMUserInfoVO;
-import com.orhanobut.logger.Logger;
 import com.zxly.o2o.account.Account;
 import com.zxly.o2o.application.Config;
 import com.zxly.o2o.request.BaseRequest;
@@ -29,6 +28,7 @@ import com.zxly.o2o.request.GeShopAppMenuRequest;
 import com.zxly.o2o.request.GetuiBindRequest;
 import com.zxly.o2o.shop.R;
 import com.zxly.o2o.util.Constants;
+import com.zxly.o2o.util.PreferUtil;
 import com.zxly.o2o.util.StringUtil;
 import com.zxly.o2o.util.ViewUtils;
 
@@ -104,8 +104,8 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
         //  登录成功返回
         Account.saveLoginUser(this, usserInfo);
         Account.user = usserInfo;
-        String tt=Config.getuiClientId;
-        Logger.t("TAG").e(tt);
+
+        PreferUtil.getInstance().setLoginPhoneNum(editPhone.getText().toString());
         new GetuiBindRequest(Config.getuiClientId).start();
         getShopAppMenu();
 
@@ -148,15 +148,18 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
 
     @Override
     public void setToolBar() {
+
         setToolBar(toolbar, "");
+        toolbar.setNavigationIcon(this.getResources().getDrawable(R.drawable.al_login_return));
+
     }
 
     @Override
     public void initView() {
-        initListener();
 
-        editPhone.setText("13592495216");
-        editPassword.setText("123456");
+        initListener();
+        if(StringUtil.isNull(PreferUtil.getInstance().getLoginPhoneNum()));
+        editPhone.setText(PreferUtil.getInstance().getLoginPhoneNum());
     }
 
     @Override
@@ -237,6 +240,8 @@ public class AliteLoginActivity extends BaseActivity<LoginPresenterImpl> impleme
                 LoginType = 0;
                 break;
             case R.id.btn_register_login:
+                if(editPassword.getText().length()!=0)
+                    editPassword.setText("");
                 if (llVerificationLogin.getVisibility() == View.GONE)
                     llVerificationLogin.setVisibility(View.VISIBLE);
 

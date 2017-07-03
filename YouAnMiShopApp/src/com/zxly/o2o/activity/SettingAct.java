@@ -170,6 +170,7 @@ public class SettingAct extends BaseActivity implements
             public void onOK() {
                 SettingAct.this.deleteFile("user");
                 Account.user = null;
+                PreferUtil.getInstance().CleanShopAppMenu();
                 PreferUtil.getInstance().setLoginToken("");
 //                LoginAct.start(SettingAct.this);
                 Intent intent= new Intent(SettingAct.this, AliteLaunchActivity.class);

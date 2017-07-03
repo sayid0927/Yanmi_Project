@@ -233,7 +233,7 @@ public class AliterHomeActivity extends BaseActivity<HomeActivityPresenterImpl> 
 
     @Override
     public void finish() {
-        PreferUtil.getInstance().CleanShopAppMenu();  // 退出首页时把所有权限设置成false 下次再进重新获取
+        PreferUtil.getInstance().CleanShopAppMenu();
         super.finish();
     }
 }

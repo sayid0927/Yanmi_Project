@@ -1,7 +1,6 @@
 package com.zxly.o2o.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -19,10 +18,13 @@ import com.zxly.o2o.model.StoreArticle;
 import com.zxly.o2o.request.PromoteCallbackConfirmRequest;
 import com.zxly.o2o.shop.R;
 import com.zxly.o2o.util.ShareListener;
+import com.zxly.o2o.util.StringUtil;
 import com.zxly.o2o.util.UmengUtil;
 import com.zxly.o2o.util.ViewUtils;
 
 import java.util.HashMap;
+
+import static com.zxly.o2o.shop.R.id.label_product;
 
 /**
  * Created by dsnx on 2016/9/7.
@@ -55,11 +57,11 @@ public class StoreArticelAdapter extends ObjectAdapter implements View.OnClickLi
             holder.txtTitle = (TextView) convertView.findViewById(R.id.txt_title);
             holder.txtBrwoseCount = (TextView) convertView.findViewById(R.id.txt_browseCount);
             holder.btnPromotion = convertView.findViewById(R.id.btn_promotion);
-            holder.txtRecomend = convertView.findViewById(R.id.txt_recomend);
+//            holder.txtRecomend = convertView.findViewById(R.id.txt_recomend);
             holder.txtLabel1 = (TextView) convertView.findViewById(R.id.txt_label1);
-            holder.txtLabel2 = (TextView) convertView.findViewById(R.id.txt_label2);
-            holder.txtLabel3 = (TextView) convertView.findViewById(R.id.txt_label3);
-            holder.labelProduct = convertView.findViewById(R.id.label_product);
+//            holder.txtLabel2 = (TextView) convertView.findViewById(R.id.txt_label2);
+//            holder.txtLabel3 = (TextView) convertView.findViewById(R.id.txt_label3);
+            holder.labelProduct = convertView.findViewById(label_product);
             holder.btnPromotion.setOnClickListener(this);
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -94,26 +96,43 @@ public class StoreArticelAdapter extends ObjectAdapter implements View.OnClickLi
         }
         StoreArticle storeArticle = (StoreArticle) getItem(position);
         int hasNewLabel = storeArticle.getHasNewLabel();
-        holder.headIcon.setImageUrl(storeArticle.getHeadUrl(), AppController.imageLoader);
-        holder.headIcon.setDefaultImageResId(R.drawable.artice_def_icon);
+        String gg=storeArticle.getHeadUrl();
+
+        if(StringUtil.isNull(storeArticle.getHeadUrl())){
+            holder.headIcon.setVisibility(View.GONE);
+
+        }else {
+            holder.headIcon.setVisibility(View.VISIBLE);
+            holder.headIcon.setImageUrl(storeArticle.getHeadUrl(), AppController.imageLoader);
+            holder.headIcon.setDefaultImageResId(R.drawable.artice_def_icon);
+        }
+
+
+
         ViewUtils.setText(holder.txtTitle, storeArticle.getTitle());
         if (storeArticle.isProductArticle()) {
             ViewUtils.setVisible(holder.labelProduct);
         } else {
             ViewUtils.setGone(holder.labelProduct);
         }
+        if(holder.headIcon.getVisibility()==View.VISIBLE){
+            holder.labelProduct.setVisibility(View.VISIBLE);
+        }else {
+            holder.labelProduct.setVisibility(View.GONE);
+        }
+
         if (storeArticle.isRecomend()) {
             if (hasNewLabel == 1) {
-                holder.txtRecomend.setBackgroundColor(Color.parseColor("#ff0200"));
+//                holder.txtRecomend.setBackgroundColor(Color.parseColor("#ff0200"));
             }
-            ViewUtils.setVisible(holder.txtRecomend);
+//            ViewUtils.setVisible(holder.txtRecomend);
         } else {
-            ViewUtils.setGone(holder.txtRecomend);
+//            ViewUtils.setGone(holder.txtRecomend);
         }
         String[] labels = storeArticle.getLabels();
         ViewUtils.setGone(holder.txtLabel1);
-        ViewUtils.setGone(holder.txtLabel2);
-        ViewUtils.setGone(holder.txtLabel3);
+//        ViewUtils.setGone(holder.txtLabel2);
+//        ViewUtils.setGone(holder.txtLabel3);
         StringBuilder sbLabels = new StringBuilder();
         if (labels != null) {
             int len = labels.length;
@@ -123,17 +142,17 @@ public class StoreArticelAdapter extends ObjectAdapter implements View.OnClickLi
                 String name = label[1];
                 int m = id % 3;
                 TextView tvLabel = null;
-                switch (i) {
-                    case 0:
+//                switch (i) {
+//                    case 0:
                         tvLabel = holder.txtLabel1;
-                        break;
-                    case 1:
-                        tvLabel = holder.txtLabel2;
-                        break;
-                    case 2:
-                        tvLabel = holder.txtLabel3;
-                        break;
-                }
+//                        break;
+//                    case 1:
+//                        tvLabel = holder.txtLabel2;
+//                        break;
+//                    case 2:
+//                        tvLabel = holder.txtLabel3;
+//                        break;
+//                }
                 ViewUtils.setVisible(tvLabel);
                 //十一月运维2对标签背景颜色做了一个新规则  新旧规则通过hasNewLabel标识
                 String color = "#ff5e1d";
@@ -171,7 +190,7 @@ public class StoreArticelAdapter extends ObjectAdapter implements View.OnClickLi
                 }
                 sbLabels.append(name);
                 if (sbLabels.length() <= 15) {
-                    tvLabel.setBackgroundColor(Color.parseColor(color));
+//                    tvLabel.setBackgroundColor(Color.parseColor(color));
                     tvLabel.setText(name);
                 }
 

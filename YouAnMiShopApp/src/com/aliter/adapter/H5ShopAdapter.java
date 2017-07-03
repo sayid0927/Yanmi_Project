@@ -11,15 +11,12 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.easemob.easeui.AppException;
-import com.orhanobut.logger.Logger;
 import com.zxly.o2o.account.Account;
 import com.zxly.o2o.adapter.ObjectAdapter;
 import com.zxly.o2o.application.AppController;
 import com.zxly.o2o.request.BaseRequest;
 import com.zxly.o2o.shop.R;
 import com.zxly.o2o.util.ViewUtils;
-
-import static com.zxly.o2o.request.IMGetUnRegistListRequest.pageIndex;
 
 
 public class H5ShopAdapter extends ObjectAdapter implements View.OnClickListener {
@@ -65,9 +62,7 @@ public class H5ShopAdapter extends ObjectAdapter implements View.OnClickListener
         holder.headIcon.setImageUrl(loaclItem.getHeadUrl(), AppController.imageLoader);
         holder.headIcon.setDefaultImageResId(R.drawable.al_manage_productpic);
         holder.txtTitle.setText(loaclItem.getBrandName()+" "+loaclItem.getProductName());
-
         holder.txtBrwoseCount.setText(String.valueOf(loaclItem.getMinPrice())+" - "+String.valueOf(loaclItem.getMaxPrice()));
-//        holder.txDate.setText(String.valueOf(loaclItem.getMaxPrice()));
         if (loaclItem.getIsShelves() == 1) {   //是否上架,1:上架,2:下架
             holder.btnPromotion.setBackground(context.getResources().getDrawable(R.drawable.alite_h5_shop_selector));
             holder.btnPromotion.setTextColor(context.getResources().getColor(R.color.textSelectColor));
@@ -88,6 +83,7 @@ public class H5ShopAdapter extends ObjectAdapter implements View.OnClickListener
               //  1:上架商品,2:下架商品
                 final int type;
                 type= (productsBean.getIsShelves()==1)?2:1;
+
                 H5ShopShelvesRequest h5ShopShelvesRequest = new H5ShopShelvesRequest(productsBean.getId(), type);
                 h5ShopShelvesRequest.setOnResponseStateListener(new BaseRequest.ResponseStateListener() {
                     @Override
@@ -152,7 +148,7 @@ public class H5ShopAdapter extends ObjectAdapter implements View.OnClickListener
     class H5ShopShelvesRequest extends BaseRequest {
 
         public H5ShopShelvesRequest(int id, int type) {
-            addParams("id", pageIndex);
+            addParams("id", id);
             addParams("type", type);
             addParams("shopId", Account.user.getShopId());
         }
@@ -160,13 +156,11 @@ public class H5ShopAdapter extends ObjectAdapter implements View.OnClickListener
         @Override
         protected void fire(String data) throws AppException {
 
-            Logger.t("TAG").d(data);
-
         }
 
         @Override
         protected String method() {
-            return "/commend/product/shelves";
+            return "commend/product/shelves";
         }
     }
 }

@@ -202,9 +202,9 @@ public class AliteShopPromotionFragment extends BaseFragment<ShopPromotionPresen
             mFragments.add(PromotionAcitcityFragment.newInstance());
         }
         if (mFragments.size() == 0 || mTitleList.size() == 0) {
-            mTitleList.add("店铺文章");
-            StoreArticleFragement storeArticleFragement = StoreArticleFragement.newInstance(1);
-            mFragments.add(storeArticleFragement);
+            mTitleList.add("");
+            NullFragment nullFragment = new NullFragment();
+            mFragments.add(nullFragment);
         }
     }
 

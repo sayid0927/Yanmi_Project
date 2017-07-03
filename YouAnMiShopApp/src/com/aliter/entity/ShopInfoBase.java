@@ -44,7 +44,24 @@ public class ShopInfoBase {
     private  String provinceName;
 
    private String h5url;
+    private String h5gaoji;
+    private  String h5keduoduo;
 
+    public String getH5gaoji() {
+        return h5gaoji;
+    }
+
+    public void setH5gaoji(String h5gaoji) {
+        this.h5gaoji = h5gaoji;
+    }
+
+    public String getH5keduoduo() {
+        return h5keduoduo;
+    }
+
+    public void setH5keduoduo(String h5keduoduo) {
+        this.h5keduoduo = h5keduoduo;
+    }
 
     public String getH5url() {
         return h5url;

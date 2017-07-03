@@ -13,6 +13,7 @@ import com.aliter.ui.activity.self.AliteMeakeMoneyActivity;
 import com.zxly.o2o.account.Account;
 import com.zxly.o2o.activity.FeedbackAct;
 import com.zxly.o2o.activity.FragmentListAct;
+import com.zxly.o2o.activity.H5DetailAct;
 import com.zxly.o2o.activity.PayMyAccountAct;
 import com.zxly.o2o.activity.PersonalHomepageAct;
 import com.zxly.o2o.activity.SettingAct;
@@ -24,6 +25,7 @@ import com.zxly.o2o.request.PersonalInitRequest;
 import com.zxly.o2o.shop.R;
 import com.zxly.o2o.util.CallBack;
 import com.zxly.o2o.util.PhoneUtil;
+import com.zxly.o2o.util.PreferUtil;
 import com.zxly.o2o.util.StringUtil;
 import com.zxly.o2o.util.UmengUtil;
 import com.zxly.o2o.util.ViewUtils;
@@ -71,6 +73,12 @@ public class SelfFragmentAlite extends BaseFragment {
     Unbinder unbinder;
     @BindView(R.id.tv_month_earnings_num)
     TextView tvMonthEarningsNum;
+    @BindView(R.id.rl_huiyang)
+    RelativeLayout rlHuiyang;
+    Unbinder unbinder1;
+    @BindView(R.id.txt_shop_name)
+    TextView txtShopName;
+    Unbinder unbinder2;
 
     private MakeMoneyInitRequest moneyInitRequest;
 
@@ -112,11 +120,31 @@ public class SelfFragmentAlite extends BaseFragment {
         MakeMoneyinit();
 
 //     我的任务指标:isBoss != 1 && roleType != 1 (普通店员)
-        if (Account.user.getIsBoss() != 1 || Account.user.getRoleType() != 1) {
-            rlTaskIndex.setVisibility(View.GONE);
-        }else {
+        if (Account.user.getIsBoss() != 1 && Account.user.getRoleType() != 1) {
             rlTaskIndex.setVisibility(View.VISIBLE);
+        } else {
+            rlTaskIndex.setVisibility(View.GONE);
         }
+
+
+//        packType:1免费,2普通,3高级
+
+       int packtype= PreferUtil.getInstance().getPackType();
+        switch (packtype){
+            case 1:
+                txtShopName.setText("免费会员");
+                break;
+            case 2:
+                txtShopName.setText("普通会员");
+                break;
+            case 3:
+                txtShopName.setText("高级会员");
+                break;
+        }
+
+
+
+
     }
 
     @Override
@@ -141,7 +169,8 @@ public class SelfFragmentAlite extends BaseFragment {
 
 
     @OnClick({R.id.ll_setting, R.id.rl_service_phone, R.id.img_user_head, R.id.ll_earnings_list, R.id.rl_task_index,
-            R.id.ll_my_messages, R.id.rl_user_balance, R.id.rl_feedback, R.id.ll_setting_user_name, R.id.rl_meake_money})
+            R.id.ll_my_messages, R.id.rl_user_balance, R.id.rl_feedback, R.id.ll_setting_user_name, R.id.rl_meake_money,
+            R.id.rl_huiyang})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_setting:    //  设置
@@ -190,6 +219,16 @@ public class SelfFragmentAlite extends BaseFragment {
             case R.id.ll_setting_user_name: //  设置用户信息
                 PersonalHomepageAct.start(getActivity());
                 break;
+            case R.id.rl_huiyang: //  设置用户信息
+
+                String H5gaojiUrl = PreferUtil.getInstance().getShopInfo().getH5gaoji();
+                if (StringUtil.isNull(H5gaojiUrl)) {
+                    H5DetailAct.start(H5DetailAct.TYPE_DEFAULT,
+                            AppController.getInstance().getTopAct(),
+                            H5gaojiUrl, "高级功能介绍", null, false, 1);
+                }
+                break;
+
 
         }
     }
@@ -245,5 +284,10 @@ public class SelfFragmentAlite extends BaseFragment {
         });
         moneyInitRequest.start(this);
     }
+
+    @OnClick()
+    public void onViewClicked() {
+    }
+
 }
 

@@ -29,6 +29,7 @@ import com.easemob.easeui.EaseConstant;
 import com.easemob.easeui.adapter.EaseContactAdapter;
 import com.easemob.easeui.controller.EaseUI;
 import com.easemob.easeui.model.IMUserInfoVO;
+import com.igexin.sdk.PushManager;
 import com.tencent.tinker.loader.app.ApplicationLike;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
@@ -124,7 +125,7 @@ public class AppController extends Application {
         lruImageCache = BitmapLruCache.instance();
 
         PreferUtil.getInstance().init(this);
-
+        PushManager.getInstance().initialize(this.getApplicationContext());
         HXApplication.getInstance().onCreate(this,R.raw.sis_server);  //环信初始化
         setPkgVersion();
         displayMetrics = EaseUI.displayMetrics;

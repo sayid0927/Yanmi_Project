@@ -77,6 +77,9 @@ public class LoadingView extends LinearLayout implements AnimationListener {
 	public void setBtnText(String btnText) {
 		ViewUtils.setText(btnLoading, btnText);
 	}
+	public void setBtnGone( ) {
+		btnLoading.setVisibility(GONE);
+	}
 
 	/**
 	 * 开始加载数据时调用此函数

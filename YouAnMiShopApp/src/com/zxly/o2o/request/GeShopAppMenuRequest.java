@@ -5,6 +5,7 @@ import com.android.volley.VolleyError;
 import com.easemob.easeui.AppException;
 import com.easemob.easeui.utils.GsonParser;
 import com.google.gson.reflect.TypeToken;
+import com.orhanobut.logger.Logger;
 import com.zxly.o2o.account.Account;
 import com.zxly.o2o.util.PreferUtil;
 
@@ -48,6 +49,7 @@ public class GeShopAppMenuRequest extends BaseRequest{
             shopAppMenuBeanArrayList = GsonParser.getInstance().fromJson(data, type);
             List<ShopAppMenuBean.MenuDataBean> menuDataBean = shopAppMenuBeanArrayList.getMenuData();
             PreferUtil.getInstance().setShopPackType(shopAppMenuBeanArrayList.getPackType());
+            Logger.t("TAG").e(String.valueOf(shopAppMenuBeanArrayList.getPackType()));
             for (int i=0;i<menuDataBean.size();i++){
              String   tmp = menuDataBean.get(i).getMenuName();
                 String   code = menuDataBean.get(i).getCode();
